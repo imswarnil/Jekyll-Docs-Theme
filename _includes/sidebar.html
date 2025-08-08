@@ -1,0 +1,19 @@
+<div class="sidebar-left-content">
+    <nav class="sidebar-nav">
+      <ul>
+        {% for section in site.data.navigation_sidebar %}
+          <li class="nav-category">{{ section.title }}</li>
+          {% for link in section.links %}
+            <li class="nav-link {% if page.url == link.url %}active{% endif %}">
+              <a href="{{ link.url | relative_url }}">
+                <i class="ph-duotone {{ link.icon }}"></i>{{ link.text }}
+              </a>
+            </li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+  <div class="attribution-card">
+    <p>Created by <strong>{{ site.author }}</strong>.</p>
+  </div>
