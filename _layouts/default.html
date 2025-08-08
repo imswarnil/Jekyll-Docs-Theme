@@ -47,7 +47,90 @@
 
   <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
     {% include site-icons.svg %}
-
+    <!-- The body remains exactly the same as in your original file -->
+    <div class="page-wrapper">
+        <header class="header"><!-- Populated by JS --></header>
+        <aside class="sidebar-left" id="sidebar-left"><!-- Populated by JS --></aside>
+        <div class="main-content-area">
+            <div class="hero-banner">
+                <div class="hero-content"><div class="hero-text"><p class="tableau-logo"><span>++</span>+ a b l e a u</p><h1>TABLEAU CRM<br>TRAINING</h1></div></div>
+                <img src="https://i.ibb.co/L5rK5Y5/einstein-character.png" alt="Einstein character" class="hero-character">
+            </div>
+            <main class="content-wrapper">
+                <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
+                <div class="ad-placeholder ad-leaderboard">Leaderboard Ad (728x90)</div>
+                <div class="ad-placeholder ad-mobile-banner">Mobile Banner Ad (320x50)</div>
+                <div class="mobile-toc" id="mobile-toc-container"><h3 class="toc-title">On This Page</h3><div class="mobile-toc-content"></div></div>
+                <article>
+                    <h2 id="components-title">Reusable Components</h2><p>This theme includes a rich set of pre-styled components to help you build beautiful content pages quickly and consistently.</p>
+                    <div class="code-block-wrapper"><pre><code>&lt;button class="cta"&gt;Click Me&lt;/button&gt;</code></pre></div>
+                    <div class="component-card"><h4>Special Callout</h4><p>Use this card to highlight important information. The corner bubbles are created with pure CSS for a branded touch.</p></div>
+                </article>
+                <div class="buy-me-coffee-banner"><h3>Found this useful?</h3><p>Your support helps us create more high-quality content.</p><a href="#" class="cta-button"><i class="ph-duotone ph-coffee"></i>Buy me a coffee</a></div>
+                <div class="page-footer-nav"><nav class="pagination" aria-label="Lesson navigation"></nav><div class="related-posts" style="margin-top: 3rem;"><h2>Related Posts</h2><div class="related-posts-grid"></div></div><div class="comments-placeholder" style="margin-top: 3rem;"><h2>Comments</h2><div class="ad-placeholder" style="min-height: 120px;">Comment Section / Ad Placeholder</div></div></div>
+            </main>
+            <aside class="sidebar-right">
+                <h3 class="toc-title">On This Page</h3><div class="desktop-toc-container toc-container"></div>
+                <div class="sidebar-right-actions"></div>
+                <div class="ad-placeholder" style="height:250px; margin-top: 2rem;">Square Ad (250x250)</div>
+                <div class="ad-placeholder vertical" style="flex-grow: 1; margin-top: 1rem;">Skyscraper Ad</div>
+            </aside>
+        </div>
+        <footer class="main-footer"></footer>
+    </div>
+    <div class="mobile-overlay" id="mobile-overlay"></div>
+    <div id="search-modal"><div class="search-overlay"></div><div class="search-container"><div class="search-header"><i class="ph-duotone ph-magnifying-glass"></i><input type="text" id="search-input" placeholder="Search lessons, components..."></div><div class="search-results"></div></div></div>
+    <div id="toc-source" style="display: none;"><a href="#components-title">Reusable Components</a></div>
+    
+    <!-- The script remains exactly the same -->
+    <script>
+    (function() {
+        const searchData = [ { icon: 'ph-palette', title: 'Theming', desc: 'Customize colors, fonts, and spacing.', category: 'Core Concepts', url: '#' }, { icon: 'ph-code', title: 'Components', desc: 'Explore reusable UI components like tabs and cards.', category: 'Features', url: '#' }];
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- DYNAMIC CONTENT POPULATION ---
+            document.querySelector('.header').innerHTML = `<div class="header-left"><button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu"><i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i></button><a href="#" class="logo">CourseDocs</a><nav class="header-nav"><a href="#" class="active">Courses</a><a href="#">Blog</a></nav></div><div class="header-right"><button class="search-trigger-button" id="search-trigger"><i class="ph-duotone ph-magnifying-glass"></i><span>Search...</span><span class="kbd">⌘K</span></button><a href="#" class="action-button github-link" aria-label="GitHub Repository"><i class="ph-duotone ph-github-logo"></i></a><button class="action-button" id="theme-toggle" aria-label="Toggle dark mode"><i class="ph-duotone ph-sun"></i></button></div>`;
+            document.getElementById('sidebar-left').innerHTML = `<div class="sidebar-left-content"><nav class="sidebar-nav"><ul><li class="nav-category">Getting Started</li><li class="nav-link"><a href="#"><i class="ph-duotone ph-rocket-launch"></i>Introduction</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-download-simple"></i>Installation</a></li><li class="nav-category">Core Concepts</li><li class="nav-link active"><a href="#"><i class="ph-duotone ph-palette"></i>Theming</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-layout"></i>Layout</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-puzzle-piece"></i>Components</a></li></ul></nav><div class="sponsor-card"><div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div><div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div><p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">Learn advanced CRM techniques with our new course.</p></div></div><div class="attribution-card"><p>Created by <strong>Salesforce Release</strong>.</p></div>`;
+            document.querySelector('.pagination').innerHTML = `<a href="#" class="prev"><i class="ph-duotone ph-arrow-left pagination-icon"></i><div class="text-content"><div class="label">Previous</div><div class="title">Installation</div></div></a><a href="#" class="next"><div class="text-content"><div class="label">Next</div><div class="title">Layout</div></div><i class="ph-duotone ph-arrow-right pagination-icon"></i></a>`;
+            document.querySelector('.related-posts-grid').innerHTML = `<a href="#" class="related-post-card"><i class="ph-duotone ph-layout card-icon"></i><h4>Understanding Layout</h4><p>Dive deep into the CSS Grid and Flexbox setup.</p></a><a href="#" class="related-post-card"><i class="ph-duotone ph-puzzle-piece card-icon"></i><h4>Using Components</h4><p>A look at the pre-built components you can use.</p></a>`;
+            document.querySelector('.sidebar-right-actions').innerHTML = `<a href="#"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a><a href="#"><i class="ph-duotone ph-users-three"></i>Join our community</a>`;
+            document.querySelector('.main-footer').innerHTML = `<div class="footer-content"><div class="footer-column"><h4><i class="ph-duotone ph-rocket-launch"></i>Product</h4><ul style="list-style: none;"><li><a href="#">Features</a></li></ul></div><div class="footer-column"><h4><i class="ph-duotone ph-users"></i>Community</h4><ul style="list-style: none;"><li><a href="#">GitHub</a></li></ul></div><div class="footer-column"><h4><i class="ph-duotone ph-book-open"></i>Resources</h4><ul style="list-style: none;"><li><a href="#">Blog</a></li></ul></div><div class="footer-column"><h4><i class="ph-duotone ph-scales"></i>Legal</h4><ul style="list-style: none;"><li><a href="#">Privacy</a></li></ul></div></div><div class="footer-bottom"><span>&copy; 2024 CourseDocs, Inc.</span><div class="footer-socials" style="display: flex; gap: 1rem;"><a href="#" aria-label="Twitter"><i class="ph-duotone ph-twitter-logo"></i></a><a href="#" aria-label="GitHub"><i class="ph-duotone ph-github-logo"></i></a></div></div>`;
+            document.querySelector('.breadcrumbs').innerHTML = `<a href="#"><i class="ph-duotone ph-house"></i></a><span>&rsaquo;</span><a href="#">Courses</a><span>&rsaquo;</span><a href="#">Core Concepts</a><span>&rsaquo;</span><span>Theming</span>`;
+            
+            // --- COPY CODE BUTTON ---
+            document.querySelectorAll('.code-block-wrapper').forEach(wrapper => { const btn = document.createElement('button'); btn.className = 'copy-button'; btn.innerHTML = '<i class="ph-duotone ph-copy"></i> Copy'; wrapper.appendChild(btn); const code = wrapper.querySelector('pre code').innerText; btn.addEventListener('click', () => { navigator.clipboard.writeText(code).then(() => { btn.innerHTML = '<i class="ph-duotone ph-check"></i> Copied!'; setTimeout(() => { btn.innerHTML = '<i class="ph-duotone ph-copy"></i> Copy'; }, 2000); }); }); });
+            
+            // --- TOC & SCROLLSPY ---
+            const tocSource = document.getElementById('toc-source'), desktopToc = document.querySelector('.desktop-toc-container'), mobileTocContent = document.querySelector('.mobile-toc-content'), headings = document.querySelectorAll('article h2, article h3.component-title');
+            const mobileTocList = document.createElement('ol');
+            tocSource.querySelectorAll('a').forEach(link => { const dt = link.cloneNode(true); dt.classList.add('toc-link'); desktopToc.appendChild(dt); const li = document.createElement('li'); li.appendChild(link.cloneNode(true)); mobileTocList.appendChild(li); });
+            mobileTocContent.appendChild(mobileTocList);
+            const observer = new IntersectionObserver(e=>e.forEach(i=>{if(i.isIntersecting){const d=i.target.id;document.querySelectorAll('.toc-link').forEach(l=>l.classList.remove('active'));document.querySelectorAll(`.toc-link[href="#${d}"]`).forEach(l=>l.classList.add('active'))}}),{rootMargin:`-100px 0px -50% 0px`,threshold:.1});
+            headings.forEach(h => observer.observe(h));
+            
+            // --- MOBILE SIDENAV ---
+            const menuToggle = document.getElementById('mobile-menu-toggle'), sidebar = document.getElementById('sidebar-left'), mobileOverlay = document.getElementById('mobile-overlay');
+            const closeMenu = () => { sidebar.classList.remove('is-open'); mobileOverlay.classList.remove('is-active'); };
+            menuToggle.addEventListener('click', () => { sidebar.classList.toggle('is-open'); mobileOverlay.classList.toggle('is-active'); });
+            mobileOverlay.addEventListener('click', closeMenu);
+            
+            // --- DARK MODE ---
+            const themeToggle = document.getElementById('theme-toggle'), htmlEl = document.documentElement;
+            const setTheme = t => { htmlEl.classList.toggle('dark', t==='dark'); themeToggle.querySelector('i').className=t==='dark'?'ph-duotone ph-moon':'ph-duotone ph-sun'; localStorage.setItem('theme',t);};
+            setTheme(localStorage.getItem('theme')||'light');
+            themeToggle.addEventListener('click', () => setTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark'));
+            
+            // --- SEARCH MODAL ---
+            const searchModal=document.getElementById('search-modal'),searchTrigger=document.getElementById('search-trigger'),searchOverlay=searchModal.querySelector('.search-overlay'),searchInput=document.getElementById('search-input'),resultsContainer=searchModal.querySelector('.search-results');
+            let activeResultIndex = -1;
+            const openSearch = () => { searchModal.classList.add('is-open'); document.body.classList.add('modal-open'); setTimeout(() => searchInput.focus(), 50); renderResults(''); };
+            const closeSearch = () => { searchModal.classList.remove('is-open'); document.body.classList.remove('modal-open'); searchInput.value=''; };
+            const renderResults = q => { const f=searchData.filter(i=>i.title.toLowerCase().includes(q.toLowerCase())||i.desc.toLowerCase().includes(q.toLowerCase())); resultsContainer.innerHTML=''; activeResultIndex=-1; if(f.length===0){resultsContainer.innerHTML='<div class="search-no-results" style="padding: 2rem; text-align: center; color: var(--docs-muted-foreground);">No results found.</div>';return;} const ul=document.createElement('ul'); f.forEach((i,x)=>{const li=document.createElement('li');li.className='search-result-item';li.dataset.index=x;li.innerHTML=`<a href="${i.url}"><div style="flex-shrink: 0; width: 32px; text-align: center;"><i class="ph-duotone ${i.icon}"></i></div><div style="flex-grow: 1;"><div style="font-weight:600;">${i.title}</div><div style="font-size: 0.875rem; color: var(--docs-muted-foreground);">${i.desc}</div></div><div style="font-size: 0.75rem; text-transform: uppercase; color: var(--docs-muted-foreground); background-color: var(--docs-secondary); padding: 0.1rem 0.4rem; border-radius: 0.25rem;">${i.category}</div></a>`;ul.appendChild(li)}); resultsContainer.appendChild(ul); };
+            const updateActive = n => { const i=resultsContainer.querySelectorAll('.search-result-item'); if(i.length===0)return; if(activeResultIndex>-1&&i[activeResultIndex])i[activeResultIndex].classList.remove('active'); if(n>=i.length)n=0;if(n<0)n=i.length-1; if(i[n]){i[n].classList.add('active');i[n].scrollIntoView({block:'nearest'});} activeResultIndex=n; };
+            searchTrigger.addEventListener('click',openSearch); searchOverlay.addEventListener('click',closeSearch); searchInput.addEventListener('input',()=>renderResults(searchInput.value));
+            document.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();}if(searchModal.classList.contains('is-open')){if(e.key==='Escape')closeSearch();if(e.key==='ArrowDown'){e.preventDefault();updateActive(activeResultIndex+1);}if(e.key==='ArrowUp'){e.preventDefault();updateActive(activeResultIndex-1);}if(e.key==='Enter'){const a=resultsContainer.querySelector('.search-result-item.active a');if(a)a.click();}}});
+        });
+    })();
+    </script>
     {{ content }}
 
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
