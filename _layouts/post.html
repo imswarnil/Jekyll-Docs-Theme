@@ -9,33 +9,22 @@ layout: default
         <h1>{{ page.title | upcase }}</h1>
       </div>
     </div>
-    {% if page.hero_image %}
-      <img src="{{ page.hero_image }}" alt="" class="hero-character">
-    {% endif %}
+    {% if page.hero_image %}<img src="{{ page.hero_image }}" alt="" class="hero-character">{% endif %}
   </div>
 
   <main class="content-wrapper">
-    <nav class="breadcrumbs" aria-label="Breadcrumb"></nav>
     <div class="mobile-toc" id="mobile-toc-container">
       <h3 class="toc-title">On This Page</h3>
       <div class="mobile-toc-content"></div>
     </div>
-
-    <article>
-      {{ content }}
-    </article>
+    <article>{{ content }}</article>
   </main>
 
   <aside class="sidebar-right">
     <h3 class="toc-title">On This Page</h3>
     <div class="desktop-toc-container toc-container"></div>
     <div class="sidebar-right-actions">
-      <a href="{{ site.github_url }}/edit/main/{{ page.path }}"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
-      <a href="#"><i class="ph-duotone ph-users-three"></i>Join our community</a>
+      <a href="{{ site.github_url }}/edit/main/{{ page.path }}" target="_blank" rel="noopener noreferrer"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
     </div>
   </aside>
-</div>
-
-<div id="toc-source" style="display: none;">
-  {% comment %} The JS will auto-populate this from H2 tags in your content. {% endcomment %}
 </div>
