@@ -1,0 +1,139 @@
+---
+layout: base
+---
+
+<main id="main" class="main-content-area" style="grid-column: 1 / -1;">
+  <!-- Full-width hero -->
+  <section class="hero-banner hero-banner--academy">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="tableau-logo">CRM ANALYTICS • ACADEMY</div>
+        <h1>{{ page.hero_title | default: "CRM Analytics Academy" }}</h1>
+        <p class="sf-text--large sf-text-muted hero__subtitle">
+          {{ page.hero_subtitle | default: "Learn Salesforce CRM Analytics end-to-end: datasets, recipes, SAQL, bindings, security predicates, JSON, and Lightning embedding." }}
+        </p>
+
+        <div class="hero-cta">
+          <a href="#curriculum" class="btn btn--primary"><i class="ph-duotone ph-graduation-cap"></i> Browse Curriculum</a>
+          <a href="#lessons" class="btn btn--ghost">Latest Lessons</a>
+        </div>
+
+        <div class="hero-pills">
+          <span class="pill">SAQL</span>
+          <span class="pill">Security Predicate</span>
+          <span class="pill">Dashboard JSON</span>
+          <span class="pill">Lightning Embedding</span>
+        </div>
+      </div>
+
+      {% if page.hero_image %}
+        <img class="hero-character" src="{{ page.hero_image | relative_url }}" alt="CRM Analytics Academy">
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- KPIs -->
+  <section class="section kpis">
+    <div class="sf-container">
+      <div class="kpi-grid">
+        <div class="kpi-card"><div class="kpi-num">30+</div><div class="kpi-label">Hands-on Lessons</div></div>
+        <div class="kpi-card"><div class="kpi-num">10</div><div class="kpi-label">Real Projects</div></div>
+        <div class="kpi-card"><div class="kpi-num">4</div><div class="kpi-label">Capstones</div></div>
+        <div class="kpi-card"><div class="kpi-num">∞</div><div class="kpi-label">Career Upside</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What you'll learn -->
+  <section class="section">
+    <div class="sf-container">
+      <h2 class="section-title">What you’ll learn</h2>
+      <div class="feature-grid">
+        <article class="feature-card">
+          <i class="ph-duotone ph-database icon"></i>
+          <h3>Data Foundations</h3>
+          <p>Recipes, Dataflows, Datasets—modeling that scales.</p>
+        </article>
+        <article class="feature-card">
+          <i class="ph-duotone ph-code-simple icon"></i>
+          <h3>SAQL Mastery</h3>
+          <p>Group, filter, foreach, cogroup, windowing, performance.</p>
+        </article>
+        <article class="feature-card">
+          <i class="ph-duotone ph-shield-check icon"></i>
+          <h3>Security Predicate</h3>
+          <p>Row-level access without breaking UX.</p>
+        </article>
+        <article class="feature-card">
+          <i class="ph-duotone ph-layout icon"></i>
+          <h3>Dashboard JSON</h3>
+          <p>Bindings, selectors, dynamic queries, templates.</p>
+        </article>
+        <article class="feature-card">
+          <i class="ph-duotone ph-lightning icon"></i>
+          <h3>Lightning Embedding</h3>
+          <p>Embed context-aware dashboards into Salesforce.</p>
+        </article>
+        <article class="feature-card">
+          <i class="ph-duotone ph-rocket-launch icon"></i>
+          <h3>Real Projects</h3>
+          <p>Sales, CPQ, Support—portfolio-ready dashboards.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Curriculum -->
+  <section id="curriculum" class="section section--muted">
+    <div class="sf-container">
+      <h2 class="section-title">Curriculum</h2>
+      <div class="steps">
+        <div class="step"><span class="step-dot"></span><div class="step-content"><h3>Module 1 — Foundations & Mindset</h3><p>CRM Analytics vs Reports, use-cases, mental models.</p></div></div>
+        <div class="step"><span class="step-dot"></span><div class="step-content"><h3>Module 2 — Datasets & Recipes</h3><p>Connectors, joins, transforms, incremental loads.</p></div></div>
+        <div class="step"><span class="step-dot"></span><div class="step-content"><h3>Module 3 — SAQL Deep Dive</h3><p>Cogroup, window functions, optimization.</p></div></div>
+        <div class="step"><span class="step-dot"></span><div class="step-content"><h3>Module 4 — Dashboard JSON + Bindings</h3><p>Selectors, facets, dynamic queries, UX.</p></div></div>
+        <div class="step"><span class="step-dot"></span><div class="step-content"><h3>Module 5 — Security & Embedding</h3><p>Security predicate, Lightning embedding, deploy.</p></div></div>
+      </div>
+
+      <div class="cta-row">
+        <a href="/enroll" class="btn btn--primary btn--lg"><i class="ph-duotone ph-graduation-cap"></i> Enroll Now</a>
+        <a href="#faq" class="btn btn--ghost btn--lg">Read FAQs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Latest lessons (auto) -->
+  <section id="lessons" class="section">
+    <div class="sf-container">
+      <h2 class="section-title">Latest lessons</h2>
+      <div class="lesson-list">
+        {% assign posts = site.posts | where_exp: "p", "p.draft != true" | sort: "date" | reverse %}
+        {% for post in posts limit: 6 %}
+          <a class="lesson-item" href="{{ post.url | relative_url }}">
+            <i class="ph-duotone ph-article"></i>
+            <div class="lesson-meta">
+              <h3 class="lesson-title">{{ post.title }}</h3>
+              <p class="lesson-sub">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+              <span class="lesson-date">{{ post.date | date: "%b %d, %Y" }}</span>
+            </div>
+          </a>
+        {% endfor %}
+        {% if posts.size == 0 %}
+          <p class="sf-text-muted">Lessons coming soon. Grab popcorn.</p>
+        {% endif %}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="section">
+    <div class="sf-container">
+      <h2 class="section-title">FAQ</h2>
+      <div class="faq">
+        <details><summary>Is this beginner friendly?</summary><p>Yes. We start from foundational mental models.</p></details>
+        <details><summary>Do I need a dev org?</summary><p>Recommended. We’ll show you how to get one.</p></details>
+        <details><summary>Will I learn SAQL?</summary><p>Deeply—grouping to cogrouping with performance tips.</p></details>
+      </div>
+    </div>
+  </section>
+</main>

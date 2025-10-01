@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="{{ page.theme | default: site.theme }}">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>
+    {% if page.seo_title %}{{ page.seo_title }}
+    {% elsif page.title %}{{ page.title }} – {{ site.title }}
+    {% else %}{{ site.title }}{% endif %}
+  </title>
+
+  {% assign meta_desc = page.description | default: page.excerpt | default: site.description %}
+  <meta name="description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 160 }}">
+
+  {%- comment -%} Canonical {%- endcomment -%}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+
+  {%- comment -%} Open Graph / Twitter {%- endcomment -%}
+  {% assign share_title = page.seo_title | default: page.title | default: site.title %}
+  {% assign share_image = page.social_image | default: site.social_image %}
+  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
+  <meta property="og:title" content="{{ share_title }}">
+  <meta property="og:description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 200 }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  {% if share_image %}<meta property="og:image" content="{{ share_image | absolute_url }}">{% endif %}
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ share_title }}">
+  <meta name="twitter:description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 200 }}">
+  {% if share_image %}<meta name="twitter:image" content="{{ share_image | absolute_url }}">{% endif %}
+
+  {%- comment -%} JSON-LD (Organization + WebSite). Safe fallbacks. {%- endcomment -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ site.title | escape }}",
+    "url": "{{ site.url | default: site.github.url | default: '' }}",
+    "description": "{{ site.description | strip_html | strip_newlines | truncate: 200 | escape }}",
+    "publisher": {
+      "@type": "Organization",
+      "name": "{{ site.author.name | default: site.title | escape }}"
+    }
+  }
+  </script>
+
+  {%- comment -%} Core CSS (your existing stylesheet(s)) {%- endcomment -%}
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  {% if site.fonts_href %}<link rel="stylesheet" href="{{ site.fonts_href }}">{% endif %}
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+
+
+  {%- comment -%} Favicons / Manifest (you said manifest is separate) {%- endcomment -%}
+  <link rel="icon" href="{{ '/assets/favicon.ico' | relative_url }}">
+  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
+
+  {%- comment -%} Analytics / Clarity / Adsense hooks (optional) {%- endcomment -%}
+  {% if site.google_analytics %}{{ site.google_analytics | raw }}{% endif %}
+  {% if site.microsoft_clarity %}{{ site.microsoft_clarity | raw }}{% endif %}
+  {% if site.adsense_script %}{{ site.adsense_script | raw }}{% endif %}
+
+  {%- comment -%} Per-page head injections {%- endcomment -%}
+  {{ content_for_head }}
+</head>
+
+<body class="{{ page.body_class }}">
+  <a class="sr-only" href="#main">Skip to content</a>
+
+  <!-- Global header (keeps your look & feel) -->
+  <header class="header">
+    <div class="header-left">
+      <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <nav class="header-nav">
+        {% for item in site.data.nav.main %}
+          <a href="{{ item.url | relative_url }}" class="{% if page.url == item.url %}active{% endif %}">{{ item.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+    <div class="header-right">
+      <!-- your action icons/buttons -->
+      <button class="action-button" aria-label="Toggle theme" id="themeToggle">
+        <i class="ph-duotone ph-moon-stars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page canvas -->
+  <div class="page-wrapper">
+    {{ content }}
+  </div>
+
+  <!-- Global footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div>
+        <strong>{{ site.title }}</strong>
+        <p class="sf-text-muted">{{ site.tagline | default: site.description }}</p>
+      </div>
+      <div>
+        <div><a href="{{ '/about/' | relative_url }}">About</a></div>
+        <div><a href="{{ '/contact/' | relative_url }}">Contact</a></div>
+      </div>
+      <div>
+        <div><a href="{{ '/privacy/' | relative_url }}">Privacy</a></div>
+        <div><a href="{{ '/sitemap.xml' | absolute_url }}">Sitemap</a></div>
+      </div>
+      <div>
+        <div>© {{ site.time | date: '%Y' }} {{ site.author.name | default: site.title }}</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with Jekyll</span>
+      <span>Theme by Imswarnil</span>
+    </div>
+  </footer>
+
+  {%- comment -%} Minimal theme toggle (optional) {%- endcomment -%}
+  <script>
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('prefers-dark', document.documentElement.classList.contains('dark'));
+    });
+    (function () {
+      if (localStorage.getItem('prefers-dark') === 'true') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</body>
+</html>
