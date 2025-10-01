@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" class="{{ page.theme | default: site.theme }}">
+    <head>
+        <!-- General meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        {% if page.indexing == false %}
+          <meta name="robots" content="noindex">
+        {% endif %}
+    
+        {% if page.collectionpage %}
+          {% seo title=false %}
+    
+          {% assign collectiondata = site.collections | where: "label", page.collectionpage | first %}
+          <title>{{ collectiondata.title }} - {{ site.title }}</title>
+          <meta property="og:title" content="{{ collectiondata.title }}">
+          <meta name="description" content="{{ collectiondata.description }}">
+          <meta property="og:description" content="{{ collectiondata.description }}">
+        {% else %}
+          {% seo %}
+        {% endif %}
+        {% if site.fonts.preconnect_urls %}
+          {% for url in site.fonts.preconnect_urls %}
+            <link rel="preconnect" href="{{ url }}" crossorigin />
+          {% endfor %}
+        {% endif %}
+    
+        <link rel="manifest" href="{{ "/manifest.json" | relative_url }}">
+        <meta name="theme-color" content="{{ site.manifest.theme_color | default: '#242e2b' }}"/>
+    
+        {% if site.css_inline == true %}
+          {% include site-styles.html %}
+        {% else %}
+          <link rel="stylesheet" href="{{ "/assets/styles.css" | relative_url }}">
+        {% endif %}
+    
+        {% if site.favicons or site.avatarurl %}{% include site-favicons.html %}{% endif %}
+    
+        {% if site.google_analytics %}{% include site-analytics.html %}{% endif %}
+    
+        {% include site-fonts.html %}
+    
+        {% include site-before-start.html %}
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+      <script src="https://unpkg.com/@phosphor-icons/web"></script>
+      </head>
+    
+
+<body class="{{ page.body_class }}">
+  <a class="sr-only" href="#main">Skip to content</a>
+
+  <!-- Global header (keeps your look & feel) -->
+  <header class="header">
+    <div class="header-left">
+      <a class="logo" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <nav class="header-nav">
+        {% for item in site.data.nav.main %}
+          <a href="{{ item.url | relative_url }}" class="{% if page.url == item.url %}active{% endif %}">{{ item.title }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+    <div class="header-right">
+      <!-- your action icons/buttons -->
+      <button class="action-button" aria-label="Toggle theme" id="themeToggle">
+        <i class="ph-duotone ph-moon-stars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Page canvas -->
+  <div class="page-wrapper">
+    {{ content }}
+  </div>
+
+  <!-- Global footer -->
+  <footer class="main-footer">
+    <div class="footer-content">
+      <div>
+        <strong>{{ site.title }}</strong>
+        <p class="sf-text-muted">{{ site.tagline | default: site.description }}</p>
+      </div>
+      <div>
+        <div><a href="{{ '/about/' | relative_url }}">About</a></div>
+        <div><a href="{{ '/contact/' | relative_url }}">Contact</a></div>
+      </div>
+      <div>
+        <div><a href="{{ '/privacy/' | relative_url }}">Privacy</a></div>
+        <div><a href="{{ '/sitemap.xml' | absolute_url }}">Sitemap</a></div>
+      </div>
+      <div>
+        <div>© {{ site.time | date: '%Y' }} {{ site.author.name | default: site.title }}</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>Built with Jekyll</span>
+      <span>Theme by Imswarnil</span>
+    </div>
+  </footer>
+
+  {%- comment -%} Minimal theme toggle (optional) {%- endcomment -%}
+  <script>
+    const btn = document.getElementById('themeToggle');
+    if (btn) btn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('prefers-dark', document.documentElement.classList.contains('dark'));
+    });
+    (function () {
+      if (localStorage.getItem('prefers-dark') === 'true') {
+        document.documentElement.classList.add('dark');
+      }
+    })();
+  </script>
+</body>
+</html>
