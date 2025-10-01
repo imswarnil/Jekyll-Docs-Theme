@@ -2,9 +2,10 @@
 <html lang="{{ site.lang | default: "en-US" }}">
   {% include head.html %}
   <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
-
     <div class="page-wrapper">
-      <header class="header">{% include header.html %}</header>
+      <header class="header">
+        {% include header.html %}
+      </header>
       <aside class="sidebar-left" id="sidebar-left">{% include sidebar.html %}</aside>
       
       {{ content }}

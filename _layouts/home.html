@@ -2,6 +2,7 @@
 <html lang="{{ site.lang | default: "en-US" }}">
 {% include head.html %}
   <body class="layout-{{ page.layout | default: 'home' }}">
+    <div class="page-wrapper">
     <header class="header">
       {% include header.html %}
     </header>
@@ -11,6 +12,7 @@
     <footer class="main-footer">
       {% include footer.html %}
     </footer>
+    </div>
 
     <div class="mobile-overlay" id="mobile-overlay"></div>
     <div id="search-modal">
