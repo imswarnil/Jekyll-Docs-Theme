@@ -49,6 +49,206 @@
 
   <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
 
+    <main id="main" class="aca-page">
+
+        <!-- HERO -->
+        <section class="aca-hero">
+          <div class="aca-container aca-hero__inner">
+            <div class="aca-hero__content">
+              <p class="aca-eyebrow">CRM ANALYTICS • ACADEMY</p>
+              <h1 class="aca-hero__title">{{ page.hero_title | default: "Master Salesforce CRM Analytics" }}</h1>
+              <p class="aca-hero__subtitle">
+                {{ page.hero_subtitle | default: "Go from zero to job-ready: datasets, recipes, SAQL, bindings, security predicate, Dashboard JSON, and Lightning embedding." }}
+              </p>
+              <div class="aca-cta-row">
+                <a class="aca-btn aca-btn--primary" href="#curriculum"><i class="ph-duotone ph-graduation-cap"></i>Start Learning</a>
+                <a class="aca-btn aca-btn--ghost" href="#lessons">Latest Lessons</a>
+              </div>
+              <ul class="aca-badges">
+                <li>SAQL</li><li>Security Predicate</li><li>Dashboard JSON</li><li>Lightning</li>
+              </ul>
+            </div>
+      
+            <div class="aca-hero__media">
+              <picture>
+                <img src="{{ page.hero_image | default: '/assets/img/academy/hero.png' | relative_url }}" alt="CRM Analytics dashboard illustration" loading="eager" decoding="async">
+              </picture>
+            </div>
+          </div>
+          <span class="aca-hero__blob aca-hero__blob--a"></span>
+          <span class="aca-hero__blob aca-hero__blob--b"></span>
+        </section>
+      
+        <!-- TOP AD -->
+        <section class="aca-ad">
+          <div class="aca-container">
+            <div class="aca-ad__unit" aria-label="Advertisement">
+              <span class="aca-ad__label">Ad</span>
+              <div class="aca-ad__frame">728×90 Leaderboard (placeholder)</div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- KPIs -->
+        <section class="aca-kpis">
+          <div class="aca-container aca-kpis__grid">
+            <div class="aca-kpi"><div class="aca-kpi__num">30+</div><div class="aca-kpi__label">Hands-on Lessons</div></div>
+            <div class="aca-kpi"><div class="aca-kpi__num">10</div><div class="aca-kpi__label">Real Projects</div></div>
+            <div class="aca-kpi"><div class="aca-kpi__num">4</div><div class="aca-kpi__label">Capstones</div></div>
+            <div class="aca-kpi"><div class="aca-kpi__num">∞</div><div class="aca-kpi__label">Career Upside</div></div>
+          </div>
+        </section>
+      
+        <!-- WHAT YOU'LL LEARN -->
+        <section class="aca-section">
+          <div class="aca-container">
+            <h2 class="aca-h2">What you’ll learn</h2>
+            <div class="aca-features">
+              <article class="aca-card">
+                <i class="ph-duotone ph-database aca-card__icon"></i>
+                <h3 class="aca-card__title">Data Foundations</h3>
+                <p>Recipes, Dataflows, Datasets—joins, transforms, incremental loads.</p>
+              </article>
+              <article class="aca-card">
+                <i class="ph-duotone ph-code-simple aca-card__icon"></i>
+                <h3 class="aca-card__title">SAQL Mastery</h3>
+                <p>Group, filter, foreach, cogroup, windows, and performance patterns.</p>
+              </article>
+              <article class="aca-card">
+                <i class="ph-duotone ph-shield-check aca-card__icon"></i>
+                <h3 class="aca-card__title">Security Predicate</h3>
+                <p>Row-level security that scales without breaking UX.</p>
+              </article>
+              <article class="aca-card">
+                <i class="ph-duotone ph-layout aca-card__icon"></i>
+                <h3 class="aca-card__title">Dashboard JSON</h3>
+                <p>Bindings, selectors, dynamic queries, templates & theming.</p>
+              </article>
+              <article class="aca-card">
+                <i class="ph-duotone ph-lightning aca-card__icon"></i>
+                <h3 class="aca-card__title">Lightning Embedding</h3>
+                <p>Contextual dashboards inside Salesforce apps.</p>
+              </article>
+              <article class="aca-card">
+                <i class="ph-duotone ph-rocket-launch aca-card__icon"></i>
+                <h3 class="aca-card__title">Real Projects</h3>
+                <p>Sales, CPQ, Support—portfolio-ready capstones.</p>
+              </article>
+            </div>
+          </div>
+        </section>
+      
+        <!-- CURRICULUM -->
+        <section id="curriculum" class="aca-section aca-section--muted">
+          <div class="aca-container">
+            <h2 class="aca-h2">Curriculum</h2>
+            <ol class="aca-steps">
+              <li><span class="dot"></span><div><h3>Module 1 — Foundations & Mindset</h3><p>CRM Analytics vs Reports, use-cases, mental models.</p></div></li>
+              <li><span class="dot"></span><div><h3>Module 2 — Datasets & Recipes</h3><p>Connectors, joins, transforms, governance.</p></div></li>
+              <li><span class="dot"></span><div><h3>Module 3 — SAQL Deep Dive</h3><p>Cogroup, windows, optimization & patterns.</p></div></li>
+              <li><span class="dot"></span><div><h3>Module 4 — Dashboard JSON + Bindings</h3><p>Selectors, facets, dynamic queries, UX.</p></div></li>
+              <li><span class="dot"></span><div><h3>Module 5 — Security & Embedding</h3><p>Security predicate, Lightning embedding, deploy.</p></div></li>
+            </ol>
+            <div class="aca-cta-row">
+              <a class="aca-btn aca-btn--primary aca-btn--lg" href="/enroll"><i class="ph-duotone ph-graduation-cap"></i>Enroll Now</a>
+              <a class="aca-btn aca-btn--ghost aca-btn--lg" href="#faq">Read FAQs</a>
+            </div>
+          </div>
+        </section>
+      
+        <!-- LATEST LESSONS (auto) -->
+        <section id="lessons" class="aca-section">
+          <div class="aca-container">
+            <h2 class="aca-h2">Latest lessons</h2>
+            <div class="aca-list">
+              {% assign posts = site.posts | where_exp: "p", "p.draft != true" | sort: "date" | reverse %}
+              {% for post in posts limit: 6 %}
+                <a class="aca-list__item" href="{{ post.url | relative_url }}">
+                  <i class="ph-duotone ph-article"></i>
+                  <div class="meta">
+                    <h3>{{ post.title }}</h3>
+                    <p>{{ post.excerpt | strip_html | truncate: 120 }}</p>
+                    <span class="date">{{ post.date | date: "%b %d, %Y" }}</span>
+                  </div>
+                </a>
+              {% endfor %}
+              {% if posts.size == 0 %}<p class="sf-text-muted">Lessons dropping soon. Hold my chai.</p>{% endif %}
+            </div>
+          </div>
+        </section>
+      
+        <!-- IN-CONTENT AD -->
+        <section class="aca-ad">
+          <div class="aca-container">
+            <div class="aca-ad__unit" aria-label="Advertisement">
+              <span class="aca-ad__label">Ad</span>
+              <div class="aca-ad__frame">336×280 / 300×250 Rectangle (placeholder)</div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- TESTIMONIALS -->
+        <section class="aca-section aca-section--muted">
+          <div class="aca-container">
+            <h2 class="aca-h2">Creators & Builders speak</h2>
+            <div class="aca-testimonials">
+              <blockquote>“Bindings finally clicked. The JSON patterns here are gold.”<footer>— Priya, Consultant</footer></blockquote>
+              <blockquote>“I shipped my first Analytics dashboard in a week.”<footer>— Aakash, Analyst</footer></blockquote>
+              <blockquote>“From SAQL fear to SAQL flex.”<footer>— Rohan, Data Engineer</footer></blockquote>
+            </div>
+          </div>
+        </section>
+      
+        <!-- PRICING -->
+        <section class="aca-section">
+          <div class="aca-container">
+            <h2 class="aca-h2">Choose your path</h2>
+            <div class="aca-pricing">
+              <div class="aca-price">
+                <h3>Starter</h3><p class="price">₹0</p>
+                <ul><li>Intro lessons</li><li>Community access</li><li>Newsletter</li></ul>
+                <a class="aca-btn aca-btn--ghost" href="/signup">Get Started</a>
+              </div>
+              <div class="aca-price aca-price--primary">
+                <h3>Pro</h3><p class="price">₹4,999</p>
+                <ul><li>All lessons & labs</li><li>Capstone projects</li><li>Templates & JSON</li></ul>
+                <a class="aca-btn aca-btn--primary" href="/enroll">Enroll Pro</a>
+              </div>
+              <div class="aca-price">
+                <h3>Team</h3><p class="price">Custom</p>
+                <ul><li>Team seats</li><li>Private coaching</li><li>Deployment help</li></ul>
+                <a class="aca-btn aca-btn--ghost" href="/contact">Talk to Us</a>
+              </div>
+            </div>
+          </div>
+        </section>
+      
+        <!-- NEWSLETTER -->
+        <section class="aca-section aca-news">
+          <div class="aca-container aca-news__box">
+            <div>
+              <h2 class="aca-h2">Level up weekly</h2>
+              <p class="aca-news__sub">Short, tactical CRM Analytics tips. No spam.</p>
+            </div>
+            <form class="aca-news__form" action="https://formspree.io/f/your-form-id" method="POST">
+              <input type="email" name="email" placeholder="you@company.com" required>
+              <button class="aca-btn aca-btn--primary" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </section>
+      
+        <!-- FOOTER AD -->
+        <section class="aca-ad aca-ad--footer">
+          <div class="aca-container">
+            <div class="aca-ad__unit" aria-label="Advertisement">
+              <span class="aca-ad__label">Ad</span>
+              <div class="aca-ad__frame">970×90 / 728×90 (placeholder)</div>
+            </div>
+          </div>
+        </section>
+      </main>
+      
+
     <div class="page-wrapper">
       <header class="header">{% include header.html %}</header>
       <aside class="sidebar-left" id="sidebar-left">{% include sidebar.html %}</aside>
