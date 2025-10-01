@@ -1,1 +1,52 @@
-<div class="sidebar-left-content"><nav class="sidebar-nav"><ul><li class="nav-category">Getting Started</li><li class="nav-link"><a href="#"><i class="ph-duotone ph-rocket-launch"></i>Introduction</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-download-simple"></i>Installation</a></li><li class="nav-category">Core Concepts</li><li class="nav-link active"><a href="#"><i class="ph-duotone ph-palette"></i>Theming</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-layout"></i>Layout</a></li><li class="nav-link"><a href="#"><i class="ph-duotone ph-puzzle-piece"></i>Components</a></li></ul></nav><div class="sponsor-card"><div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div><div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div><p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">Learn advanced CRM techniques with our new course.</p></div></div>
+<div class="sidebar-left-content">
+  <nav class="sidebar-nav">
+    <ul>
+      {%- comment -%}
+        Collect posts (skip drafts), optionally sort by nav_weight then date
+        ─ Use in post front matter:
+           title: ...
+           categories: [getting-started]   # first category becomes the section header
+           nav_icon: "ph-duotone ph-rocket-launch"
+           nav_weight: 10                  # lower = higher in the list
+      {%- endcomment -%}
+      {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
+
+      {%- comment -%} sort: weight then date (desc) {%- endcomment -%}
+      {% assign by_weight = posts | sort: "nav_weight" %}
+      {% assign by_weight_then_date = by_weight | sort: "date" | reverse %}
+
+      {%- comment -%} group by first category (fallback: "Core Concepts") {%- endcomment -%}
+      {% assign groups = by_weight_then_date | group_by_exp: "p", "p.categories[0] | default: 'Core Concepts'" %}
+
+      {%- for g in groups -%}
+        <li class="nav-category">
+          {{ g.name | replace: '-', ' ' | capitalize }}
+        </li>
+
+        {%- for post in g.items -%}
+          <li class="nav-link {% if page.url == post.url %}active{% endif %}">
+            <a href="{{ post.url | relative_url }}">
+              <i class="{{ post.nav_icon | default: 
+                 (g.name == 'getting-started'  ? 'ph-duotone ph-rocket-launch' :
+                 g.name == 'installation'      ? 'ph-duotone ph-download-simple' :
+                 g.name == 'theming'           ? 'ph-duotone ph-palette' :
+                 g.name == 'layout'            ? 'ph-duotone ph-layout' :
+                 g.name == 'components'        ? 'ph-duotone ph-puzzle-piece' :
+                                                 'ph-duotone ph-article') }}"></i>
+              {{ post.title }}
+            </a>
+          </li>
+        {%- endfor -%}
+      {%- endfor -%}
+    </ul>
+  </nav>
+
+  <!-- Sponsor card stays exactly like your design -->
+  <div class="sponsor-card">
+    <div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div>
+    <div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div>
+    <p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">
+      Learn advanced CRM techniques with our new course.
+    </p>
+  </div>
+</div>
