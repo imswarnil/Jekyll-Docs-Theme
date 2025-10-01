@@ -4,7 +4,10 @@
 
 // A. Global & Reusable Homepage Components
 //==========================================================================
-
+.home-wrapper{
+    display: grid;
+    grid-template-rows: var(--docs-header-height) 1fr;
+}
 .sf-container {
   max-width: 1200px;
   margin: 0 auto;
