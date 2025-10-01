@@ -1,0 +1,152 @@
+<script>
+    (function() {
+      let searchData = [];
+      const baseurl = "{{ site.baseurl }}";
+    
+      document.addEventListener('DOMContentLoaded', function () {
+        // --- FETCH SEARCH DATA ---
+        fetch(`${baseurl}/assets/search.json`)
+          .then(r => r.json())
+          .then(d => { searchData = d; })
+          .catch(err => console.error('Error fetching search data:', err));
+    
+        // --- COPY CODE BUTTON ---
+        document.querySelectorAll('article pre').forEach(pre => {
+          if (!pre.querySelector('code')) return;
+          const wrapper = document.createElement('div'); wrapper.className = 'code-block-wrapper';
+          pre.parentNode.insertBefore(wrapper, pre); wrapper.appendChild(pre);
+          const btn = document.createElement('button'); btn.className = 'copy-button';
+          btn.innerHTML = '<i class="ph-duotone ph-copy"></i> Copy'; wrapper.appendChild(btn);
+          const code = pre.querySelector('code').innerText;
+          btn.addEventListener('click', () => {
+            navigator.clipboard.writeText(code).then(() => {
+              btn.innerHTML = '<i class="ph-duotone ph-check"></i> Copied!';
+              setTimeout(() => { btn.innerHTML = '<i class="ph-duotone ph-copy"></i> Copy'; }, 2000);
+            });
+          });
+        });
+    
+        // --- TOC & SCROLLSPY ---
+        const headings = document.querySelectorAll('article h2[id]');
+        if (headings.length) {
+          const desktopToc = document.querySelector('.desktop-toc-container');
+          const mobileTocContent = document.querySelector('.mobile-toc-content');
+          if (mobileTocContent) {
+            const ol = document.createElement('ol');
+            headings.forEach(h => {
+              const a = document.createElement('a'); a.href = `#${h.id}`; a.textContent = h.textContent;
+              if (desktopToc) { const dt = a.cloneNode(true); dt.classList.add('toc-link'); desktopToc.appendChild(dt); }
+              const li = document.createElement('li'); li.appendChild(a.cloneNode(true)); ol.appendChild(li);
+            });
+            mobileTocContent.appendChild(ol);
+          }
+          const observer = new IntersectionObserver(entries => entries.forEach(i => {
+            if (!i.isIntersecting) return;
+            const id = i.target.id;
+            document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+            document.querySelectorAll(`.toc-link[href="#${id}"]`).forEach(l => l.classList.add('active'));
+          }), { rootMargin: `-100px 0px -50% 0px`, threshold: 0.1 });
+          headings.forEach(h => observer.observe(h));
+        }
+    
+        // --- MOBILE SIDENAV ---
+        const menuToggle = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-left');
+        const mobileOverlay = document.getElementById('mobile-overlay');
+        const closeMenu = () => {
+          sidebar?.classList.remove('is-open');
+          mobileOverlay?.classList.remove('is-active');
+          document.body.classList.remove('modal-open');
+        };
+        menuToggle?.addEventListener('click', (e) => {
+          e.stopPropagation();
+          sidebar?.classList.toggle('is-open');
+          mobileOverlay?.classList.toggle('is-active');
+          document.body.classList.toggle('modal-open');
+        });
+        mobileOverlay?.addEventListener('click', closeMenu);
+    
+        // --- DARK MODE ---
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          const htmlEl = document.documentElement;
+          const setTheme = t => {
+            htmlEl.classList.toggle('dark', t === 'dark');
+            themeToggle.querySelector('i').className = t === 'dark' ? 'ph-duotone ph-moon' : 'ph-duotone ph-sun';
+            localStorage.setItem('theme', t);
+          };
+          setTheme(localStorage.getItem('theme') || 'light');
+          themeToggle.addEventListener('click', () => setTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark'));
+        }
+    
+        // --- SEARCH MODAL ---
+        const searchModal = document.getElementById('search-modal');
+        const searchTrigger = document.getElementById('search-trigger');
+        const searchOverlay = searchModal?.querySelector('.search-overlay');
+        const searchInput = document.getElementById('search-input');
+        const resultsContainer = searchModal?.querySelector('.search-results');
+        let activeResultIndex = -1;
+    
+        const openSearch = () => {
+          searchModal?.classList.add('is-open'); document.body.classList.add('modal-open');
+          setTimeout(() => searchInput?.focus(), 50); renderResults('');
+        };
+        const closeSearch = () => {
+          searchModal?.classList.remove('is-open'); document.body.classList.remove('modal-open');
+          if (searchInput) searchInput.value = '';
+        };
+        const renderResults = query => {
+          if (!resultsContainer) return;
+          const term = (query || '').trim().toLowerCase();
+          let results = [];
+          if (term.length > 1) {
+            const regex = new RegExp(term, 'gi');
+            results = searchData.filter(item => item.title.match(regex) || item.content.match(regex));
+          }
+          resultsContainer.innerHTML = ''; activeResultIndex = -1;
+          if (term.length > 1 && results.length === 0) {
+            resultsContainer.innerHTML = '<div class="search-no-results">No results found.</div>'; return;
+          }
+          if (results.length > 0) {
+            const ul = document.createElement('ul');
+            results.slice(0, 10).forEach((item, index) => {
+              const li = document.createElement('li');
+              li.className = 'search-result-item'; li.dataset.index = index;
+              li.innerHTML = `<a href="${item.url}">
+                <div style="flex-shrink:0;width:32px;text-align:center;"><i class="ph-duotone ph-file-text"></i></div>
+                <div style="flex-grow:1;">
+                  <div style="font-weight:600;">${item.title}</div>
+                  <div style="font-size:.875rem;color:var(--docs-muted-foreground);">${(item.excerpt || '').substring(0, 70)}...</div>
+                </div></a>`;
+              ul.appendChild(li);
+            });
+            resultsContainer.appendChild(ul);
+          }
+        };
+        const updateActive = n => {
+          if (!resultsContainer) return;
+          const items = resultsContainer.querySelectorAll('.search-result-item');
+          if (!items.length) return;
+          if (activeResultIndex > -1 && items[activeResultIndex]) items[activeResultIndex].classList.remove('active');
+          if (n >= items.length) n = 0; if (n < 0) n = items.length - 1;
+          if (items[n]) { items[n].classList.add('active'); items[n].scrollIntoView({ block: 'nearest' }); }
+          activeResultIndex = n;
+        };
+    
+        searchTrigger?.addEventListener('click', openSearch);
+        searchOverlay?.addEventListener('click', closeSearch);
+        searchInput?.addEventListener('input', () => renderResults(searchInput.value));
+    
+        document.addEventListener('keydown', e => {
+          if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+          if (searchModal?.classList.contains('is-open')) {
+            if (e.key === 'Escape') closeSearch();
+            if (e.key === 'ArrowDown') { e.preventDefault(); updateActive(activeResultIndex + 1); }
+            if (e.key === 'ArrowUp') { e.preventDefault(); updateActive(activeResultIndex - 1); }
+            if (e.key === 'Enter') { const a = resultsContainer?.querySelector('.search-result-item.active a'); if (a) a.click(); }
+          }
+        });
+      });
+    })();
+    </script>
+    
