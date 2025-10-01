@@ -1,69 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" class="{{ page.theme | default: site.theme }}">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-
-  <title>
-    {% if page.seo_title %}{{ page.seo_title }}
-    {% elsif page.title %}{{ page.title }} – {{ site.title }}
-    {% else %}{{ site.title }}{% endif %}
-  </title>
-
-  {% assign meta_desc = page.description | default: page.excerpt | default: site.description %}
-  <meta name="description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 160 }}">
-
-  {%- comment -%} Canonical {%- endcomment -%}
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
-
-  {%- comment -%} Open Graph / Twitter {%- endcomment -%}
-  {% assign share_title = page.seo_title | default: page.title | default: site.title %}
-  {% assign share_image = page.social_image | default: site.social_image %}
-  <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}website{% endif %}">
-  <meta property="og:title" content="{{ share_title }}">
-  <meta property="og:description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 200 }}">
-  <meta property="og:url" content="{{ page.url | absolute_url }}">
-  {% if share_image %}<meta property="og:image" content="{{ share_image | absolute_url }}">{% endif %}
-
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ share_title }}">
-  <meta name="twitter:description" content="{{ meta_desc | strip_html | strip_newlines | truncate: 200 }}">
-  {% if share_image %}<meta name="twitter:image" content="{{ share_image | absolute_url }}">{% endif %}
-
-  {%- comment -%} JSON-LD (Organization + WebSite). Safe fallbacks. {%- endcomment -%}
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "{{ site.title | escape }}",
-    "url": "{{ site.url | default: site.github.url | default: '' }}",
-    "description": "{{ site.description | strip_html | strip_newlines | truncate: 200 | escape }}",
-    "publisher": {
-      "@type": "Organization",
-      "name": "{{ site.author.name | default: site.title | escape }}"
-    }
-  }
-  </script>
-
-  {%- comment -%} Core CSS (your existing stylesheet(s)) {%- endcomment -%}
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  {% if site.fonts_href %}<link rel="stylesheet" href="{{ site.fonts_href }}">{% endif %}
-  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
-
-
-  {%- comment -%} Favicons / Manifest (you said manifest is separate) {%- endcomment -%}
-  <link rel="icon" href="{{ '/assets/favicon.ico' | relative_url }}">
-  <link rel="manifest" href="{{ '/site.webmanifest' | relative_url }}">
-
-  {%- comment -%} Analytics / Clarity / Adsense hooks (optional) {%- endcomment -%}
-  {% if site.google_analytics %}{{ site.google_analytics | raw }}{% endif %}
-  {% if site.microsoft_clarity %}{{ site.microsoft_clarity | raw }}{% endif %}
-  {% if site.adsense_script %}{{ site.adsense_script | raw }}{% endif %}
-
-  {%- comment -%} Per-page head injections {%- endcomment -%}
-  {{ content_for_head }}
-</head>
+    <head>
+        <!-- General meta -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        {% if page.indexing == false %}
+          <meta name="robots" content="noindex">
+        {% endif %}
+    
+        {% if page.collectionpage %}
+          {% seo title=false %}
+    
+          {% assign collectiondata = site.collections | where: "label", page.collectionpage | first %}
+          <title>{{ collectiondata.title }} - {{ site.title }}</title>
+          <meta property="og:title" content="{{ collectiondata.title }}">
+          <meta name="description" content="{{ collectiondata.description }}">
+          <meta property="og:description" content="{{ collectiondata.description }}">
+        {% else %}
+          {% seo %}
+        {% endif %}
+        {% if site.fonts.preconnect_urls %}
+          {% for url in site.fonts.preconnect_urls %}
+            <link rel="preconnect" href="{{ url }}" crossorigin />
+          {% endfor %}
+        {% endif %}
+    
+        <link rel="manifest" href="{{ "/manifest.json" | relative_url }}">
+        <meta name="theme-color" content="{{ site.manifest.theme_color | default: '#242e2b' }}"/>
+    
+        {% if site.css_inline == true %}
+          {% include site-styles.html %}
+        {% else %}
+          <link rel="stylesheet" href="{{ "/assets/styles.css" | relative_url }}">
+        {% endif %}
+    
+        {% if site.favicons or site.avatarurl %}{% include site-favicons.html %}{% endif %}
+    
+        {% if site.google_analytics %}{% include site-analytics.html %}{% endif %}
+    
+        {% include site-fonts.html %}
+    
+        {% include site-before-start.html %}
+         <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;800&display=swap" rel="stylesheet">
+      <script src="https://unpkg.com/@phosphor-icons/web"></script>
+      </head>
+    
 
 <body class="{{ page.body_class }}">
   <a class="sr-only" href="#main">Skip to content</a>
