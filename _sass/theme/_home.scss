@@ -1,6 +1,7 @@
 // Styles specifically for the homepage layout
 .home-wrapper {
     display: grid;
+    grid-template-rows: var(--docs-header-height) 1fr;
 }
 
 // A reusable container to center content
