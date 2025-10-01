@@ -1,7 +1,8 @@
 // Styles specifically for the homepage layout
-
-.home-main {
-  // This is the main container for the homepage sections
+.home-wrapper {
+    display: grid;
+    grid-template-rows: var(--docs-header-height) 1fr;
+    @media (min-width: 1024px) { grid-template-columns: var(--docs-sidebar-left-width) 1fr; }
 }
 
 // A reusable container to center content
