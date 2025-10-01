@@ -6,170 +6,207 @@ description: "Master Salesforce CRM Analytics. The definitive, end-to-end curric
 hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this path
 ---
 
-<!-- This is the main content that goes inside your .home-main wrapper -->
-<div class="sf-home-page">
+<!-- HERO -->
+<section class="hero-banner hero-banner--academy">
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="tableau-logo">CRM ANALYTICS • ACADEMY</div>
+      <h1>{{ page.hero_title }}</h1>
+      <p class="sf-text--large sf-text-muted hero__subtitle">{{ page.hero_subtitle }}</p>
 
-  <!-- ======================= HERO ======================= -->
-  <section class="sf-home-hero">
-    <div class="sf-home-container sf-home-hero__inner">
-      <div class="sf-home-hero__content">
-        <p class="sf-home-eyebrow">A Course by Imswarnil</p>
-        <h1 class="sf-home-hero__title">Master Salesforce CRM Analytics</h1>
-        <p class="sf-home-hero__subtitle">
-          The definitive curriculum for builders. Go from data foundations to deploying dynamic, secure, and insightful dashboards that drive real business value.
-        </p>
-        <div class="sf-home-cta-row">
-          <a class="sf-home-btn sf-home-btn--primary sf-home-btn--lg" href="#pricing"><i class="ph-duotone ph-rocket-launch"></i>Enroll Now</a>
-          <a class="sf-home-btn sf-home-btn--ghost sf-home-btn--lg" href="#curriculum">View Curriculum</a>
-        </div>
-        <ul class="sf-home-badges">
-          <li>SAQL</li><li>Data Recipes</li><li>Security</li><li>Dashboard JSON</li><li>Lightning</li>
-        </ul>
+      <div class="hero-cta">
+        <a href="#curriculum" class="btn btn--primary">Browse Curriculum</a>
+        <a href="#lessons" class="btn btn--ghost">Latest Lessons</a>
       </div>
-      <div class="sf-home-hero__media">
-        <img src="{{ page.hero_image | relative_url }}" alt="An illustration of a modern Salesforce analytics dashboard showing charts and KPIs." loading="eager">
+
+      <div class="hero-pills">
+        <span class="pill">SAQL</span>
+        <span class="pill">Security Predicate</span>
+        <span class="pill">Dashboard JSON</span>
+        <span class="pill">Lightning Embedding</span>
       </div>
     </div>
-  </section>
 
-  <!-- ======================= WHO THIS COURSE IS FOR ======================= -->
-  <section class="sf-home-section">
-    <div class="sf-home-container">
-      <h2 class="sf-home-section-title">Is This Course For You?</h2>
-      <p class="sf-home-section-subtitle">This curriculum is designed for ambitious Salesforce professionals who want to become analytics experts.</p>
-      <div class="sf-home-audience-grid">
-        <div class="sf-home-audience-card">
-          <i class="ph-duotone ph-user-gear"></i>
-          <h3>Salesforce Admins</h3>
-          <p>Go beyond standard reports and dashboards. Build powerful, custom analytics apps that answer complex business questions.</p>
+    <!-- Optional hero art placeholder; swap with your SVG/PNG if needed -->
+    <img class="hero-character" src="/assets/img/academy-hero.png" alt="CRM Analytics Academy">
+  </div>
+</section>
+
+<!-- KPI STRIP -->
+<section class="section kpis">
+  <div class="sf-container">
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-num">30+</div>
+        <div class="kpi-label">Hands-on Lessons</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">10</div>
+        <div class="kpi-label">Real Projects</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">4</div>
+        <div class="kpi-label">Capstone Dashboards</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-num">∞</div>
+        <div class="kpi-label">Career Upside</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT YOU'LL LEARN -->
+<section class="section">
+  <div class="sf-container">
+    <h2 class="section-title">What you’ll learn</h2>
+    <div class="feature-grid">
+      <article class="feature-card">
+        <i class="ph-duotone ph-database icon"></i>
+        <h3>Data Foundations</h3>
+        <p>Connect, model, and prep data with Recipes, Dataflows, and Datasets. Nail row/column thinking for Analytics.</p>
+      </article>
+      <article class="feature-card">
+        <i class="ph-duotone ph-code-simple icon"></i>
+        <h3>SAQL Mastery</h3>
+        <p>Aggregate, filter, group, and cogroup like a pro. Turn business questions into optimized SAQL.</p>
+      </article>
+      <article class="feature-card">
+        <i class="ph-duotone ph-shield-check icon"></i>
+        <h3>Security Predicate</h3>
+        <p>Design row-level security for enterprise scale. Least privilege without breaking UX.</p>
+      </article>
+      <article class="feature-card">
+        <i class="ph-duotone ph-layout icon"></i>
+        <h3>Dashboard JSON</h3>
+        <p>Bindings, selectors, and dynamic queries. Build adaptive dashboards users love.</p>
+      </article>
+      <article class="feature-card">
+        <i class="ph-duotone ph-lightning icon"></i>
+        <h3>Lightning Embedding</h3>
+        <p>Bring dashboards into Salesforce apps with context—reduce clicks, boost adoption.</p>
+      </article>
+      <article class="feature-card">
+        <i class="ph-duotone ph-rocket-launch icon"></i>
+        <h3>Real Projects</h3>
+        <p>Capstone dashboards for Sales, CPQ, and Support. Ship portfolio pieces employers notice.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM -->
+<section id="curriculum" class="section section--muted">
+  <div class="sf-container">
+    <h2 class="section-title">Curriculum</h2>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <h3>Module 1 — Foundations & Mindset</h3>
+          <p>CRM Analytics vs Reports, use-cases, mental models, and quick wins.</p>
         </div>
-        <div class="sf-home-audience-card">
-          <i class="ph-duotone ph-chart-bar"></i>
-          <h3>Aspiring Analysts</h3>
-          <p>Gain the most in-demand analytics skills in the Salesforce ecosystem and fast-track your career as a data specialist.</p>
+      </div>
+      <div class="step">
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <h3>Module 2 — Datasets & Recipes</h3>
+          <p>Connectors, joins, transforms, incremental loads, and governance.</p>
         </div>
-        <div class="sf-home-audience-card">
-          <i class="ph-duotone ph-handshake"></i>
-          <h3>Consultants & Architects</h3>
-          <p>Confidently design and deliver scalable, secure, and high-performance analytics solutions for your clients.</p>
+      </div>
+      <div class="step">
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <h3>Module 3 — SAQL Deep Dive</h3>
+          <p>Group, filter, foreach, order, cogroup, windowing, and performance patterns.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <h3>Module 4 — Dashboard JSON + Bindings</h3>
+          <p>Selectors, facets, dynamic queries, templates, and UX rules.</p>
+        </div>
+      </div>
+      <div class="step">
+        <span class="step-dot"></span>
+        <div class="step-content">
+          <h3>Module 5 — Security & Embedding</h3>
+          <p>Security predicate, row-level access, Lightning embedding, and deployment.</p>
         </div>
       </div>
     </div>
-  </section>
 
-  <!-- ======================= INSTRUCTOR ======================= -->
-  <section id="instructor" class="sf-home-section sf-home-section--muted">
-    <div class="sf-home-container">
-      <h2 class="sf-home-section-title">Meet Your Instructor</h2>
-      <div class="sf-home-instructor">
-        <div class="sf-home-instructor__media">
-          <img src="/assets/img/swarnil.jpg" alt="Swarnil, Instructor at CRM Analytics Academy">
-        </div>
-        <div class="sf-home-instructor__bio">
-          <h3>Swarnil</h3>
-          <p class="sf-home-instructor__tagline">Salesforce Architect & Educator</p>
-          <p>With years of experience designing and deploying large-scale analytics solutions, Swarnil has distilled his knowledge into this comprehensive curriculum. His focus is on teaching the 'why' behind the 'how', empowering you to solve real business problems.</p>
-          <div class="sf-home-instructor__socials">
-            <a href="#" class="sf-home-btn sf-home-btn--ghost"><i class="ph-duotone ph-twitter-logo"></i>Twitter</a>
-            <a href="#" class="sf-home-btn sf-home-btn--ghost"><i class="ph-duotone ph-linkedin-logo"></i>LinkedIn</a>
+    <div class="cta-row">
+      <a href="/enroll" class="btn btn--primary btn--lg"><i class="ph-duotone ph-graduation-cap"></i> Enroll Now</a>
+      <a href="#faq" class="btn btn--ghost btn--lg">Read FAQs</a>
+    </div>
+  </div>
+</section>
+
+<!-- LATEST LESSONS (Auto) -->
+<section id="lessons" class="section">
+  <div class="sf-container">
+    <h2 class="section-title">Latest lessons</h2>
+    <div class="lesson-list">
+      {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
+      {% assign ordered = posts | sort: "date" | reverse %}
+      {% for post in ordered limit: 6 %}
+        <a class="lesson-item" href="{{ post.url | relative_url }}">
+          <i class="ph-duotone ph-article"></i>
+          <div class="lesson-meta">
+            <h3 class="lesson-title">{{ post.title }}</h3>
+            <p class="lesson-sub">{{ post.excerpt | strip_html | truncate: 120 }}</p>
+            <span class="lesson-date">{{ post.date | date: "%b %d, %Y" }}</span>
           </div>
-        </div>
-      </div>
+        </a>
+      {% endfor %}
+      {% if ordered.size == 0 %}
+        <p class="sf-text-muted">Lessons coming soon. Grab popcorn.</p>
+      {% endif %}
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ======================= PROJECT SHOWCASE ======================= -->
-  <section class="sf-home-section">
-    <div class="sf-home-container">
-        <h2 class="sf-home-section-title">Build Real-World Projects</h2>
-        <p class="sf-home-section-subtitle">Apply your skills by building portfolio-ready capstone dashboards from scratch.</p>
-        <div class="sf-home-projects-grid">
-            <div class="sf-home-project-card">
-                <img src="/assets/img/project-sales.png" alt="Sales Pipeline Dashboard">
-                <div class="sf-home-project-card__overlay"><h3>Sales Pipeline Analysis</h3></div>
-            </div>
-            <div class="sf-home-project-card">
-                <img src="/assets/img/project-service.png" alt="Service Agent Performance Dashboard">
-                <div class="sf-home-project-card__overlay"><h3>Service Agent Performance</h3></div>
-            </div>
-            <div class="sf-home-project-card">
-                <img src="/assets/img/project-cpq.png" alt="CPQ Deal Analytics Dashboard">
-                <div class="sf-home-project-card__overlay"><h3>CPQ Deal Analytics</h3></div>
-            </div>
-        </div>
+<!-- TESTIMONIALS -->
+<section class="section section--muted">
+  <div class="sf-container">
+    <h2 class="section-title">Creators & Builders speak</h2>
+    <div class="testimonial-grid">
+      <blockquote class="testimonial">
+        <p>“Clear, practical, and battle-tested. I shipped my first Analytics dashboard in a week.”</p>
+        <footer>— Aakash, CRM Analyst</footer>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>“Bindings finally clicked. The JSON patterns here are gold.”</p>
+        <footer>— Priya, Salesforce Consultant</footer>
+      </blockquote>
+      <blockquote class="testimonial">
+        <p>“From SAQL fear to SAQL flex. Totally worth it.”</p>
+        <footer>— Rohan, Data Engineer</footer>
+      </blockquote>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ======================= CURRICULUM ======================= -->
-  <section id="curriculum" class="sf-home-section sf-home-section--muted">
-    <div class="sf-home-container">
-      <h2 class="sf-home-section-title">The Curriculum Path</h2>
-      <p class="sf-home-section-subtitle">A structured journey from fundamentals to advanced mastery.</p>
-      <ol class="sf-home-steps">
-        <li><span class="dot"></span><div><h3>Module 1 — Foundations & Mindset</h3><p>CRM Analytics vs. Reports, core use-cases, mental models, and quick wins.</p></div></li>
-        <li><span class="dot"></span><div><h3>Module 2 — Datasets & Recipes</h3><p>Connectors, joins, transforms, incremental loads, and data governance.</p></div></li>
-        <li><span class="dot"></span><div><h3>Module 3 — SAQL Deep Dive</h3><p>Group, filter, cogroup, windowing functions, and performance patterns.</p></div></li>
-        <li><span class="dot"></span><div><h3>Module 4 — Dashboard JSON + Bindings</h3><p>Selectors, faceting, dynamic queries, templates, and UX best practices.</p></div></li>
-        <li><span class="dot"></span><div><h3>Module 5 — Security & Embedding</h3><p>Security predicates, dynamic row-level access, and Lightning embedding.</p></div></li>
-      </ol>
+<!-- FAQ -->
+<section id="faq" class="section">
+  <div class="sf-container">
+    <h2 class="section-title">FAQ</h2>
+    <div class="faq">
+      <details>
+        <summary>Is this beginner friendly?</summary>
+        <p>Yes. We start with foundations and layer complexity with demos and labs.</p>
+      </details>
+      <details>
+        <summary>Do I need Salesforce access?</summary>
+        <p>A dev org is recommended for hands-on labs. We show you how to get one.</p>
+      </details>
+      <details>
+        <summary>Will I learn SAQL?</summary>
+        <p>Deeply. From groupings to cogroups and performance techniques.</p>
+      </details>
     </div>
-  </section>
-
-  <!-- ======================= PRICING ======================= -->
-  <section id="pricing" class="sf-home-section">
-      <div class="sf-home-container">
-          <h2 class="sf-home-section-title">Become a CRM Analytics Pro</h2>
-          <p class="sf-home-section-subtitle">Choose the plan that's right for your journey. One-time payment, lifetime access.</p>
-          <div class="sf-home-pricing-grid">
-              <div class="sf-home-price-card">
-                  <h3>Starter</h3>
-                  <p class="price">₹0</p>
-                  <ul><li>Introductory lessons</li><li>Community forum access</li><li>Weekly newsletter</li></ul>
-                  <a class="sf-home-btn sf-home-btn--ghost" href="#">Get Started</a>
-              </div>
-              <div class="sf-home-price-card sf-home-price-card--highlighted">
-                  <div class="highlight-badge">Most Popular</div>
-                  <h3>Pro Access</h3>
-                  <p class="price">₹4,999</p>
-                  <ul><li><strong>All 30+ lessons & labs</strong></li><li>All 4 capstone projects</li><li>Private student community</li><li>Direct instructor support</li><li>Templates & JSON files</li></ul>
-                  <a class="sf-home-btn sf-home-btn--primary" href="#">Enroll in Pro</a>
-              </div>
-              <div class="sf-home-price-card">
-                  <h3>Teams</h3>
-                  <p class="price">Custom</p>
-                  <ul><li>5+ team seats</li><li>Dedicated Slack channel</li><li>Private coaching sessions</li><li>Deployment assistance</li></ul>
-                  <a class="sf-home-btn sf-home-btn--ghost" href="#">Contact Sales</a>
-              </div>
-          </div>
-      </div>
-  </section>
-
-  <!-- ======================= WALL OF LOVE ======================= -->
-  <section class="sf-home-section sf-home-section--muted">
-    <div class="sf-home-container">
-      <h2 class="sf-home-section-title">Wall of Love</h2>
-      <div class="sf-home-wall-of-love">
-        <blockquote>“Bindings finally clicked. The JSON patterns here are gold.”<footer>— Aakash, Consultant</footer></blockquote>
-        <blockquote>“From SAQL fear to SAQL flex. This is the most comprehensive resource out there.”<footer>— Neha, Data Analyst</footer></blockquote>
-        <blockquote>“I shipped my first real dashboard in one week. A career accelerator.”<footer>— Vikram, Salesforce Admin</footer></blockquote>
-        <blockquote>“The security module alone was worth the price. Essential for enterprise projects.”<footer>— Anjali, Architect</footer></blockquote>
-        <blockquote>“Clear, practical, and battle-tested.”<footer>— Sanjay, Project Manager</footer></blockquote>
-        <blockquote>“The best investment I've made in my Salesforce career.”<footer>— Meera, Freelancer</footer></blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================= FAQ ======================= -->
-  <section id="faq" class="sf-home-section">
-    <div class="sf-home-container">
-      <h2 class="sf-home-section-title">Frequently Asked Questions</h2>
-      <div class="sf-home-faq">
-        <details><summary>Is this course beginner-friendly?</summary><p>Absolutely. We start with the core foundations, layering on complexity with hands-on labs. No prior experience is assumed.</p></details>
-        <details><summary>Do I need a Salesforce org?</summary><p>A free Developer Edition org is highly recommended. We provide a lesson showing you exactly how to get one set up.</p></details>
-        <details><summary>How deep does the SAQL section go?</summary><p>Very deep. We cover everything from basic groupings to advanced cogrouping, windowing functions, and performance optimization.</p></details>
-        <details><summary>Is this a one-time purchase?</summary><p>Yes. This is a one-time purchase that grants you lifetime access to all current and future course materials.</p></details>
-      </div>
-    </div>
-  </section>
-
-</div>
+  </div>
+</section>
