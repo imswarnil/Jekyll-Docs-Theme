@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: "en-US" }}">
-  {% include head.html %}
-  <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
-
-    <div class="page-wrapper">
-      <header class="header">{% include header.html %}</header>
-      <aside class="sidebar-left" id="sidebar-left">{% include sidebar.html %}</aside>
-      
+{% include head.html %}
+  <body class="layout-{{ page.layout | default: 'home' }}">
+    <header class="header">
+      {% include header.html %}
+    </header>
+    <main class="home-main">
       {{ content }}
-      
-      <footer class="main-footer">{% include footer.html %}</footer>
-    </div>
-  
+    </main>
+    <footer class="main-footer">
+      {% include footer.html %}
+    </footer>
+
     <div class="mobile-overlay" id="mobile-overlay"></div>
     <div id="search-modal">
       <div class="search-overlay"></div>
@@ -23,7 +23,6 @@
         <div class="search-results"></div>
       </div>
     </div>
-
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
     {% include site-before-end.html %}
   </body>
