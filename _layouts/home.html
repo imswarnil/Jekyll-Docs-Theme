@@ -1,12 +1,12 @@
 ---
 layout: default
 ---
-<!-- Full-width homepage (uses your tokens) -->
+
 <section class="aca-hero">
   <div class="aca-container aca-hero__inner">
     <div class="aca-hero__content">
-      <p class="aca-eyebrow">CRM ANALYTICS • ACADEMY</p>
-      <h1 class="aca-hero__title">{{ page.hero_title | default: "Master Salesforce CRM Analytics" }}</h1>
+      {% if page.hero_logo %}<p class="aca-eyebrow">{{ page.hero_logo }}</p>{% else %}<p class="aca-eyebrow">CRM ANALYTICS • ACADEMY</p>{% endif %}
+      <h1 class="aca-hero__title">{{ page.hero_title | default: page.title | default: "Master Salesforce CRM Analytics" }}</h1>
       <p class="aca-hero__subtitle">
         {{ page.hero_subtitle | default: "Datasets, Recipes, SAQL, Bindings, Security Predicate, Dashboard JSON & Lightning embedding." }}
       </p>
@@ -24,9 +24,13 @@ layout: default
   <span class="aca-hero__blob aca-hero__blob--b"></span>
 </section>
 
+<!-- Top leaderboard ad -->
 <section class="aca-ad">
   <div class="aca-container">
-    {% include ad.html kind:"leaderboard" note:"728×90 / 970×90" %}
+    <div class="ads adslot adslot--leaderboard">
+      <span class="ads__label">Ad</span>
+      <div class="ads__frame">728×90 / 970×90</div>
+    </div>
   </div>
 </section>
 
@@ -43,8 +47,8 @@ layout: default
   <div class="aca-container">
     <h2 class="aca-h2">Latest lessons</h2>
     <div class="aca-list">
-      {% assign posts = site.posts | where_exp: "p","p.draft != true" | sort:"date" | reverse %}
-      {% for post in posts limit:6 %}
+      {% assign posts = site.posts | where_exp: "p","p.draft != true" | sort: "date" | reverse %}
+      {% for post in posts limit: 6 %}
         <a class="aca-list__item" href="{{ post.url | relative_url }}">
           <i class="ph-duotone ph-article"></i>
           <div class="meta">
@@ -59,8 +63,12 @@ layout: default
   </div>
 </section>
 
+<!-- In-content rectangle ad -->
 <section class="aca-ad">
   <div class="aca-container">
-    {% include ad.html kind:"rectangle" note:"300×250 / 336×280" %}
+    <div class="ads adslot adslot--rectangle">
+      <span class="ads__label">Ad</span>
+      <div class="ads__frame">300×250 / 336×280</div>
+    </div>
   </div>
 </section>

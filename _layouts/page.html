@@ -2,20 +2,28 @@
 layout: default
 ---
 
-{% include header.html %}
+<link rel="stylesheet" href="{{ '/assets/css/ims-site-extras.css' | relative_url }}">
 
-<main class="main  container">
+<section class="page-hero">
+  <div class="aca-container">
+    <h1 class="page-title">{{ page.title }}</h1>
+    {% if page.subtitle %}<p class="page-sub">{{ page.subtitle }}</p>{% endif %}
+  </div>
+</section>
 
-  <article class="article  article--page  content  typeset">
+<section class="page-body">
+  <div class="aca-container">
+    <article class="page-content">
+      {{ content }}
+    </article>
+  </div>
+</section>
 
-    <h1>{{ page.title }}</h1>
-
-    {{ content }}
-
-  </article>
-
-  {% if page.aside == true %}{% include site-aside.html %}{% endif %}
-
-</main>
-
-{% include footer.html %}
+<section class="aca-ad">
+  <div class="aca-container">
+    <div class="ads adslot adslot--rectangle">
+      <span class="ads__label">Ad</span>
+      <div class="ads__frame">300×250 / 336×280</div>
+    </div>
+  </div>
+</section>

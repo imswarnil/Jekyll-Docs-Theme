@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="{{ site.lang | default: 'en-US' }}">
   {% include head.html %}
-
   <body class="layout-{{ page.layout | default: 'default' }}{% if page.title %} {{ page.title | slugify }}{% endif %}">
     <div class="page-wrapper">
-       {% include header.html %}
+      <header class="header">{% include header.html %}</header>
+
+      <!-- Main content slot -->
       <main class="site-main">
         {{ content }}
       </main>
+
       <footer class="main-footer">{% include footer.html %}</footer>
     </div>
+
     {% include search-modal.html %}
     {% include site-scripts.html %}
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
