@@ -1,210 +1,143 @@
 ---
+# IMPORTANT: This must be layout: home to use your full-width wrapper
 layout: home
-title: "CRM Analytics Academy | Master Salesforce Analytics"
-permalink: /
-description: "Go from zero to job-ready with a hands-on curriculum covering datasets, recipes, SAQL, security predicates, dashboard JSON, and Lightning embedding."
-hero_title: "Master Salesforce CRM Analytics"
-hero_subtitle: "The complete, end-to-end curriculum for builders. Go from data foundations to deploying dynamic, secure, and insightful dashboards that drive business value."
+title: "CRM Analytics Academy | The Complete Course for Salesforce Builders"
+description: "Master Salesforce CRM Analytics. A complete, end-to-end curriculum covering data recipes, SAQL, security predicates, dynamic dashboard JSON, and Lightning embedding."
+hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this path
 ---
 
-<main>
-    <!-- HERO -->
-    <section class="hero-banner hero-banner--academy">
-      <div class="sf-container">
-        <div class="hero-text">
-          <div class="eyebrow-text">CRM ANALYTICS • ACADEMY</div>
-          <h1>{{ page.hero_title }}</h1>
-          <p class="hero__subtitle">{{ page.hero_subtitle }}</p>
-          <div class="hero-cta">
-            <a href="#curriculum" class="btn btn--primary btn--lg">Browse Curriculum</a>
-            <a href="#lessons" class="btn btn--ghost btn--lg">Explore Lessons</a>
-          </div>
-          <div class="hero-pills">
-            <span class="pill">SAQL</span>
-            <span class="pill">Security Predicates</span>
-            <span class="pill">Dashboard JSON</span>
-            <span class="pill">Data Recipes</span>
-            <span class="pill">Lightning Embedding</span>
-          </div>
+<!-- The .home-main class is from your layout, we'll build inside it -->
+<div class="academy-page">
+
+  <!-- ======================= HERO ======================= -->
+  <section class="acad-hero">
+    <div class="acad-container acad-hero__inner">
+      <div class="acad-hero__content">
+        <p class="acad-eyebrow">A COURSE BY IMSWARNIL</p>
+        <h1 class="acad-hero__title">Master Salesforce CRM Analytics</h1>
+        <p class="acad-hero__subtitle">
+          The complete curriculum for builders. Go from data foundations to deploying dynamic, secure, and insightful dashboards that drive business value.
+        </p>
+        <div class="acad-cta-row">
+          <a class="acad-btn acad-btn--primary acad-btn--lg" href="#curriculum"><i class="ph-duotone ph-graduation-cap"></i>Explore Curriculum</a>
+          <a class="acad-btn acad-btn--ghost acad-btn--lg" href="#instructor">Meet the Instructor</a>
         </div>
-        <div class="hero-media">
-          <img class="hero-character" src="/assets/img/academy-hero.png" alt="An illustration of a Salesforce analytics dashboard showing charts and KPIs.">
+        <ul class="acad-badges">
+          <li>SAQL</li><li>Data Recipes</li><li>Security</li><li>Dashboard JSON</li><li>Lightning</li>
+        </ul>
+      </div>
+      <div class="acad-hero__media">
+        <img src="{{ page.hero_image | relative_url }}" alt="An illustration of a modern Salesforce analytics dashboard showing charts and KPIs." loading="eager">
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================= KPIs ======================= -->
+  <section class="acad-kpis">
+    <div class="acad-container acad-kpis__grid">
+      <div class="acad-kpi"><div class="acad-kpi__num">30+</div><div class="acad-kpi__label">In-Depth Lessons</div></div>
+      <div class="acad-kpi"><div class="acad-kpi__num">10</div><div class="acad-kpi__label">Real-World Projects</div></div>
+      <div class="acad-kpi"><div class="acad-kpi__num">4</div><div class="acad-kpi__label">Capstone Dashboards</div></div>
+      <div class="acad-kpi"><div class="acad-kpi__num">∞</div><div class="acad-kpi__label">Career Upside</div></div>
+    </div>
+  </section>
+
+  <!-- ======================= MEET YOUR INSTRUCTOR ======================= -->
+  <section id="instructor" class="acad-section">
+    <div class="acad-container">
+      <h2 class="acad-section-title">Meet Your Instructor</h2>
+      <div class="acad-instructor">
+        <div class="acad-instructor__media">
+          <img src="/assets/img/swarnil.jpg" alt="Swarnil, Instructor at CRM Analytics Academy">
+        </div>
+        <div class="acad-instructor__bio">
+          <h3>Swarnil</h3>
+          <p class="acad-instructor__tagline">Salesforce Architect & Educator</p>
+          <p>With years of experience designing and deploying large-scale analytics solutions on the Salesforce platform, Swarnil has distilled his knowledge into this comprehensive, practical curriculum. His focus is on teaching the 'why' behind the 'how', empowering you to solve real business problems, not just pass exams.</p>
+          <div class="acad-instructor__socials">
+            <a href="#" class="acad-btn acad-btn--ghost"><i class="ph-duotone ph-twitter-logo"></i>Twitter</a>
+            <a href="#" class="acad-btn acad-btn--ghost"><i class="ph-duotone ph-linkedin-logo"></i>LinkedIn</a>
+          </div>
         </div>
       </div>
-    </section>
-    <!-- KPI STRIP -->
-    <section class="section kpis">
-      <div class="sf-container">
-        <div class="kpi-grid">
-          <div class="kpi-card">
-            <div class="kpi-num">30+</div>
-            <div class="kpi-label">Hands-on Lessons</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-num">10</div>
-            <div class="kpi-label">Real-World Projects</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-num">4</div>
-            <div class="kpi-label">Capstone Dashboards</div>
-          </div>
-          <div class="kpi-card">
-            <div class="kpi-num">∞</div>
-            <div class="kpi-label">Career Upside</div>
-          </div>
+    </div>
+  </section>
+
+  <!-- ======================= CURRICULUM ======================= -->
+  <section id="curriculum" class="acad-section acad-section--muted">
+    <div class="acad-container">
+      <h2 class="acad-section-title">The Curriculum Path</h2>
+      <p class="acad-section-subtitle">A structured journey from fundamentals to advanced mastery.</p>
+      <ol class="acad-steps">
+        <li><span class="dot"></span><div><h3>Module 1 — Foundations & Mindset</h3><p>CRM Analytics vs. Reports, core use-cases, mental models, and quick wins.</p></div></li>
+        <li><span class="dot"></span><div><h3>Module 2 — Datasets & Recipes</h3><p>Connectors, joins, transforms, incremental loads, and data governance.</p></div></li>
+        <li><span class="dot"></span><div><h3>Module 3 — SAQL Deep Dive</h3><p>Group, filter, cogroup, windowing functions, and performance patterns.</p></div></li>
+        <li><span class="dot"></span><div><h3>Module 4 — Dashboard JSON + Bindings</h3><p>Selectors, faceting, dynamic queries, templates, and UX best practices.</p></div></li>
+        <li><span class="dot"></span><div><h3>Module 5 — Security & Embedding</h3><p>Security predicates, dynamic row-level access, and Lightning embedding.</p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ======================= TRAILBLAZER SPOTLIGHT ======================= -->
+  <section class="acad-section">
+    <div class="acad-container">
+      <h2 class="acad-section-title">Trailblazer Spotlight</h2>
+      <p class="acad-section-subtitle">See the success stories from our amazing students.</p>
+      <div class="acad-trailblazers">
+        <div class="acad-trailblazer-card">
+          <img src="/assets/img/student1.jpg" alt="Priya Patel">
+          <h4>Priya Patel</h4>
+          <span>Consultant → Analytics Architect</span>
+          <blockquote>“The deep dive on SAQL and bindings was a game-changer. I landed a promotion within three months of completing the course.”</blockquote>
+        </div>
+        <div class="acad-trailblazer-card">
+          <img src="/assets/img/student2.jpg" alt="Rohan Desai">
+          <h4>Rohan Desai</h4>
+          <span>Admin → Data Engineer</span>
+          <blockquote>“I always struggled with the data layer. The recipes module simplified everything. I now manage our entire analytics data pipeline.”</blockquote>
         </div>
       </div>
-    </section>
-    <!-- WHAT YOU'LL LEARN -->
-    <section class="section">
-      <div class="sf-container">
-        <h2 class="section-title">What You’ll Master</h2>
-        <div class="feature-grid">
-          <article class="feature-card">
-            <i class="ph-duotone ph-database icon"></i>
-            <h3>Data Foundations</h3>
-            <p>Connect, model, and prep data with Recipes. Nail row-level thinking for enterprise analytics.</p>
-          </article>
-          <article class="feature-card">
-            <i class="ph-duotone ph-code-simple icon"></i>
-            <h3>SAQL Mastery</h3>
-            <p>Aggregate, filter, group, and cogroup like a pro. Turn complex business questions into optimized SAQL.</p>
-          </article>
-          <article class="feature-card">
-            <i class="ph-duotone ph-shield-check icon"></i>
-            <h3>Security Predicates</h3>
-            <p>Design dynamic, row-level security for enterprise scale. Achieve least privilege without breaking the user experience.</p>
-          </article>
-          <article class="feature-card">
-            <i class="ph-duotone ph-layout icon"></i>
-            <h3>Dashboard JSON</h3>
-            <p>Master bindings, selectors, and dynamic queries. Build adaptive, interactive dashboards that users love.</p>
-          </article>
-          <article class="feature-card">
-            <i class="ph-duotone ph-lightning icon"></i>
-            <h3>Lightning Embedding</h3>
-            <p>Bring dashboards directly into Salesforce apps with context to reduce clicks and boost user adoption.</p>
-          </article>
-          <article class="feature-card">
-            <i class="ph-duotone ph-rocket-launch icon"></i>
-            <h3>Real-World Projects</h3>
-            <p>Build capstone dashboards for Sales, Service, and CPQ. Ship portfolio pieces that employers will notice.</p>
-          </article>
-        </div>
+    </div>
+  </section>
+
+  <!-- ======================= WALL OF LOVE ======================= -->
+  <section class="acad-section acad-section--muted">
+    <div class="acad-container">
+      <h2 class="acad-section-title">Wall of Love</h2>
+      <div class="acad-wall-of-love">
+        <blockquote>“Bindings finally clicked. The JSON patterns here are gold.”<footer>— Aakash, Consultant</footer></blockquote>
+        <blockquote>“From SAQL fear to SAQL flex. This is the most comprehensive resource out there, period.”<footer>— Neha, Data Analyst</footer></blockquote>
+        <blockquote>“I shipped my first real analytics dashboard in one week. A career accelerator.”<footer>— Vikram, Salesforce Admin</footer></blockquote>
+        <blockquote>“The security predicate module alone was worth the price. Essential for enterprise projects.”<footer>— Anjali, Technical Architect</footer></blockquote>
+        <blockquote>“Clear, practical, and battle-tested.”<footer>— Sanjay, Project Manager</footer></blockquote>
+        <blockquote>“The best investment I've made in my Salesforce career.”<footer>— Meera, Freelancer</footer></blockquote>
       </div>
-    </section>
-    <!-- CURRICULUM -->
-    <section id="curriculum" class="section section--muted">
-      <div class="sf-container">
-        <h2 class="section-title">The Curriculum Path</h2>
-        <div class="steps">
-          <div class="step">
-            <span class="step-dot"></span>
-            <div class="step-content">
-              <h3>Module 1 — Foundations & Mindset</h3>
-              <p>CRM Analytics vs. Reports, core use-cases, mental models, and quick wins.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-dot"></span>
-            <div class="step-content">
-              <h3>Module 2 — Datasets & Recipes</h3>
-              <p>Connectors, joins, transforms, incremental loads, and data governance.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-dot"></span>
-            <div class="step-content">
-              <h3>Module 3 — SAQL Deep Dive</h3>
-              <p>Group, filter, foreach, order, cogroup, windowing functions, and performance patterns.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-dot"></span>
-            <div class="step-content">
-              <h3>Module 4 — Dashboard JSON + Bindings</h3>
-              <p>Selectors, faceting, dynamic queries from user input, templates, and UX best practices.</p>
-            </div>
-          </div>
-          <div class="step">
-            <span class="step-dot"></span>
-            <div class="step-content">
-              <h3>Module 5 — Security & Embedding</h3>
-              <p>Security predicates, dynamic row-level access, Lightning embedding, and deployment.</p>
-            </div>
-          </div>
-        </div>
-        <div class="cta-row">
-          <a href="/enroll" class="btn btn--primary btn--lg"><i class="ph-duotone ph-graduation-cap"></i> Enroll Now</a>
-          <a href="#faq" class="btn btn--ghost btn--lg">Read FAQs</a>
-        </div>
+    </div>
+  </section>
+
+  <!-- ======================= SUPPORT THIS PROJECT ======================= -->
+  <section class="acad-section">
+    <div class="acad-container">
+      <div class="acad-support-box">
+        <i class="ph-duotone ph-heart"></i>
+        <h2>Support This Project</h2>
+        <p>This academy is a passion project. If you find it valuable, consider sponsoring on GitHub to help keep the content up-to-date and accessible.</p>
+        <a href="#" class="acad-btn acad-btn--primary acad-btn--lg">Sponsor on GitHub</a>
       </div>
-    </section>
-    <!-- LATEST LESSONS -->
-    <section id="lessons" class="section">
-      <div class="sf-container">
-        <h2 class="section-title">Latest Lessons</h2>
-        <div class="lesson-list">
-          {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
-          {%- assign ordered = posts | sort: "date" | reverse -%}
-          {% for post in ordered limit: 4 %}
-            <a class="lesson-item" href="{{ post.url | relative_url }}">
-              <i class="ph-duotone ph-article"></i>
-              <div class="lesson-meta">
-                <h3 class="lesson-title">{{ post.title }}</h3>
-                <p class="lesson-sub">{{ post.excerpt | strip_html | truncate: 120 }}</p>
-                <time class="lesson-date">{{ post.date | date: "%b %d, %Y" }}</time>
-              </div>
-            </a>
-          {% endfor %}
-          {% if ordered.size == 0 %}
-            <p style="text-align:center; color: var(--docs-muted-foreground);">New lessons are being crafted. Stay tuned!</p>
-          {% endif %}
-        </div>
+    </div>
+  </section>
+
+  <!-- ======================= FAQ ======================= -->
+  <section id="faq" class="acad-section acad-section--muted">
+    <div class="acad-container">
+      <h2 class="acad-section-title">Frequently Asked Questions</h2>
+      <div class="acad-faq">
+        <details><summary>Is this course beginner-friendly?</summary><p>Absolutely. We start with the core foundations, layering on complexity with hands-on labs. No prior experience is assumed.</p></details>
+        <details><summary>Do I need a Salesforce org?</summary><p>A free Developer Edition org is highly recommended. We provide a lesson showing you exactly how to get one set up.</p></details>
+        <details><summary>How deep does the SAQL section go?</summary><p>Very deep. We cover everything from basic groupings to advanced cogrouping, windowing functions, and performance optimization.</p></details>
+        <details><summary>Is this a one-time purchase?</summary><p>Yes. This is a one-time purchase that grants you lifetime access to all current and future course materials.</p></details>
       </div>
-    </section>
-    <!-- TESTIMONIALS -->
-    <section class="section section--muted">
-      <div class="sf-container">
-        <h2 class="section-title">What Builders Are Saying</h2>
-        <div class="testimonial-grid">
-          <blockquote class="testimonial">
-            <p>“Clear, practical, and battle-tested. I shipped my first real analytics dashboard in one week. This course is a career accelerator.”</p>
-            <footer>— Aakash, CRM Analyst</footer>
-          </blockquote>
-          <blockquote class="testimonial">
-            <p>“The concepts of bindings and dashboard JSON finally clicked for me. The patterns taught here are pure gold for any consultant.”</p>
-            <footer>— Priya, Salesforce Consultant</footer>
-          </blockquote>
-          <blockquote class="testimonial">
-            <p>“I went from SAQL fear to SAQL flex. This is the most comprehensive resource out there, period. Totally worth the investment.”</p>
-            <footer>— Rohan, Data Engineer</footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-    <!-- FAQ -->
-    <section id="faq" class="section">
-      <div class="sf-container">
-        <h2 class="section-title">Frequently Asked Questions</h2>
-        <div class="faq">
-          <details>
-            <summary>Is this course beginner-friendly?</summary>
-            <div class="faq__content"><p>Absolutely. We start with the core foundations of data and analytics, layering on complexity with hands-on labs and demos. No prior experience is assumed.</p></div>
-          </details>
-          <details>
-            <summary>Do I need access to a Salesforce org?</summary>
-            <div class="faq__content"><p>A free Salesforce Developer Edition org is highly recommended to follow along with the hands-on labs. We provide a lesson showing you exactly how to get one set up.</p></div>
-          </details>
-          <details>
-            <summary>How deep does the SAQL section go?</summary>
-            <div class="faq__content"><p>Very deep. We cover everything from basic groupings and filters to advanced cogrouping, windowing functions, and query performance optimization techniques.</p></div>
-          </details>
-          <details>
-            <summary>Is this a one-time purchase or a subscription?</summary>
-            <div class="faq__content"><p>This is a one-time purchase that grants you lifetime access to all current and future course materials, including video lessons, project files, and code templates.</p></div>
-          </details>
-        </div>
-      </div>
-    </section>
-</main>
+    </div>
+  </section>
+
+</div>
