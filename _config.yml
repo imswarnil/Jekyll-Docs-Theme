@@ -36,7 +36,7 @@ plugins:
 
 # 3. Gem settings
 paginate: 2 # jekyll-paginate > items per page
-paginate_path: blog/page:num # jekyll-paginate > blog page
+paginate_path: tutorials/page:num # jekyll-paginate > blog page
 jekyll-mentions: https://twitter.com # jekyll-mentions > service used when @replying
 twitter:
   username: DavidDarnes # jekyll-seo-tag > Owners twitter username
@@ -56,7 +56,7 @@ social: # jekyll-seo-tag > social overrides
 # 4. Jekyll settings
 sass:
   style: compressed # Style compression
-permalink: pretty  # Permalink style (/YYYY/MM/DD/page-name/)
+permalink: "/:slug/"
 excerpt_separator: <!-- more --> # Marks end of excerpt in posts
 timezone: Europe/London # Timezone for blog posts and alike
 
@@ -113,40 +113,7 @@ css_inline: true # Will insert all styles into a single <style> block in the <he
 adsense:
   enabled: true
   publisher_id: "ca-pub-1291242080282540"
-  # Map your ad types to their unique slot IDs here.
-  # These keys (e.g., 'in-article') are what you will pass to the component.
-  slots:
-    # Article/Feed Ads
-    in-article: "6501428979"
-    in-feed: "9130894804"
-    
-    # Skyscraper Ads (for sidebars)
-    skyscraper-large: "7400425360"    # 300x1050
-    skyscraper-medium: "2712169578"   # 300x600
-    skyscraper-small: "9488965956"     # 160x600
-    
-    # Square & Rectangle Ads
-    rectangle-large: "4394096538"     # 336x280
-    square-medium: "6066270853"       # 300x250
-    square-small: "1684851337"        # 250x250
-    square-200: "1549380617"          # 200x250 (Special case)
 
-    # Leaderboard & Banner Ads
-    leaderboard: "4774277934"         # Responsive (covers 980x90, 728x90, mobile)
-    leaderboard-billboard: "4921873558" # 970x250
-    
-    # Multiplex Ads
-    multiplex-horizontal: "6808134701"
-    multiplex-vertical: "3375031396"
-
-    # Button Ads
-    button-large: "3836856744"        # 300x60
-    button-mobile: "4003326983"       # 300x50
-
-    # Other responsive units
-    responsive-square: "7663977887"
-    responsive-vertical: "3487917390"
-    responsive-horizontal: "8939839370"
 
 
 # 8. Site favicons & manifest icons
