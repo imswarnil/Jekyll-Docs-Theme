@@ -24,63 +24,63 @@
 
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
     {% include site-before-end.html %}
-    <script>// assets/js/lazy_ads.js
-      document.addEventListener("DOMContentLoaded", () => {
-          const lazyAdContainers = document.querySelectorAll('.crma-ad-lazy-load');
-      
-          if (!lazyAdContainers.length) {
-              return;
-          }
-      
-          const adObserver = new IntersectionObserver((entries, observer) => {
-              entries.forEach(entry => {
-                  if (entry.isIntersecting) {
-                      const adContainer = entry.target;
-                      
-                      // Create the ad script element
-                      const adSlot = adContainer.dataset.adSlot;
-                      const adFormat = adContainer.dataset.adFormat;
-                      const adLayout = adContainer.dataset.adLayout;
-      
-                      const ins = document.createElement('ins');
-                      ins.className = 'adsbygoogle';
-                      ins.style.display = 'block';
-                      ins.setAttribute('data-ad-client', 'ca-pub-1291242080282540'); // Your Publisher ID
-                      ins.setAttribute('data-ad-slot', adSlot);
-                      
-                      if (adFormat === 'fluid') {
-                          ins.setAttribute('data-ad-format', 'fluid');
-                          ins.setAttribute('data-ad-layout', adLayout);
-                      } else {
-                          ins.setAttribute('data-ad-format', adFormat);
-                          ins.setAttribute('data-full-width-responsive', 'true');
-                      }
-                      
-                      // Replace placeholder with the actual ad unit
-                      const placeholder = adContainer.querySelector('.crma-ad-unit-placeholder');
-                      if (placeholder) {
-                          placeholder.replaceWith(ins);
-                      }
-      
-                      // Push the ad to Google
-                      try {
-                          (window.adsbygoogle = window.adsbygoogle || []).push({});
-                      } catch (e) {
-                          console.error("AdSense error:", e);
-                      }
-      
-                      // Mark as loaded and stop observing this element
-                      adContainer.classList.remove('crma-ad-lazy-load');
-                      adContainer.classList.add('crma-ad-loaded');
-                      observer.unobserve(adContainer);
-                  }
-              });
-          }, { rootMargin: '200px 0px' }); // Load ad when it's 200px away from the viewport
-      
-          lazyAdContainers.forEach(ad => {
-              adObserver.observe(ad);
-          });
-      });</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+    const adPlaceholders = document.querySelectorAll('.adsense-container');
+    const publisherId = "{{ site.adsense.publisher_id }}";
+
+    if (!adPlaceholders.length || !publisherId) {
+        return;
+    }
+
+    const adObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const container = entry.target;
+                const ad = {
+                    type: container.dataset.adType,
+                    slot: container.dataset.adSlot,
+                    shape: container.dataset.adShape,
+                };
+
+                const ins = document.createElement('ins');
+                ins.className = 'adsbygoogle';
+                ins.style.display = 'block';
+                ins.setAttribute('data-ad-client', publisherId);
+                ins.setAttribute('data-ad-slot', ad.slot);
+
+                if (ad.type === 'In-article' || ad.type === 'In-feed') {
+                    ins.setAttribute('data-ad-format', 'fluid');
+                    ins.setAttribute('data-ad-layout', 'in-article');
+                } else if (ad.type === 'Multiplex') {
+                    ins.setAttribute('data-ad-format', 'autorelaxed');
+                } else {
+                    ins.setAttribute('data-ad-format', ad.shape);
+                    ins.setAttribute('data-full-width-responsive', 'true');
+                }
+                
+                const placeholderContent = container.querySelector('.adsense-unit-placeholder');
+                if (placeholderContent) {
+                    placeholderContent.replaceWith(ins);
+                }
+
+                try {
+                    (window.adsbygoogle = window.adsbygoogle || []).push({});
+                } catch (e) {
+                    console.error("AdSense Error:", e);
+                }
+
+                container.classList.add('adsense-loaded');
+                observer.unobserve(container);
+            }
+        });
+    }, { rootMargin: '200px 0px' });
+
+    adPlaceholders.forEach(placeholder => {
+        adObserver.observe(placeholder);
+    });
+});
+  </script>
   </body>
 
 </html>

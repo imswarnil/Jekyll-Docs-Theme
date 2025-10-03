@@ -1,18 +1,17 @@
-/* _sass/auto_ads.scss */
+/* _sass/adsense.scss */
 
-.crma-ad-container {
+.adsense-container {
   display: block;
   width: 100%;
   margin: 2.5rem auto;
   padding: 1.5rem;
   background-color: var(--docs-secondary);
   border: 1px solid var(--docs-border);
-  border-radius: var(--docs-radius); /* Rounded corners */
+  border-radius: var(--docs-radius);
   box-sizing: border-box;
   overflow: hidden;
-  transition: background-color 0.3s ease;
 
-  .crma-ad-label {
+  .adsense-label {
     font-family: var(--docs-font-sans);
     font-size: 0.75rem;
     font-weight: 600;
@@ -24,7 +23,7 @@
     text-align: center;
   }
 
-  .crma-ad-unit-placeholder {
+  .adsense-unit-placeholder {
     min-height: 250px;
     display: flex;
     align-items: center;
@@ -38,11 +37,13 @@
       border-radius: 50%;
       border: 3px solid var(--docs-border);
       border-top-color: var(--docs-primary);
-      animation: crma-ad-spin 1s linear infinite;
+      animation: adsense-spin 1s linear infinite;
     }
   }
 
-  &.crma-ad-loaded .crma-ad-unit-placeholder { display: none; }
+  &.adsense-loaded .adsense-unit-placeholder {
+    display: none;
+  }
 
   &[data-ad-type="In-article"],
   &[data-ad-type="In-feed"] {
@@ -55,4 +56,6 @@
   }
 }
 
-@keyframes crma-ad-spin { to { transform: rotate(360deg); } }
+@keyframes adsense-spin {
+  to { transform: rotate(360deg); }
+}
