@@ -4,7 +4,7 @@ description: "A beginner-friendly introduction to Salesforce CRM Analytics — w
 slug: "what-is-crm-analytics"
 author: "Swarnil Singhai"
 date: 2025-10-03
-categories: ["CRM Analytics", "Salesforce", "Business Intelligence"]
+categories: Getting Started
 tags: ["CRM Analytics", "Einstein Analytics", "Tableau CRM", "Salesforce", "Analytics"]
 keywords: ["What is CRM Analytics", "Einstein Analytics vs Tableau CRM", "Salesforce Analytics", "CRM Analytics beginner guide", "Business Intelligence Salesforce"]
 canonical_url: "https://crm-analytics-academy.com/what-is-crm-analytics"

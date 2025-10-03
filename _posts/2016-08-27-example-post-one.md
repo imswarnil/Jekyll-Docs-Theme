@@ -1,8 +1,6 @@
 ---
 title: Description of an Alembic
-categories:
-- General
-- External sources
+categories: Test
 feature_image: "https://picsum.photos/2560/600?image=872"
 nav_weight: 10
 ---
