@@ -24,46 +24,6 @@
 
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
     {% include site-before-end.html %}
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-  const lazyAdContainers = document.querySelectorAll('[data-lazy-ad]');
-
-  if (lazyAdContainers.length === 0) {
-    return; // No lazy ads on this page
-  }
-
-  // Set up the IntersectionObserver
-  const adObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      // Is the ad container in the viewport?
-      if (entry.isIntersecting) {
-        const adContainer = entry.target;
-        const adInsElement = adContainer.querySelector('.adsbygoogle');
-
-        // Check if the ad has already been loaded to prevent errors
-        if (adInsElement && adInsElement.getAttribute('data-ad-status') !== 'filled') {
-          // Push the ad to be loaded
-          (window.adsbygoogle = window.adsbygoogle || []).push({});
-          
-          // Optional: log to console for debugging
-          // console.log('Lazy loading ad:', adInsElement.getAttribute('data-ad-slot'));
-        }
-
-        // Stop observing this container once the ad is triggered
-        observer.unobserve(adContainer);
-      }
-    });
-  }, {
-    // Trigger when the ad is 200px from the bottom of the viewport
-    rootMargin: '0px 0px 200px 0px',
-  });
-
-  // Start observing each ad container
-  lazyAdContainers.forEach(container => {
-    adObserver.observe(container);
-  });
-});
-</script>
   </body>
 
 </html>
