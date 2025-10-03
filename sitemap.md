@@ -1,6 +1,6 @@
 ---
 title: "Sitemap"
-layout: sitemap
+layout: page
 permalink: /sitemap/
 robots: "index,follow"
 ---
