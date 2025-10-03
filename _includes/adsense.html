@@ -1,70 +1,27 @@
 {%- comment -%}
-  Minimal AdSense include
-  API:
-    {% include adsense.html type="square" %}
-    {% include adsense.html type="leaderboard" size="large" %}
-  Params:
-    - type: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
-    - size: small | medium | large (default: medium)
+================================================================================
+  Smart Adsense Component with Lazy Loading
+  - Usage: {% include adsense.html type="[TYPE]" %}
+  - This component automatically finds the slot ID from _config.yml
+    and prepares the ad for lazy loading via JavaScript.
+================================================================================
 {%- endcomment -%}
 
-{%- assign _enabled = site.adsense.enabled | default: true -%}
-{%- if _enabled != true -%}
-  <!-- Ads disabled: site.adsense.enabled != true -->
-{%- else -%}
+{%- assign ad_type = include.type -%}
+{%- assign slot_id = site.adsense.slots[ad_type] -%}
 
-{%- assign _type = include.type | downcase -%}
-{%- assign _size = include.size | default: "medium" | downcase -%}
-
-{%- assign _group = site.data.ads[_type] -%}
-{%- assign _slot = nil -%}
-{%- if _group -%}
-  {%- assign _slot = _group[_size] | default: _group["medium"] -%}
-{%- endif -%}
-
-{%- if _slot == nil -%}
-  <div class="crma-ad crma-ad--error">Ad not configured (type: {{ _type }}, size: {{ _size }})</div>
-{%- else -%}
-  {%- assign _fmt = "display" -%}
-  {%- if _type == "in-article" -%}{% assign _fmt = "in-article" %}
-  {%- elsif _type == "feed" -%}{% assign _fmt = "in-feed" %}
-  {%- elsif _type == "multiplex" -%}{% assign _fmt = "multiplex" %}
-  {%- endif -%}
-
-  <figure class="crma-ad crma-ad--{{ _type }} crma-ad--{{ _size }}" role="figure" aria-label="Advertisement">
-    <div class="crma-ad__ph" aria-hidden="true"></div>
-
+{%- if site.adsense.enabled and ad_type and slot_id -%}
+  <div class="crma-ad crma-ad--{{ ad_type }} {{ include.class }}" data-lazy-ad>
     <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="{{ site.adsense.publisher_id }}"
-      data-ad-slot="{{ _slot }}"
-      {%- if _fmt == "display" -%}
-        data-ad-format="auto" data-full-width-responsive="true"
-      {%- elsif _fmt == "in-article" -%}
-        data-ad-format="fluid" data-ad-layout="in-article"
-      {%- elsif _fmt == "in-feed" -%}
-        data-ad-format="fluid" data-ad-layout-key="-g1+1o-3k-5u"  {# replace with your key if provided #}
-      {%- elsif _fmt == "multiplex" -%}
-        data-ad-format="autorelaxed"
-      {%- endif -%}
-      loading="lazy">
+         data-ad-client="{{ site.adsense.publisher_id }}"
+         data-ad-slot="{{ slot_id }}"
+         {%- if ad_type == 'in-article' -%}
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+         {%- elsif ad_type == 'in-feed' -%}
+           data-ad-format="fluid"
+           data-ad-layout-key="-6v+f0-19-44+c6"
+         {%- endif -%}>
     </ins>
-
-    <script>
-      (function lazyAdsense(el){
-        if (!el) return;
-        window.adsbygoogle = window.adsbygoogle || [];
-        var fire = function(){ try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){} };
-        if (!('IntersectionObserver' in window)) { fire(); return; }
-        var io, fired = false, ins = el.querySelector('ins.adsbygoogle');
-        io = new IntersectionObserver(function(es){
-          es.forEach(function(e){
-            if (!fired && e.isIntersecting) { fired = true; fire(); io.disconnect(); }
-          });
-        }, { rootMargin: '200px 0px', threshold: 0.01 });
-        io.observe(ins);
-      })(document.currentScript.closest('.crma-ad'));
-    </script>
-  </figure>
-{%- endif -%}
+  </div>
 {%- endif -%}

@@ -24,71 +24,46 @@
 
     {% if site.service_worker != false %}{% include site-sw.html %}{% endif %}
     {% include site-before-end.html %}
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const adPlaceholders = document.querySelectorAll('.adsense-container');
-    const publisherId = "{{ site.adsense.publisher_id }}";
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+  const lazyAdContainers = document.querySelectorAll('[data-lazy-ad]');
 
-    if (!adPlaceholders.length || !publisherId) return;
+  if (lazyAdContainers.length === 0) {
+    return; // No lazy ads on this page
+  }
 
-    const adObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const container = entry.target;
-                const ad = {
-                    type: container.dataset.adType,
-                    slot: container.dataset.adSlot,
-                    layoutKey: container.dataset.adLayoutKey,
-                };
+  // Set up the IntersectionObserver
+  const adObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      // Is the ad container in the viewport?
+      if (entry.isIntersecting) {
+        const adContainer = entry.target;
+        const adInsElement = adContainer.querySelector('.adsbygoogle');
 
-                const ins = document.createElement('ins');
-                ins.className = 'adsbygoogle';
-                ins.setAttribute('data-ad-client', publisherId);
-                ins.setAttribute('data-ad-slot', ad.slot);
+        // Check if the ad has already been loaded to prevent errors
+        if (adInsElement && adInsElement.getAttribute('data-ad-status') !== 'filled') {
+          // Push the ad to be loaded
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+          
+          // Optional: log to console for debugging
+          // console.log('Lazy loading ad:', adInsElement.getAttribute('data-ad-slot'));
+        }
 
-                // Build the precise <ins> tag for each ad type
-                switch (ad.type) {
-                    case 'Display':
-                        ins.style.display = 'block';
-                        ins.setAttribute('data-ad-format', 'auto');
-                        ins.setAttribute('data-full-width-responsive', 'true');
-                        break;
-                    case 'In-article':
-                        ins.style.display = 'block';
-                        ins.style.textAlign = 'center';
-                        ins.setAttribute('data-ad-layout', 'in-article');
-                        ins.setAttribute('data-ad-format', 'fluid');
-                        break;
-                    case 'In-feed':
-                        ins.style.display = 'block';
-                        ins.setAttribute('data-ad-format', 'fluid');
-                        ins.setAttribute('data-ad-layout-key', ad.layoutKey);
-                        break;
-                    case 'Multiplex':
-                        // Note: Responsive multiplex ads are now recommended.
-                        // The old fixed-size inline style is less common.
-                        ins.style.display = 'block';
-                        ins.setAttribute('data-ad-format', 'autorelaxed');
-                        break;
-                }
-                
-                const placeholderContent = container.querySelector('.adsense-unit-placeholder');
-                if (placeholderContent) {
-                    placeholderContent.replaceWith(ins);
-                }
+        // Stop observing this container once the ad is triggered
+        observer.unobserve(adContainer);
+      }
+    });
+  }, {
+    // Trigger when the ad is 200px from the bottom of the viewport
+    rootMargin: '0px 0px 200px 0px',
+  });
 
-                try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } 
-                catch (e) { console.error("AdSense Error:", e); }
-
-                container.classList.add('adsense-loaded');
-                observer.unobserve(container);
-            }
-        });
-    }, { rootMargin: '200px 0px' });
-
-    adPlaceholders.forEach(placeholder => adObserver.observe(placeholder));
+  // Start observing each ad container
+  lazyAdContainers.forEach(container => {
+    adObserver.observe(container);
+  });
 });
-  </script>
+</script>
   </body>
 
 </html>
