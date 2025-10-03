@@ -6,19 +6,16 @@ description: "Master Salesforce CRM Analytics. The definitive, end-to-end curric
 hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this path
 ---
 
-<!-- HERO -->
 <section class="hero-banner hero-banner--academy">
   <div class="hero-content">
     <div class="hero-text">
       <div class="tableau-logo">CRM ANALYTICS • ACADEMY</div>
-      <h1>{{ page.hero_title }}</h1>
-      <p class="sf-text--large sf-text-muted hero__subtitle">{{ page.hero_subtitle }}</p>
-
+      <h1>Master Your Data</h1>
+      <p class="sf-text--large sf-text-muted hero__subtitle">From raw numbers to actionable insights. Unlock the full potential of your CRM data with expert-led courses and tutorials.</p>
       <div class="hero-cta">
         <a href="#curriculum" class="btn btn--primary">Browse Curriculum</a>
         <a href="#lessons" class="btn btn--ghost">Latest Lessons</a>
       </div>
-
       <div class="hero-pills">
         <span class="pill">SAQL</span>
         <span class="pill">Security Predicate</span>
@@ -26,9 +23,42 @@ hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this
         <span class="pill">Lightning Embedding</span>
       </div>
     </div>
-
-    <!-- Optional hero art placeholder; swap with your SVG/PNG if needed -->
-    <img class="hero-character" src="/assets/img/crm-analytics-hero.svg" alt="CRM Analytics Academy">
+    <!-- Dynamic, Animated SVG Storyboard -->
+    <div class="hero-character" aria-hidden="true">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <g id="storyboard">
+          <!-- Stage 1: Raw Data Points (Chaos) -->
+          <g class="data-points">
+            <circle class="data-point p1" cx="50" cy="80" r="3"/>
+            <circle class="data-point p2" cx="350" cy="150" r="4"/>
+            <circle class="data-point p3" cx="120" cy="250" r="2.5"/>
+            <rect class="data-point p4" x="30" y="180" width="5" height="5" rx="1"/>
+            <rect class="data-point p5" x="320" y="50" width="6" height="6" rx="1"/>
+            <rect class="data-point p6" x="280" y="260" width="4" height="4" rx="1"/>
+          </g>
+          <!-- Stage 2: Central Processor (Analysis) -->
+          <g class="core-processor">
+            <circle class="core-ring ring-1" cx="200" cy="150" r="20"/>
+            <circle class="core-ring ring-2" cx="200" cy="150" r="35"/>
+            <circle class="core-center" cx="200" cy="150" r="8"/>
+          </g>
+          <!-- Stage 3 & 4: Charts (Insight & Growth) -->
+          <g class="charts">
+            <!-- Bar Chart -->
+            <g class="bar-chart">
+              <rect class="chart-bar bar-1" x="140" y="150" width="15" height="0"/>
+              <rect class="chart-bar bar-2" x="165" y="150" width="15" height="0"/>
+              <rect class="chart-bar bar-3" x="190" y="150" width="15" height="0"/>
+            </g>
+            <!-- Line Graph -->
+            <g class="line-graph">
+              <polyline class="chart-line" points="215,150 235,120 255,135 275,100"/>
+              <circle class="line-dot" cx="275" cy="100" r="0"/>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
   </div>
 </section>
 
