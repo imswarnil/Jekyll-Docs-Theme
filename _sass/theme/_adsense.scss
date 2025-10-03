@@ -1,40 +1,32 @@
-/* _sass/adsense.scss */
+/* ==========================================================================
+   AdSense Component Styles for CRM Analytics Academy
+   ========================================================================== */
 
+/**
+ * 1. Base Ad Container
+ *    - Applies to all ad units.
+ *    - Uses theme variables for a consistent look (light background, border, radius).
+ */
 .crma-ad-container {
   display: block;
   width: 100%;
   max-width: 100%;
-  margin: 2.5rem auto; /* Spacing above/below */
-  padding: 1rem;
+  margin: 2.5rem auto; /* Vertical spacing to separate from content */
+  padding: 1.5rem;
   
-  /* Match site aesthetic: muted background and border */
   background-color: var(--docs-secondary);
   border: 1px solid var(--docs-border);
   border-radius: var(--docs-radius);
   
   text-align: center;
   box-sizing: border-box;
-  overflow: hidden; /* Prevent Google's iframes from breaking layout */
-
-  /* Variant: In-Article (usually looks better cleaner) */
-  &.crma-ad--in-article {
-    background-color: transparent;
-    border: none;
-    padding: 2rem 0;
-    border-top: 1px solid var(--docs-border);
-    border-bottom: 1px solid var(--docs-border);
-  }
-
-  /* Variant: Fixed (Sidebar) */
-  &.crma-ad--fixed {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 1rem;
-  }
+  overflow: hidden; /* Prevents ad iframes from breaking the border-radius */
 }
 
+/**
+ * 2. Ad Label ("Advertisement")
+ *    - A subtle, muted label placed above the ad unit.
+ */
 .crma-ad-label {
   font-family: var(--docs-font-sans);
   font-size: 0.75rem;
@@ -42,18 +34,38 @@
   color: var(--docs-muted-foreground);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   line-height: 1;
 }
 
-/* Ensure Google's inserted elements don't override our background */
+/**
+ * 3. Format-Specific Variants
+ *    - Special styling for certain ad types to improve integration.
+ */
+
+/* In-article & In-feed ads should blend with the content, not sit in a box */
+.crma-ad-container.crma-ad-format--in-article,
+.crma-ad-container.crma-ad-format--in-feed {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid var(--docs-border);
+  border-bottom: 1px solid var(--docs-border);
+  border-radius: 0;
+  padding: 2.5rem 0; /* More vertical spacing, no horizontal padding */
+}
+
+/**
+ * 4. Google AdSense Overrides & Responsive Handling
+ */
+
+/* Force Google's ad element to respect our container's background */
 .adsbygoogle {
   background: transparent !important;
 }
 
-/* Optional: Hide ads entirely on very small screens if they break UX */
-@media (max-width: 350px) {
-    .crma-ad-container {
-        display: none !important;
-    }
+/* On very small screens, ads can disrupt the layout. Hiding them can improve UX. */
+@media (max-width: 374px) {
+  .crma-ad-container {
+    display: none !important;
+  }
 }
