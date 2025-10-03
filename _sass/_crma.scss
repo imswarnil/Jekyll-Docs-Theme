@@ -1,0 +1,20 @@
+// 1. Variables & Theming
+@import 'theme/variables';
+
+// 2. Base Styles (Reset, Typography, etc.)
+@import 'theme/base';
+
+// 3. Core Layout Structure
+@import 'theme/layout';
+@import 'theme/home';
+
+// 4. Page Sections
+@import 'theme/header';
+@import 'theme/hero';
+@import 'theme/footer';
+@import 'theme/modal';
+
+// 5. Reusable Components
+@import 'theme/components';
+@import 'theme/adsense';
+
