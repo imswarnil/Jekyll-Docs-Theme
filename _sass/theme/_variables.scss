@@ -1,31 +1,31 @@
 :root {
-    --docs-header-height: 64px;
-    --docs-sidebar-left-width: 260px;
-    --docs-sidebar-right-width: 240px;
-    --docs-radius: 0.75rem;
-    --docs-transition-speed: 0.2s;
-    --docs-font-sans: 'Montserrat', sans-serif;
-    --docs-background: hsl(0, 0%, 100%);
-    --docs-foreground: hsl(215, 100%, 15%);
-    --docs-primary: hsl(212, 100%, 32%);
-    --docs-primary-foreground: hsl(0, 0%, 100%);
-    --docs-secondary: hsl(210, 50%, 96%);
-    --docs-muted: hsl(210, 50%, 96%);
-    --docs-muted-foreground: hsl(214, 20%, 55%);
-    --docs-accent: hsl(210, 50%, 92%);
-    --docs-border: hsl(210, 30%, 90%);
-    --docs-hero-bg: hsl(205, 84%, 73%);
-    --docs-hero-foreground: hsl(215, 100%, 15%);
-    --docs-hero-accent: hsl(212, 100%, 32%);
+    --crma-header-height: 64px;
+    --crma-sidebar-left-width: 260px;
+    --crma-sidebar-right-width: 240px;
+    --crma-radius: 0.75rem;
+    --crma-transition-speed: 0.2s;
+    --crma-font-sans: 'Montserrat', sans-serif;
+    --crma-background: hsl(0, 0%, 100%);
+    --crma-foreground: hsl(215, 100%, 15%);
+    --crma-primary: hsl(212, 100%, 32%);
+    --crma-primary-foreground: hsl(0, 0%, 100%);
+    --crma-secondary: hsl(210, 50%, 96%);
+    --crma-muted: hsl(210, 50%, 96%);
+    --crma-muted-foreground: hsl(214, 20%, 55%);
+    --crma-accent: hsl(210, 50%, 92%);
+    --crma-border: hsl(210, 30%, 90%);
+    --crma-hero-bg: hsl(205, 84%, 73%);
+    --crma-hero-foreground: hsl(215, 100%, 15%);
+    --crma-hero-accent: hsl(212, 100%, 32%);
 }
 html.dark {
-    --docs-background: hsl(216, 43%, 12%);
-    --docs-foreground: hsl(210, 33%, 90%);
-    --docs-primary: hsl(205, 84%, 73%);
-    --docs-primary-foreground: hsl(215, 100%, 15%);
-    --docs-secondary: hsl(216, 35%, 18%);
-    --docs-muted: hsl(216, 35%, 18%);
-    --docs-muted-foreground: hsl(214, 15%, 55%);
-    --docs-accent: hsl(216, 35%, 22%);
-    --docs-border: hsl(216, 30%, 25%);
+    --crma-background: hsl(216, 43%, 12%);
+    --crma-foreground: hsl(210, 33%, 90%);
+    --crma-primary: hsl(205, 84%, 73%);
+    --crma-primary-foreground: hsl(215, 100%, 15%);
+    --crma-secondary: hsl(216, 35%, 18%);
+    --crma-muted: hsl(216, 35%, 18%);
+    --crma-muted-foreground: hsl(214, 15%, 55%);
+    --crma-accent: hsl(216, 35%, 22%);
+    --crma-border: hsl(216, 30%, 25%);
 }
