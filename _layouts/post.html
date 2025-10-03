@@ -14,20 +14,12 @@ layout: default
       </div>
     </div>
     {% if page.hero_image %}<img src="{{ page.hero_image }}" alt="" class="hero-character">{% endif %}
-    {% include poster.html
-      title_line1="TABLEAU CRM"
-      title_line2="TRAINING"
-      kicker="CRM ANALYTICS"
-      bg="#a8d2f3"
-      circle_dark="#1e5ea3"
-      circle_mid="#2f78c7"
-      text="#0d355b"
-      kicker_color="#0d355b"
-      class="mb-8" %}
-
+  
   </div>
 
   {% include adsense.html type="responsive-leaderboard" %}
+
+  {% include poster.html %}
 
   <main class="content-wrapper">
     <div class="mobile-toc" id="mobile-toc-container">
