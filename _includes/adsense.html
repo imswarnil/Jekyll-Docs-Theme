@@ -1,46 +1,87 @@
-<!-- _includes/adsense.html -->
 {%- comment -%}
-  This master component generates the precise HTML for each AdSense unit.
-  It is designed to be called with a 'type' parameter.
+  Responsive + Lazy AdSense include
+  Usage:
+    {% include adsense.html name="In-article" align="center" label="Advertisement" %}
+    {% include adsense.html name="Leaderboard (980 x 90)" %}
+    {% include adsense.html slot="6501428979" type="in-article" %}
+    {% include adsense.html name="Multiplex Ad [ Horizontal ]" %}
+    {% include adsense.html name="In Feed Ad" %}
+  Params:
+    - name:   Key in site.data.ads (preferred)
+    - slot:   Direct AdSense slot (overrides name)
+    - type:   display | in-article | in-feed | multiplex (auto if name found)
+    - align:  left|center|right (default center)
+    - label:  accessible label text (default "Advertisement")
+    - full:   true|false for 100% width wrapper (default true)
+    - style:  inline style string for wrapper (optional)
 {%- endcomment -%}
 
-{%- if site.adsense.publisher_id and include.type -%}
-  {%- assign ad_found = true -%}
-  {%- comment -%} --- Ad Definitions with Precise Parameters --- {%- endcomment -%}
-  {%- case include.type -%}
-    {%- when "in-article" -%}           {-%- assign ad = '{ "slot": "6501428979", "type": "In-article", "shape": "in-article" }' | parse_json -%}
-    {%- when "in-feed" -%}              {%- assign ad = '{ "slot": "9130894804", "type": "In-feed", "shape": "in-feed", "layout_key": "-6v+f0-19-44+c6" }' | parse_json -%}
-    {%- when "multiplex-vertical" -%}   {%- assign ad = '{ "slot": "3375031396", "type": "Multiplex", "shape": "multiplex" }' | parse_json -%}
-    {%- when "multiplex-horizontal" -%} {%- assign ad = '{ "slot": "6808134701", "type": "Multiplex", "shape": "multiplex" }' | parse_json -%}
-    {%- when "large-skyscraper" -%}     {%- assign ad = '{ "slot": "2712169578", "type": "Display", "shape": "skyscraper" }' | parse_json -%}
-    {%- when "medium-skyscraper" -%}    {%- assign ad = '{ "slot": "9488965956", "type": "Display", "shape": "skyscraper" }' | parse_json -%}
-    {%- when "small-skyscraper" -%}     {%- assign ad = '{ "slot": "4394096538", "type": "Display", "shape": "skyscraper" }' | parse_json -%}
-    {%- when "skyscraper-250x600" -%}   {%- assign ad = '{ "slot": "5882506557", "type": "Display", "shape": "skyscraper" }' | parse_json -%}
-    {%- when "responsive-vertical" -%}  {%- assign ad = '{ "slot": "3487917390", "type": "Display", "shape": "skyscraper" }' | parse_json -%}
-    {%- when "display-980x120" -%}        {%- assign ad = '{ "slot": "7400425360", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "mobile-leaderboard" -%}     {%- assign ad = '{ "slot": "4003326983", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "responsive-leaderboard" -%} {%- assign ad = '{ "slot": "4774277934", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "billboard" -%}              {%- assign ad = '{ "slot": "4921873558", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "leaderboard-980x90" -%}     {%- assign ad = '{ "slot": "8539588233", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "leaderboard-728x90" -%}     {%- assign ad = '{ "slot": "1864856299", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "responsive-horizontal" -%}  {%- assign ad = '{ "slot": "8939839370", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "large-button" -%}           {%- assign ad = '{ "slot": "3836856744", "type": "Display", "shape": "leaderboard" }' | parse_json -%}
-    {%- when "large-rectangle" -%}        {%- assign ad = '{ "slot": "1684851337", "type": "Display", "shape": "rectangle" }' | parse_json -%}
-    {%- when "small-square" -%}           {%- assign ad = '{ "slot": "6066270853", "type": "Display", "shape": "square" }' | parse_json -%}
-    {%- when "medium-square" -%}          {%- assign ad = '{ "slot": "9619442326", "type": "Display", "shape": "square" }' | parse_json -%}
-    {%- when "chatgpting-200x250" -%}     {%- assign ad = '{ "slot": "1549380617", "type": "Display", "shape": "rectangle" }' | parse_json -%}
-    {%- when "responsive-square" -%}      {%- assign ad = '{ "slot": "7663977887", "type": "Display", "shape": "square" }' | parse_json -%}
-    {%- when "imswarnil-main-blog" -%}    {%- assign ad = '{ "slot": "3295795878", "type": "Display", "shape": "auto" }' | parse_json -%}
-    {%- else -%} {%- assign ad_found = false -%}
-  {%- endcase -%}
+{%- assign ad = nil -%}
+{%- if include.name -%}
+  {%- assign ad = site.data.ads | where: "name", include.name | first -%}
+{%- endif -%}
 
-  {%- if ad_found  -%}
-    <div class="adsense-container adsense-container--{{ ad.shape }}" 
-         data-ad-type="{{ ad.type }}" 
-         data-ad-slot="{{ ad.slot }}"
-         {% if ad.layout_key %}data-ad-layout-key="{{ ad.layout_key }}"{% endif %}>
-      <div class="adsense-label">Advertisement</div>
-      <div class="adsense-unit-placeholder"></div>
-    </div>
-  {%- endif -%}
+{%- assign slot = include.slot | default: ad.slot -%}
+{%- assign type = include.type | default: ad.type | default: "display" -%}
+{%- assign align = include.align | default: "center" -%}
+{%- assign full = include.full | default: true -%}
+{%- assign label = include.label | default: "Advertisement" -%}
+
+{%- if slot == nil -%}
+  <!-- AdSense include: missing slot -->
+  <div class="crma-ad crma-ad--error">Ad slot not found</div>
+{%- else -%}
+  <figure
+    class="crma-ad crma-ad--{{ type }} crma-ad--align-{{ align }}{% if full %} crma-ad--full{% endif %}"
+    role="figure"
+    aria-label="{{ label | escape }}"
+    data-slot="{{ slot }}"
+    data-type="{{ type }}"
+  >
+    <figcaption class="crma-ad__label" aria-hidden="true">{{ label }}</figcaption>
+
+    {%- comment -%} Placeholder box for CLS control {%- endcomment -%}
+    <div class="crma-ad__ph" aria-hidden="true"></div>
+
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="{{ site.adsense.publisher_id }}"
+      data-ad-slot="{{ slot }}"
+      {%- if type == "display" -%}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      {%- elsif type == "in-article" -%}
+        data-ad-format="fluid"
+        data-ad-layout="in-article"
+      {%- elsif type == "in-feed" -%}
+        data-ad-format="fluid"
+        data-ad-layout-key="-g1+1o-3k-5u"  {# Tip: replace with your layout key if you have one #}
+      {%- elsif type == "multiplex" -%}
+        data-ad-format="autorelaxed"
+      {%- endif -%}
+      data-adtest="{{ site.env | default: jekyll.environment | downcase == 'production' | ternary: 'off', 'on' }}"
+      loading="lazy">
+    </ins>
+
+    <script>
+      (function lazyAdsense(el){
+        if (!window.adsbygoogle) { window.adsbygoogle = window.adsbygoogle || []; }
+        var ins = el.querySelector('ins.adsbygoogle');
+        if (!('IntersectionObserver' in window)) { try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){} return; }
+
+        var fired = false;
+        var io = new IntersectionObserver(function(entries){
+          entries.forEach(function(entry){
+            if (!fired && entry.isIntersecting) {
+              fired = true;
+              try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
+              io.disconnect();
+            }
+          });
+        }, { rootMargin: '200px 0px', threshold: 0.01 });
+
+        io.observe(ins);
+      })(document.currentScript.closest('.crma-ad'));
+    </script>
+  </figure>
 {%- endif -%}
