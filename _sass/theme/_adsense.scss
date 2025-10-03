@@ -1,113 +1,48 @@
-/* _sass/adsense.scss */
+/* CRMA Ad Wrapper */
+.crma-ad{
+  --_pad: 12px;
+  --_radius: var(--crma-radius, 0.75rem);
+  --_bg: var(--crma-secondary, hsl(210, 50%, 96%));
+  --_fg: var(--crma-muted-foreground, hsl(214, 20%, 55%));
+  --_bd: var(--crma-border, hsl(210, 30%, 90%));
 
-// 1. Base Container Styles (applies to all ads)
-// -----------------------------------------------------------------------------
-.adsense-container {
+  margin: 1.25rem 0;
+  padding: var(--_pad);
+  border: 1px solid var(--_bd);
+  border-radius: var(--_radius);
+  background: var(--_bg);
+  color: var(--_fg);
+}
+
+/* Keep width flexible; center by default */
+.crma-ad--full { width: 100%; }
+.crma-ad--align-left   { margin-left: 0; margin-right: auto; }
+.crma-ad--align-center { margin-left: auto; margin-right: auto; }
+.crma-ad--align-right  { margin-left: auto; margin-right: 0; }
+
+/* Gentle label */
+.crma-ad__label{
+  font: 600 12px/1 var(--crma-font-sans, 'Montserrat', sans-serif);
+  letter-spacing: 0.02em;
+  color: var(--crma-muted-foreground, hsl(214,20%,55%));
+  margin: 0 0 8px 0;
+  opacity: .85;
+}
+
+/* Placeholder for CLS control (adjust heights if you want) */
+.crma-ad__ph{
   display: block;
-  margin: 2.5rem auto;
-  padding: 1rem;
-  background-color: var(--docs-secondary);
-  border: 1px solid var(--docs-border);
-  border-radius: var(--docs-radius);
-  box-sizing: border-box;
-  overflow: hidden;
-
-  .adsense-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--docs-muted-foreground);
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-
-  // Placeholder with loading spinner
-  .adsense-unit-placeholder {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    &::after {
-      content: '';
-      display: block;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 3px solid var(--docs-border);
-      border-top-color: var(--docs-primary);
-      animation: adsense-spin 1s linear infinite;
-    }
-  }
-
-  &.adsense-loaded .adsense-unit-placeholder { display: none; }
+  width: 100%;
+  min-height: clamp(60px, 8vw, 120px);
+  border-radius: calc(var(--_radius) - 2px);
+  background:
+    linear-gradient(0deg, color-mix(in srgb, var(--_bg), #000 3%), color-mix(in srgb, var(--_bg), #000 3%));
 }
 
-// 2. Shape-Specific Modifier Styles
-// -----------------------------------------------------------------------------
-
-// For Leaderboards, Billboards, and Banners
-.adsense-container--leaderboard {
-  max-width: 970px; // Max width of a billboard
-  padding: 1.25rem;
-  .adsense-unit-placeholder {
-    min-height: 90px;
-    // Responsive aspect ratio
-    aspect-ratio: 728 / 90;
-    @media (min-width: 800px) {
-      aspect-ratio: 970 / 90;
-    }
-  }
+/* When the ad loads, Google will size the <ins>. The placeholder naturally collapses behind it. */
+.crma-ad ins.adsbygoogle{
+  display:block;
 }
 
-// For all Skyscrapers (tall, vertical ads)
-.adsense-container--skyscraper {
-  max-width: 300px; // Max width of a large skyscraper
-  // On mobile, let it take more space if needed
-  @media (max-width: 480px) {
-    max-width: 100%;
-  }
-  .adsense-unit-placeholder {
-    min-height: 600px;
-    aspect-ratio: 300 / 600;
-  }
-}
-
-// For Square ads
-.adsense-container--square {
-  max-width: 300px;
-  @media (max-width: 480px) {
-    max-width: 100%;
-  }
-  .adsense-unit-placeholder {
-    min-height: 250px;
-    aspect-ratio: 1 / 1;
-  }
-}
-
-// For wider Rectangle ads
-.adsense-container--rectangle {
-  max-width: 336px;
-  @media (max-width: 480px) {
-    max-width: 100%;
-  }
-  .adsense-unit-placeholder {
-    min-height: 280px;
-    aspect-ratio: 336 / 280;
-  }
-}
-
-// 3. Type-Specific Overrides (for non-display ads)
-// -----------------------------------------------------------------------------
-
-// For In-Article and In-Feed ads that should blend in
-.adsense-container--in-article,
-.adsense-container--in-feed {
-  background-color: transparent;
-  border: none;
-  border-top: 1px solid var(--docs-border);
-  border-bottom: 1px solid var(--docs-border);
-  border-radius: 0;
-  padding: 2rem 0;
-}
-
-@keyframes adsense-spin { to { transform: rotate(360deg); } }
+/* Dark mode inherits your palette via html.dark vars */
+html.dark .crma-ad__label{ opacity:.9; }
