@@ -1,68 +1,48 @@
 {%- comment -%}
-  Imswarnil – Jekyll Hero Poster Component (SVG)
-  Usage:
-    {% include hero_poster.svg.html 
-         title="TABLEAU CRM" 
-         title_line2="TRAINING" 
-         kicker="CRM ANALYTICS" 
-         bg="#a8d2f3" circle_dark="#1e5ea3" circle_mid="#2f78c7" 
-         text="#0d355b" kicker_color="#0d355b" 
-         class="my-hero" %}
+  Minimal Poster Component (single include)
+  • Only dynamic bits: page title and first category
+  • Everything else hardcoded (colors, shapes, layout)
+  • One-line, responsive title (no wrap)
 
-  Notes:
-  - Fully responsive (scales with container width)
-  - Edit colors via include params (shown above)
-  - If page has `title:` in front matter and you omit `title`, it will use `page.title`
+  Usage in any layout/page:
+  ---------------------------------------
+  {% include poster.html %}
+  (expects `page.title`; uses `page.categories | first` for kicker if present)
 {%- endcomment -%}
 
-{%- assign l1 = include.title | default: page.title | default: "TABLEAU CRM" -%}
-{%- assign l2 = include.title_line2 | default: "TRAINING" -%}
-{%- assign kicker = include.kicker | default: "CRM ANALYTICS" -%}
-{%- assign bg = include.bg | default: "#a8d2f3" -%}
-{%- assign circle_dark = include.circle_dark | default: "#1e5ea3" -%}
-{%- assign circle_mid = include.circle_mid | default: "#2f78c7" -%}
-{%- assign text = include.text | default: "#0d355b" -%}
-{%- assign kicker_color = include.kicker_color | default: "#0d355b" -%}
-{%- assign cls = include.class | default: "" -%}
+<figure class="poster" role="img" aria-label="Hero poster for {{ page.title | escape }}">
+  <style>
+    /* Hardcoded palette + layout */
+    .poster{position:relative;display:block;width:100%;aspect-ratio:16/9;overflow:hidden;border-radius:16px;background:#a8d2f3;margin:0}
+    .poster__bg{position:absolute;inset:0;width:100%;height:100%}
+    .poster__content{position:absolute;inset:0;z-index:2;display:flex;align-items:center}
+    .poster__text{padding:clamp(16px,4vw,32px)}
+    .poster__kicker{margin:0 0 .35rem;font:600 clamp(12px,1.6vw,16px)/1 Montserrat,Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.18em;text-transform:uppercase;color:#0d355b;opacity:.9}
+    .poster__title{margin:0;font:800 clamp(28px,9vw,80px)/1.05 Montserrat,Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;letter-spacing:.5px;color:#0d355b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  </style>
 
-<figure class="hero-poster {{ cls }}" style="margin:0">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc"
-       width="100%" height="auto">
-    <title id="title">{{ l1 }} {{ l2 }}</title>
-    <desc id="desc">Light blue poster background with overlapping circles and a two-line headline centered.</desc>
-
-    <style>
-      :root{
-        --bg: {{ bg }};
-        --circle-dark: {{ circle_dark }};
-        --circle-mid:  {{ circle_mid }};
-        --text: {{ text }};
-        --kicker: {{ kicker_color }};
-      }
-      text{ font-family: "Montserrat", "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
-      .headline{ fill: var(--text); font-weight: 800; letter-spacing: .5px; }
-      .kicker{ fill: var(--kicker); font-weight: 600; opacity: .9; letter-spacing: .18em; text-transform: uppercase; }
-    </style>
-
-    <!-- Background -->
-    <rect x="0" y="0" width="1280" height="720" fill="var(--bg)"/>
-
-    <!-- Overlapping circles (bottom-left) -->
-    <circle cx="210" cy="760" r="340" fill="var(--circle-dark)"/>
-    <circle cx="420" cy="760" r="210" fill="var(--circle-mid)"/>
-
-    <!-- Soft vignette for depth -->
-    <radialGradient id="softCenter" cx="50%" cy="40%" r="65%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
-      <stop offset="100%" stop-color="#000000" stop-opacity=".06"/>
-    </radialGradient>
-    <rect x="0" y="0" width="1280" height="720" fill="url(#softCenter)" style="mix-blend-mode:multiply"/>
-
-    <!-- Text -->
-    <text class="kicker" x="640" y="180" font-size="26" text-anchor="middle">{{ kicker }}</text>
-    <text class="headline" x="640" y="320" font-size="120" text-anchor="middle">
-      <tspan x="640" dy="0">{{ l1 }}</tspan>
-      <tspan x="640" dy="120">{{ l2 }}</tspan>
-    </text>
+  <!-- Decorative background (hardcoded) -->
+  <svg class="poster__bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" aria-hidden="true" focusable="false">
+    <defs>
+      <radialGradient id="softCenter" cx="50%" cy="40%" r="65%">
+        <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#000000" stop-opacity=".06"/>
+      </radialGradient>
+    </defs>
+    <rect width="1280" height="720" fill="#a8d2f3"/>
+    <circle cx="210" cy="760" r="340" fill="#1e5ea3"/>
+    <circle cx="420" cy="760" r="210" fill="#2f78c7"/>
+    <rect width="1280" height="720" fill="url(#softCenter)" style="mix-blend-mode:multiply"/>
   </svg>
+
+  <!-- Dynamic text (only title + first category) -->
+  <div class="poster__content">
+    <div class="poster__text">
+      {%- assign _kicker = page.categories | first -%}
+      {%- if _kicker and _kicker != '' -%}
+      <p class="poster__kicker">{{ _kicker | upcase }}</p>
+      {%- endif -%}
+      <h1 class="poster__title">{{ page.title | upcase }}</h1>
+    </div>
+  </div>
 </figure>
