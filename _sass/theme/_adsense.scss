@@ -1,0 +1,59 @@
+/* _sass/adsense.scss */
+
+.crma-ad-container {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 2.5rem auto; /* Spacing above/below */
+  padding: 1rem;
+  
+  /* Match site aesthetic: muted background and border */
+  background-color: var(--docs-secondary);
+  border: 1px solid var(--docs-border);
+  border-radius: var(--docs-radius);
+  
+  text-align: center;
+  box-sizing: border-box;
+  overflow: hidden; /* Prevent Google's iframes from breaking layout */
+
+  /* Variant: In-Article (usually looks better cleaner) */
+  &.crma-ad--in-article {
+    background-color: transparent;
+    border: none;
+    padding: 2rem 0;
+    border-top: 1px solid var(--docs-border);
+    border-bottom: 1px solid var(--docs-border);
+  }
+
+  /* Variant: Fixed (Sidebar) */
+  &.crma-ad--fixed {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+  }
+}
+
+.crma-ad-label {
+  font-family: var(--docs-font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--docs-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+  line-height: 1;
+}
+
+/* Ensure Google's inserted elements don't override our background */
+.adsbygoogle {
+  background: transparent !important;
+}
+
+/* Optional: Hide ads entirely on very small screens if they break UX */
+@media (max-width: 350px) {
+    .crma-ad-container {
+        display: none !important;
+    }
+}

@@ -1,0 +1,53 @@
+<!-- _includes/adsense.html -->
+{%- comment -%}
+  Parameters:
+  - slot (required): The AdSense Unit ID (e.g., "1234567890").
+  - type (optional): 'display' (default), 'in-article', 'fixed'.
+  - format (optional, for 'display' type): 'auto' (default), 'rectangle', 'horizontal', 'vertical'.
+  - width/height (required only for 'fixed' type): e.g., width="300" height="250".
+{%- endcomment -%}
+
+{%- if site.adsense.enabled and site.adsense.publisher_id and include.slot -%}
+
+  {%- assign ad_type = include.type | default: 'display' -%}
+  
+  <div class="crma-ad-container crma-ad--{{ ad_type }}">
+    <!-- Styled label using your vars -->
+    <div class="crma-ad-label">Sponsored</div>
+
+    {%- if ad_type == 'display' -%}
+      <!-- 1. RESPONSIVE DISPLAY AD (Default) -->
+      <!-- adapting to container space automatically -->
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="{{ site.adsense.publisher_id }}"
+           data-ad-slot="{{ include.slot }}"
+           data-ad-format="{{ include.format | default: 'auto' }}"
+           data-full-width-responsive="true"></ins>
+
+    {%- elsif ad_type == 'in-article' -%}
+      <!-- 2. NATIVE IN-ARTICLE AD -->
+      <!-- Fluid, flows with text, good for middle of posts -->
+      <ins class="adsbygoogle"
+           style="display:block; text-align:center;"
+           data-ad-layout="in-article"
+           data-ad-format="fluid"
+           data-ad-client="{{ site.adsense.publisher_id }}"
+           data-ad-slot="{{ include.slot }}"></ins>
+
+    {%- elsif ad_type == 'fixed' -%}
+      <!-- 3. FIXED SIZE AD -->
+      <!-- Good for sidebars (e.g., 300x250) -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:{{ include.width }}px;height:{{ include.height }}px"
+           data-ad-client="{{ site.adsense.publisher_id }}"
+           data-ad-slot="{{ include.slot }}"></ins>
+    {%- endif -%}
+
+    <!-- Initialize the ad unit -->
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
+{%- endif -%}
