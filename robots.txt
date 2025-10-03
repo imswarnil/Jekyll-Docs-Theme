@@ -1,4 +1,7 @@
-{%- comment -%} /robots.txt {%- endcomment -%}
+---
+permalink: "robots.txt"
+layout: null
+---
 {%- assign is_prod = jekyll.environment | downcase == "production" -%}
 User-agent: *
 {%- if is_prod -%}
