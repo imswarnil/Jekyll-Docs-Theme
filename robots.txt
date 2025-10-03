@@ -1,12 +1,61 @@
 ---
-permalink: "robots.txt"
+
+permalink: "/robots.txt"
 layout: null
----
+------------
+
 {%- assign is_prod = jekyll.environment | downcase == "production" -%}
-User-agent: *
+{%- assign base = site.url | append: site.baseurl -%}
+
 {%- if is_prod -%}
+
+# ===== Production: allow discovery & AI access =====
+
+# Primary rule (covers all agents)
+
+User-agent: *
 Allow: /
-Sitemap: {{ site.url | append: site.baseurl }}/sitemap.xml
+
+# Major search engines
+
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: DuckDuckBot
+Allow: /
+User-agent: Baiduspider
+Allow: /
+User-agent: Yandex
+Allow: /
+
+# AI / research crawlers (explicit opt-in)
+
+User-agent: GPTBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Applebot-Image
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+
+# Sitemap
+
+Sitemap: {{ base }}/sitemap.xml
+
 {%- else -%}
+
+# ===== Non-production: block indexing =====
+
+User-agent: *
 Disallow: /
 {%- endif -%}
