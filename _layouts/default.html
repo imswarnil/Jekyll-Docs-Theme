@@ -29,9 +29,7 @@
     const adPlaceholders = document.querySelectorAll('.adsense-container');
     const publisherId = "{{ site.adsense.publisher_id }}";
 
-    if (!adPlaceholders.length || !publisherId) {
-        return;
-    }
+    if (!adPlaceholders.length || !publisherId) return;
 
     const adObserver = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
@@ -40,23 +38,38 @@
                 const ad = {
                     type: container.dataset.adType,
                     slot: container.dataset.adSlot,
-                    shape: container.dataset.adShape,
+                    layoutKey: container.dataset.adLayoutKey,
                 };
 
                 const ins = document.createElement('ins');
                 ins.className = 'adsbygoogle';
-                ins.style.display = 'block';
                 ins.setAttribute('data-ad-client', publisherId);
                 ins.setAttribute('data-ad-slot', ad.slot);
 
-                if (ad.type === 'In-article' || ad.type === 'In-feed') {
-                    ins.setAttribute('data-ad-format', 'fluid');
-                    ins.setAttribute('data-ad-layout', 'in-article');
-                } else if (ad.type === 'Multiplex') {
-                    ins.setAttribute('data-ad-format', 'autorelaxed');
-                } else {
-                    ins.setAttribute('data-ad-format', ad.shape);
-                    ins.setAttribute('data-full-width-responsive', 'true');
+                // Build the precise <ins> tag for each ad type
+                switch (ad.type) {
+                    case 'Display':
+                        ins.style.display = 'block';
+                        ins.setAttribute('data-ad-format', 'auto');
+                        ins.setAttribute('data-full-width-responsive', 'true');
+                        break;
+                    case 'In-article':
+                        ins.style.display = 'block';
+                        ins.style.textAlign = 'center';
+                        ins.setAttribute('data-ad-layout', 'in-article');
+                        ins.setAttribute('data-ad-format', 'fluid');
+                        break;
+                    case 'In-feed':
+                        ins.style.display = 'block';
+                        ins.setAttribute('data-ad-format', 'fluid');
+                        ins.setAttribute('data-ad-layout-key', ad.layoutKey);
+                        break;
+                    case 'Multiplex':
+                        // Note: Responsive multiplex ads are now recommended.
+                        // The old fixed-size inline style is less common.
+                        ins.style.display = 'block';
+                        ins.setAttribute('data-ad-format', 'autorelaxed');
+                        break;
                 }
                 
                 const placeholderContent = container.querySelector('.adsense-unit-placeholder');
@@ -64,11 +77,8 @@
                     placeholderContent.replaceWith(ins);
                 }
 
-                try {
-                    (window.adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) {
-                    console.error("AdSense Error:", e);
-                }
+                try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } 
+                catch (e) { console.error("AdSense Error:", e); }
 
                 container.classList.add('adsense-loaded');
                 observer.unobserve(container);
@@ -76,9 +86,7 @@
         });
     }, { rootMargin: '200px 0px' });
 
-    adPlaceholders.forEach(placeholder => {
-        adObserver.observe(placeholder);
-    });
+    adPlaceholders.forEach(placeholder => adObserver.observe(placeholder));
 });
   </script>
   </body>

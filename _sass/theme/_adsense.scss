@@ -1,10 +1,11 @@
 /* _sass/adsense.scss */
 
+// 1. Base Container Styles (applies to all ads)
+// -----------------------------------------------------------------------------
 .adsense-container {
   display: block;
-  width: 100%;
   margin: 2.5rem auto;
-  padding: 1.5rem;
+  padding: 1rem;
   background-color: var(--docs-secondary);
   border: 1px solid var(--docs-border);
   border-radius: var(--docs-radius);
@@ -12,19 +13,16 @@
   overflow: hidden;
 
   .adsense-label {
-    font-family: var(--docs-font-sans);
     font-size: 0.75rem;
     font-weight: 600;
     color: var(--docs-muted-foreground);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
     margin-bottom: 1rem;
-    line-height: 1;
     text-align: center;
   }
 
+  // Placeholder with loading spinner
   .adsense-unit-placeholder {
-    min-height: 250px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,21 +39,75 @@
     }
   }
 
-  &.adsense-loaded .adsense-unit-placeholder {
-    display: none;
-  }
+  &.adsense-loaded .adsense-unit-placeholder { display: none; }
+}
 
-  &[data-ad-type="In-article"],
-  &[data-ad-type="In-feed"] {
-    background-color: transparent;
-    border: none;
-    border-top: 1px solid var(--docs-border);
-    border-bottom: 1px solid var(--docs-border);
-    border-radius: 0;
-    padding: 2.5rem 0;
+// 2. Shape-Specific Modifier Styles
+// -----------------------------------------------------------------------------
+
+// For Leaderboards, Billboards, and Banners
+.adsense-container--leaderboard {
+  max-width: 970px; // Max width of a billboard
+  padding: 1.25rem;
+  .adsense-unit-placeholder {
+    min-height: 90px;
+    // Responsive aspect ratio
+    aspect-ratio: 728 / 90;
+    @media (min-width: 800px) {
+      aspect-ratio: 970 / 90;
+    }
   }
 }
 
-@keyframes adsense-spin {
-  to { transform: rotate(360deg); }
+// For all Skyscrapers (tall, vertical ads)
+.adsense-container--skyscraper {
+  max-width: 300px; // Max width of a large skyscraper
+  // On mobile, let it take more space if needed
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+  .adsense-unit-placeholder {
+    min-height: 600px;
+    aspect-ratio: 300 / 600;
+  }
 }
+
+// For Square ads
+.adsense-container--square {
+  max-width: 300px;
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+  .adsense-unit-placeholder {
+    min-height: 250px;
+    aspect-ratio: 1 / 1;
+  }
+}
+
+// For wider Rectangle ads
+.adsense-container--rectangle {
+  max-width: 336px;
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
+  .adsense-unit-placeholder {
+    min-height: 280px;
+    aspect-ratio: 336 / 280;
+  }
+}
+
+// 3. Type-Specific Overrides (for non-display ads)
+// -----------------------------------------------------------------------------
+
+// For In-Article and In-Feed ads that should blend in
+.adsense-container--in-article,
+.adsense-container--in-feed {
+  background-color: transparent;
+  border: none;
+  border-top: 1px solid var(--docs-border);
+  border-bottom: 1px solid var(--docs-border);
+  border-radius: 0;
+  padding: 2rem 0;
+}
+
+@keyframes adsense-spin { to { transform: rotate(360deg); } }

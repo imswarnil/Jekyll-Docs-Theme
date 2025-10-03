@@ -15,7 +15,7 @@ layout: default
     {% if page.hero_image %}<img src="{{ page.hero_image }}" alt="" class="hero-character">{% endif %}
   </div>
 
-  {% include adsense.html type="responsive-vertical" %}
+  {% include adsense.html type="responsive-leaderboard" %}
 
   <main class="content-wrapper">
     <div class="mobile-toc" id="mobile-toc-container">
@@ -30,7 +30,8 @@ layout: default
     <div class="desktop-toc-container toc-container"></div>
     <div class="sidebar-right-actions">
       <a href="{{ site.github_url }}/edit/main/{{ page.path }}" target="_blank" rel="noopener noreferrer"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
-    </div>
-    {% include adsense.html type="medium-skyscraper" %}
+    </div> 
+    {% include adsense.html type="medium-square" %}
+
   </aside>
 </div>
