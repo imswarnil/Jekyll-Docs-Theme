@@ -1,6 +1,28 @@
 /* _sass/hero.scss */
 
-// 1. Base Hero Banner Styling
+// 1. Define SVG-Specific Theme Variables for Light & Dark Mode
+// -----------------------------------------------------------------------------
+:root {
+  --hero-svg-bg: hsl(210, 50%, 98%);
+  --hero-svg-glow: hsl(212, 100%, 80%);
+  --hero-svg-ambient-data: hsl(214, 20%, 85%);
+  --hero-svg-connector: var(--docs-primary);
+  --hero-svg-node-active: var(--docs-primary);
+  --hero-svg-icon-bg: var(--docs-accent);
+  --hero-svg-icon-fg: var(--docs-primary);
+}
+
+html.dark {
+  --hero-svg-bg: hsl(216, 40%, 14%);
+  --hero-svg-glow: hsl(212, 100%, 22%);
+  --hero-svg-ambient-data: hsl(216, 20%, 30%);
+  --hero-svg-connector: var(--docs-primary);
+  --hero-svg-node-active: var(--docs-primary);
+  --hero-svg-icon-bg: hsl(216, 35%, 22%);
+  --hero-svg-icon-fg: var(--docs-primary);
+}
+
+// 2. Base Hero & SVG Wrapper Styling
 // -----------------------------------------------------------------------------
 .hero-banner--academy {
   background: var(--docs-hero-bg);
@@ -8,92 +30,81 @@
   position: relative;
   padding: 4rem 1.5rem;
   overflow: hidden;
-
+  
   .hero-content {
-    position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
     display: grid; grid-template-columns: 1fr; align-items: center; gap: 2rem;
+    max-width: 1200px; margin: 0 auto; position: relative; z-index: 2;
     @media (min-width: 1024px) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
   }
-
-  .hero-text {
-    .tableau-logo { font-size: 1rem; font-weight: 600; letter-spacing: 1px; color: var(--docs-hero-foreground); opacity: 0.9; margin-bottom: 1rem; }
-    h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--docs-hero-foreground); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
-    .hero__subtitle { margin-top: 1rem; color: var(--docs-hero-foreground); opacity: 0.85; max-width: 50ch; }
-    .hero-cta { margin-top: 1.5rem; }
-    .hero-pills { margin-top: 1.5rem; }
-  }
+  h1 { color: var(--docs-hero-foreground); }
+  .hero__subtitle { color: var(--docs-hero-foreground); opacity: 0.8; }
 }
 
-// 2. Animated SVG Styling & Responsiveness
-// -----------------------------------------------------------------------------
-.hero-character {
-  width: 100%;
-  max-width: 400px;
-  justify-self: center;
+.hero-svg-wrapper {
+  width: 100%; max-width: 500px; justify-self: center;
   @media (min-width: 1024px) { justify-self: end; }
+  
+  // For the parallax effect
+  #hero-constellation-svg g { transition: transform 0.2s ease-out; }
 }
 
-// 3. SVG Element Styling (Theming)
+// 3. SVG Element Styling
 // -----------------------------------------------------------------------------
-#storyboard-container {
-  .data-point { fill: var(--docs-hero-foreground); opacity: 0.5; }
-  .core-ring { fill: none; stroke: var(--docs-hero-accent); stroke-width: 1.5; }
-  .core-center { fill: var(--docs-hero-accent); }
-  .connector-line { fill: none; stroke: var(--docs-primary); stroke-width: 2.5; stroke-linecap: round; }
+#hero-constellation-svg {
+  .ambient-data circle { fill: var(--hero-svg-ambient-data); }
+  .engine-pulse { fill: var(--hero-svg-connector); opacity: 0.2; }
+  .engine-core { fill: var(--hero-svg-connector); }
+  .constellation-path { fill: none; stroke: var(--hero-svg-connector); stroke-width: 1.5; stroke-linecap: round; }
+  .constellation-node { fill: var(--hero-svg-node-active); }
   .icon-group {
-    .ph-duotone-bg { fill: var(--docs-accent); }
-    .ph-duotone-fg { fill: var(--docs-primary); }
+    .ph-duotone-bg { fill: var(--hero-svg-icon-bg); }
+    .ph-duotone-fg { fill: var(--hero-svg-icon-fg); }
   }
 }
 
-// 4. Animation Definitions (@keyframes)
+// 4. Animation Definitions
 // -----------------------------------------------------------------------------
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes float { 
+  0%, 100% { transform: translate(0, 0); }
+  25% { transform: translate(5px, -10px); }
+  75% { transform: translate(-5px, 10px); }
+}
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(3); } }
 @keyframes drawLine { to { stroke-dashoffset: 0; } }
-@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes popIn { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes fadeIn { to { opacity: 1; } }
 
-// 5. Animation Application & Sequencing (Total duration: 8s loop)
+// 5. Animation Sequencing (Total duration ~10s)
 // -----------------------------------------------------------------------------
-#storyboard-container {
-  // Data points float continuously
-  .data-point {
-    animation: float 5s ease-in-out infinite;
-    &.p2 { animation-duration: 7s; animation-delay: -2s; }
-    &.p3 { animation-duration: 6s; animation-delay: -4s; }
-    &.p4 { animation-duration: 8s; animation-delay: -1s; }
+#hero-constellation-svg {
+  .ambient-data circle {
+    animation: float 10s ease-in-out infinite;
+    &:nth-child(2) { animation-duration: 12s; animation-delay: -3s; }
+    &:nth-child(3) { animation-duration: 9s; animation-delay: -5s; }
+    &:nth-child(4) { animation-duration: 14s; animation-delay: -1s; }
   }
-  
-  // Core processor appears and pulses
-  .core-processor {
-    opacity: 0;
+
+  .engine-pulse {
     transform-origin: center;
-    animation: fadeIn 1s ease-out 0.5s forwards, pulse 4s ease-in-out 1.5s infinite;
+    animation: pulse 4s ease-out infinite 1s;
   }
 
-  // Connector lines draw themselves from the core to the icons
-  .connector-line {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
-    animation: drawLine 1s ease-out forwards;
-    // Stagger the start times
-    &.line-1 { animation-delay: 2s; }
-    &.line-2 { animation-delay: 2.3s; }
-    &.line-3 { animation-delay: 2.6s; }
+  .constellation-path {
+    // Path lengths measured manually or with JS
+    &#constellation-chart .constellation-path { stroke-dasharray: 200; stroke-dashoffset: 200; }
+    &#constellation-users .constellation-path { stroke-dasharray: 148; stroke-dashoffset: 148; }
+    &#constellation-trend .constellation-path { stroke-dasharray: 230; stroke-dashoffset: 230; }
+    animation: drawLine 1.5s ease-in-out forwards;
   }
 
-  // Icons pop into view as their connector lines "reach" them
-  .icon-group {
+  .constellation-node, .icon-group {
     opacity: 0;
     transform-origin: center;
     animation: popIn 0.5s ease-out forwards;
-    // Stagger to match the lines
-    &.icon-chart { animation-delay: 3s; }
-    &.icon-users { animation-delay: 3.3s; }
-    &.icon-trend { animation-delay: 3.6s; }
   }
-
-  // The whole animation fades in at the start for a smooth entrance
-  animation: fadeIn 0.5s ease-out;
+  
+  // Stagger the appearance of each constellation
+  #constellation-chart, #icon-chart { animation-delay: 1.5s; }
+  #constellation-users, #icon-users { animation-delay: 2.5s; }
+  #constellation-trend, #icon-trend { animation-delay: 3.5s; }
 }
