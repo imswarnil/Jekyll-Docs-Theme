@@ -7,8 +7,8 @@ sitemap: false
 [
   {% assign collections = site.collections | where_exp:'collection','collection.output != false' %}
   {% for collection in collections %}
-    {% assign crma = collection.crma | where_exp:'doc','doc.sitemap != false' %}
-    {% for doc in crma %}
+    {% assign docs = collection.docs | where_exp:'doc','doc.sitemap != false' %}
+    {% for doc in docs %}
       {
         "title": {{ doc.title | jsonify }},
         "excerpt": {{ doc.excerpt | markdownify | strip_html | jsonify }},

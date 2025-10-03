@@ -91,7 +91,7 @@ And you should be ready to go!
 
 ## Contribute Documentation
 
-Documentation is a super important, critical part of this project. crma are how we keep track of what we're doing, how, and why. It's how we stay on the same page about our policies. And it's how we tell others everything they need in order to be able to use this project -- or contribute to it. So thank you in advance.
+Documentation is a super important, critical part of this project. Docs are how we keep track of what we're doing, how, and why. It's how we stay on the same page about our policies. And it's how we tell others everything they need in order to be able to use this project -- or contribute to it. So thank you in advance.
 
 Documentation contributions of any size are welcome! Feel free to file a PR even if you're just rewording a sentence to be more clear, or fixing a spelling mistake!
 
@@ -101,8 +101,8 @@ To contribute documentation:
 * Edit or add any relevant documentation.
 * Make sure your changes are formatted correctly and consistently with the rest of the documentation.
 * Re-read what you wrote, and run a spellchecker on it to make sure you didn't miss anything.
-* In your commit message(s), begin the first line with `crma: `. For example: `crma: Adding a doc contrib section to CONTRIBUTING.md`.
-* Write clear, concise commit message(s) using [conventional-changelog format](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md). Documentation commits should use `crma(<component>): <message>`.
+* In your commit message(s), begin the first line with `docs: `. For example: `docs: Adding a doc contrib section to CONTRIBUTING.md`.
+* Write clear, concise commit message(s) using [conventional-changelog format](https://github.com/conventional-changelog/conventional-changelog-angular/blob/master/convention.md). Documentation commits should use `docs(<component>): <message>`.
 * Go to https://github.com/daviddarnes/alembic/pulls and open a new pull request with your changes.
 * If your PR is connected to an open issue, add a line in your PR's description that says `Fixes: #123`, where `#123` is the number of the issue you're fixing.
 
@@ -172,7 +172,7 @@ Label | Apply When | Notes
 `critical` | Added to `bug` issues if the problem described makes the code completely unusable in a common situation. |
 `documentation` | Added to issues or pull requests that affect any of the documentation for the project. | Can be combined with other labels, such as `bug` or `enhancement`.
 `duplicate` | Added to issues or PRs that refer to the exact same issue as another one that's been previously labeled. | Duplicate issues should be marked and closed right away, with a message referencing the issue it's a duplicate of (with `#123`)
-`enhancement` | Added to [feature requests](#request-a-feature), PRs, or documentation issues that are purely additive: the code or crma currently work as expected, but a change is being requested or suggested. |
+`enhancement` | Added to [feature requests](#request-a-feature), PRs, or documentation issues that are purely additive: the code or docs currently work as expected, but a change is being requested or suggested. |
 `help wanted` | Applied by [Committers](#join-the-project-team) to issues and PRs that they would like to get outside help for. Generally, this means it's lower priority for the maintainer team to itself implement, but that the community is encouraged to pick up if they so desire | Never applied on first-pass labelling.
 `in progress` | Applied by [Committers](#join-the-project-team) to PRs that are pending some work before they're ready for review. | The original PR submitter should @mention the team member that applied the label once the PR is complete.
 `starter` | Applied by [Committers](#join-the-project-team) to issues that they consider good introductions to the project for people who have not contributed before. These are not necessarily "easy", but rather focused around how much context is necessary in order to understand what needs to be done for this project in particular. | Existing project members are expected to stay away from these unless they increase in priority.
