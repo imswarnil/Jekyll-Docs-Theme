@@ -1,82 +1,91 @@
 {%- comment -%}
-  Responsive + Lazy AdSense include
-  Usage:
-    {% include adsense.html name="In-article" align="center" label="Advertisement" %}
-    {% include adsense.html name="Leaderboard (980 x 90)" %}
-    {% include adsense.html slot="6501428979" type="in-article" %}
-    {% include adsense.html name="Multiplex Ad [ Horizontal ]" %}
-    {% include adsense.html name="In Feed Ad" %}
-  Params:
-    - name:   Key in site.data.ads (preferred)
-    - slot:   Direct AdSense slot (overrides name)
-    - type:   display | in-article | in-feed | multiplex (auto if name found)
-    - align:  left|center|right (default center)
-    - label:  accessible label text (default "Advertisement")
-    - full:   true|false for 100% width wrapper (default true)
-    - style:  inline style string for wrapper (optional)
+  Simple AdSense include
+  Props:
+    kind: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
+    size: optional (e.g., large, medium, small, responsive, billboard, horizontal, vertical)
+    align: left|center|right (default center)
+    label: accessible caption (default "Advertisement")
+    full: true|false (default true)
+    slot: override slot id (optional, bypasses data file)
 {%- endcomment -%}
 
-{%- assign ad = nil -%}
-{%- if include.name -%}
-  {%- assign ad = site.data.ads | where: "name", include.name | first -%}
+{%- assign kind = include.kind | default: 'rectangle' -%}
+{%- assign size = include.size -%}
+{%- assign align = include.align | default: 'center' -%}
+{%- assign full  = include.full  | default: true -%}
+{%- assign label = include.label | default: 'Advertisement' -%}
+
+{%- assign slot = include.slot -%}
+{%- if slot == nil -%}
+  {%- assign group = site.data.ads[kind] -%}
+  {%- if group and group.size > 0 -%}
+    {%- if size -%}
+      {%- assign match = group | where: 'size', size | first -%}
+      {%- assign slot = match.slot | default: group[0].slot -%}
+    {%- else -%}
+      {%- assign slot = group[0].slot -%}
+    {%- endif -%}
+  {%- endif -%}
 {%- endif -%}
 
-{%- assign slot = include.slot | default: ad.slot -%}
-{%- assign type = include.type | default: ad.type | default: "display" -%}
-{%- assign align = include.align | default: "center" -%}
-{%- assign full = include.full | default: true -%}
-{%- assign label = include.label | default: "Advertisement" -%}
+{%- comment -%}
+  Determine AdSense format from kind
+{%- endcomment -%}
+{%- assign _type = 'display' -%}
+{%- if kind == 'in-article' -%}
+  {%- assign _type = 'in-article' -%}
+{%- elsif kind == 'feed' -%}
+  {%- assign _type = 'in-feed' -%}
+{%- elsif kind == 'multiplex' -%}
+  {%- assign _type = 'multiplex' -%}
+{%- endif -%}
 
 {%- if slot == nil -%}
-  <!-- AdSense include: missing slot -->
-  <div class="crma-ad crma-ad--error">Ad slot not found</div>
+  <div class="crma-ad crma-ad--error">Ad not configured (kind: {{ kind }}, size: {{ size | default: 'default' }})</div>
 {%- else -%}
   <figure
-    class="crma-ad crma-ad--{{ type }} crma-ad--align-{{ align }}{% if full %} crma-ad--full{% endif %}"
+    class="crma-ad crma-ad--{{ _type }} crma-ad--{{ kind | replace: ' ', '-' }} crma-ad--align-{{ align }}{% if full %} crma-ad--full{% endif %}"
     role="figure"
     aria-label="{{ label | escape }}"
-    data-slot="{{ slot }}"
-    data-type="{{ type }}"
+    data-kind="{{ kind }}"
+    data-size="{{ size | default: 'default' }}"
   >
     <figcaption class="crma-ad__label" aria-hidden="true">{{ label }}</figcaption>
-
-    {%- comment -%} Placeholder box for CLS control {%- endcomment -%}
     <div class="crma-ad__ph" aria-hidden="true"></div>
 
     <ins class="adsbygoogle"
       style="display:block"
       data-ad-client="{{ site.adsense.publisher_id }}"
       data-ad-slot="{{ slot }}"
-      {%- if type == "display" -%}
+      {%- if _type == 'display' -%}
         data-ad-format="auto"
         data-full-width-responsive="true"
-      {%- elsif type == "in-article" -%}
+      {%- elsif _type == 'in-article' -%}
         data-ad-format="fluid"
         data-ad-layout="in-article"
-      {%- elsif type == "in-feed" -%}
+      {%- elsif _type == 'in-feed' -%}
         data-ad-format="fluid"
-        data-ad-layout-key="-g1+1o-3k-5u"  {# Tip: replace with your layout key if you have one #}
-      {%- elsif type == "multiplex" -%}
+        data-ad-layout-key="-g1+1o-3k-5u"
+      {%- elsif _type == 'multiplex' -%}
         data-ad-format="autorelaxed"
       {%- endif -%}
-      data-adtest="{{ site.env | default: jekyll.environment | downcase == 'production' | ternary: 'off', 'on' }}"
       loading="lazy">
     </ins>
 
     <script>
-      (function lazyAdsense(el){
+      (function lazyAdsense(root){
+        if (!root) return;
         if (!window.adsbygoogle) { window.adsbygoogle = window.adsbygoogle || []; }
-        var ins = el.querySelector('ins.adsbygoogle');
-        if (!('IntersectionObserver' in window)) { try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){} return; }
+
+        var ins = root.querySelector('ins.adsbygoogle');
+        var fire = function(){ try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){} };
+
+        if (!('IntersectionObserver' in window)) { fire(); return; }
 
         var fired = false;
-        var io = new IntersectionObserver(function(entries){
-          entries.forEach(function(entry){
-            if (!fired && entry.isIntersecting) {
-              fired = true;
-              try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){}
-              io.disconnect();
-            }
+        var io = new IntersectionObserver(function(es){
+          es.forEach(function(e){
+            if (!fired && e.isIntersecting) { fired = true; fire(); io.disconnect(); }
           });
         }, { rootMargin: '200px 0px', threshold: 0.01 });
 

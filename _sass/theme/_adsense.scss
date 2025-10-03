@@ -1,4 +1,4 @@
-/* CRMA Ad Wrapper */
+/* CRMA Ad Wrapper — uses your :root / html.dark vars */
 .crma-ad{
   --_pad: 12px;
   --_radius: var(--crma-radius, 0.75rem);
@@ -14,13 +14,11 @@
   color: var(--_fg);
 }
 
-/* Keep width flexible; center by default */
 .crma-ad--full { width: 100%; }
 .crma-ad--align-left   { margin-left: 0; margin-right: auto; }
 .crma-ad--align-center { margin-left: auto; margin-right: auto; }
 .crma-ad--align-right  { margin-left: auto; margin-right: 0; }
 
-/* Gentle label */
 .crma-ad__label{
   font: 600 12px/1 var(--crma-font-sans, 'Montserrat', sans-serif);
   letter-spacing: 0.02em;
@@ -29,20 +27,15 @@
   opacity: .85;
 }
 
-/* Placeholder for CLS control (adjust heights if you want) */
-.crma-ad__ph{
-  display: block;
-  width: 100%;
-  min-height: clamp(60px, 8vw, 120px);
-  border-radius: calc(var(--_radius) - 2px);
-  background:
-    linear-gradient(0deg, color-mix(in srgb, var(--_bg), #000 3%), color-mix(in srgb, var(--_bg), #000 3%));
-}
+/* CLS-friendly placeholders per kind (tweak as needed) */
+.crma-ad__ph{ width: 100%; border-radius: calc(var(--_radius) - 2px); background: color-mix(in srgb, var(--_bg), #000 4%); min-height: 100px; }
+.crma-ad--leaderboard .crma-ad__ph{ min-height: clamp(60px, 7vw, 120px); }
+.crma-ad--rectangle   .crma-ad__ph{ min-height: clamp(120px, 18vw, 280px); }
+.crma-ad--square      .crma-ad__ph{ min-height: clamp(120px, 18vw, 250px); }
+.crma-ad--skyscraper  .crma-ad__ph{ min-height: clamp(300px, 80vh, 1050px); }
+.crma-ad--in-article  .crma-ad__ph{ min-height: clamp(120px, 16vw, 220px); }
+.crma-ad--in-feed     .crma-ad__ph{ min-height: clamp(120px, 16vw, 220px); }
+.crma-ad--multiplex   .crma-ad__ph{ min-height: clamp(180px, 22vw, 320px); }
 
-/* When the ad loads, Google will size the <ins>. The placeholder naturally collapses behind it. */
-.crma-ad ins.adsbygoogle{
-  display:block;
-}
-
-/* Dark mode inherits your palette via html.dark vars */
-html.dark .crma-ad__label{ opacity:.9; }
+/* Dark mode inherits from html.dark */
+html.dark .crma-ad__label{ opacity: .9; }

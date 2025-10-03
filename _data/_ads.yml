@@ -1,92 +1,82 @@
-# AdSense registry for includes
-# name: from your list | slot: numeric | type: display|in-article|in-feed|multiplex | note: optional
+# Simple ad taxonomy for your site
+# kind: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
+# size: large | medium | small | responsive (as you like)
+# slot: your AdSense slot id
 
-- name: "In-article"
-  slot: "6501428979"
-  type: "in-article"
-  note: "980x120 (label says In-article)"
+leaderboard:
+  - size: large
+    label: "Leaderboard (980x90)"
+    slot: "4921873558"
+  - size: xlarge
+    label: "Responsive Leaderboard"
+    slot: "4003326983"
+  - size: billboard
+    label: "Billboard (970x250)"
+    slot: "5882506557"
+  - size: mobile
+    label: "Mobile Leaderboard (300x50)"
+    slot: "3836856744"
 
-- name: "imswarnil_main_Blog1_1x1_as"
-  slot: "9619442326"
-  type: "display"
+skyscraper:
+  - size: large
+    label: "Large Skyscraper (300x1050)"
+    slot: "7400425360"
+  - size: medium
+    label: "Medium Skyscraper (300x600)"
+    slot: "2712169578"
+  - size: small
+    label: "Small Skyscraper (160x600)"
+    slot: "9488965956"
+  - size: alt
+    label: "Skyscraper (250x600)"
+    slot: "1549380617"
 
-- name: "Multiplex Responsive ( Vertical Ads )"
-  slot: "3295795878"
-  type: "multiplex"
+rectangle:
+  - size: large
+    label: "Large Rectangle (336x280)"
+    slot: "4394096538"
+  - size: medium
+    label: "Medium Rectangle (300x250)"
+    slot: "6066270853"
+  - size: button
+    label: "Large Button (300x60)"
+    slot: "9130894804"
 
-- name: "Multiplex Ad [ Horizontal ]"
-  slot: "3375031396"
-  type: "multiplex"
+square:
+  - size: medium
+    label: "Square (Responsive)"
+    slot: "8939839370"
+  - size: small
+    label: "Small Square (250x250)"
+    slot: "1684851337"
+  - size: tiny
+    label: "ChatGPTing (200x250)"
+    slot: "4774277934"
 
-- name: "In Feed Ad"
-  slot: "6808134701"
-  type: "in-feed"
+in-article:
+  - size: responsive
+    label: "In-article (fluid)"
+    slot: "6501428979"
 
-- name: "300x60 [ Large Button ]"
-  slot: "9130894804"
-  type: "display"
+feed:
+  - size: responsive
+    label: "In-feed (fluid)"
+    slot: "6808134701"  # NOTE: add your layout-key in include if you have one
 
-- name: "Mobile Leaderboard (300 * 50)"
-  slot: "3836856744"
-  type: "display"
+multiplex:
+  - size: horizontal
+    label: "Multiplex Horizontal"
+    slot: "3375031396"
+  - size: vertical
+    label: "Multiplex Vertical"
+    slot: "3295795878"
 
-- name: "Responsive_Leaderboard"
-  slot: "4003326983"
-  type: "display"
-
-- name: "ChatGPTing ( 200 x 250 )"
-  slot: "4774277934"
-  type: "display"
-
-- name: "Skyscraper [250x600]"
-  slot: "1549380617"
-  type: "display"
-
-- name: "Billboard (970×250)"
-  slot: "5882506557"
-  type: "display"
-
-- name: "Leaderboard (980 x 90)"
-  slot: "4921873558"
-  type: "display"
-
-- name: "The Leaderboard (728×90)"
-  slot: "8539588233"
-  type: "display"
-
-- name: "Vertical ( Responsive )"
-  slot: "1864856299"
-  type: "display"
-
-- name: "Horizontal ( Responsive )"
-  slot: "3487917390"
-  type: "display"
-
-- name: "Square ( Responsive )"
-  slot: "8939839370"
-  type: "display"
-
-# From your newer display list (Dec 5, 2024)
-- name: "Large Skyscraper (300×1050)"
-  slot: "7400425360"
-  type: "display"
-
-- name: "Medium Skyscraper (300×600)"
-  slot: "2712169578"
-  type: "display"
-
-- name: "Small Skyscraper (160×600)"
-  slot: "9488965956"
-  type: "display"
-
-- name: "Large (336×280)"
-  slot: "4394096538"
-  type: "display"
-
-- name: "Small Square (250×250)"
-  slot: "1684851337"
-  type: "display"
-
-- name: "Medium Square (300×250)"
-  slot: "6066270853"
-  type: "display"
+# Optional catch-alls (older responsive tags)
+vertical:
+  - size: responsive
+    label: "Vertical (Responsive)"
+    slot: "1864856299"
+horizontal:
+  - size: responsive
+    label: "Horizontal (Responsive)"
+    slot: "3487917390"
