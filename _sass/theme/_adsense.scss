@@ -1,41 +1,28 @@
-/* CRMA Ad Wrapper — uses your :root / html.dark vars */
+/* Wrapper picks up your :root / html.dark palette */
 .crma-ad{
-  --_pad: 12px;
   --_radius: var(--crma-radius, 0.75rem);
   --_bg: var(--crma-secondary, hsl(210, 50%, 96%));
-  --_fg: var(--crma-muted-foreground, hsl(214, 20%, 55%));
   --_bd: var(--crma-border, hsl(210, 30%, 90%));
-
   margin: 1.25rem 0;
-  padding: var(--_pad);
+  padding: 12px;
   border: 1px solid var(--_bd);
   border-radius: var(--_radius);
   background: var(--_bg);
-  color: var(--_fg);
 }
 
-.crma-ad--full { width: 100%; }
-.crma-ad--align-left   { margin-left: 0; margin-right: auto; }
-.crma-ad--align-center { margin-left: auto; margin-right: auto; }
-.crma-ad--align-right  { margin-left: auto; margin-right: 0; }
-
-.crma-ad__label{
-  font: 600 12px/1 var(--crma-font-sans, 'Montserrat', sans-serif);
-  letter-spacing: 0.02em;
-  color: var(--crma-muted-foreground, hsl(214,20%,55%));
-  margin: 0 0 8px 0;
-  opacity: .85;
+/* Placeholder to stabilize layout until ad paints */
+.crma-ad__ph{
+  width: 100%;
+  border-radius: calc(var(--_radius) - 2px);
+  background: color-mix(in srgb, var(--_bg), #000 4%);
+  min-height: 100px;
 }
 
-/* CLS-friendly placeholders per kind (tweak as needed) */
-.crma-ad__ph{ width: 100%; border-radius: calc(var(--_radius) - 2px); background: color-mix(in srgb, var(--_bg), #000 4%); min-height: 100px; }
+/* Rough aspect hints per type; adjust if you want tighter CLS */
 .crma-ad--leaderboard .crma-ad__ph{ min-height: clamp(60px, 7vw, 120px); }
 .crma-ad--rectangle   .crma-ad__ph{ min-height: clamp(120px, 18vw, 280px); }
-.crma-ad--square      .crma-ad__ph{ min-height: clamp(120px, 18vw, 250px); }
-.crma-ad--skyscraper  .crma-ad__ph{ min-height: clamp(300px, 80vh, 1050px); }
+.crma-ad--square      .crma-ad__ph{ min-height: clamp(150px, 22vw, 300px); }
+.crma-ad--skyscraper  .crma-ad__ph{ min-height: clamp(300px, 70vh, 1050px); }
 .crma-ad--in-article  .crma-ad__ph{ min-height: clamp(120px, 16vw, 220px); }
-.crma-ad--in-feed     .crma-ad__ph{ min-height: clamp(120px, 16vw, 220px); }
+.crma-ad--feed        .crma-ad__ph{ min-height: clamp(120px, 16vw, 220px); }
 .crma-ad--multiplex   .crma-ad__ph{ min-height: clamp(180px, 22vw, 320px); }
-
-/* Dark mode inherits from html.dark */
-html.dark .crma-ad__label{ opacity: .9; }

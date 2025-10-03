@@ -1,82 +1,30 @@
-# Simple ad taxonomy for your site
-# kind: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
-# size: large | medium | small | responsive (as you like)
-# slot: your AdSense slot id
-
+# Keep sizes: small | medium | large
 leaderboard:
-  - size: large
-    label: "Leaderboard (980x90)"
-    slot: "4921873558"
-  - size: xlarge
-    label: "Responsive Leaderboard"
-    slot: "4003326983"
-  - size: billboard
-    label: "Billboard (970x250)"
-    slot: "5882506557"
-  - size: mobile
-    label: "Mobile Leaderboard (300x50)"
-    slot: "3836856744"
+  small:  "3836856744"   # Mobile Leaderboard (300x50)
+  medium: "4921873558"   # Leaderboard (980x90) ← default
+  large:  "5882506557"   # Billboard (970x250)
 
 skyscraper:
-  - size: large
-    label: "Large Skyscraper (300x1050)"
-    slot: "7400425360"
-  - size: medium
-    label: "Medium Skyscraper (300x600)"
-    slot: "2712169578"
-  - size: small
-    label: "Small Skyscraper (160x600)"
-    slot: "9488965956"
-  - size: alt
-    label: "Skyscraper (250x600)"
-    slot: "1549380617"
+  small:  "9488965956"   # 160x600
+  medium: "2712169578"   # 300x600 ← default
+  large:  "7400425360"   # 300x1050
 
 rectangle:
-  - size: large
-    label: "Large Rectangle (336x280)"
-    slot: "4394096538"
-  - size: medium
-    label: "Medium Rectangle (300x250)"
-    slot: "6066270853"
-  - size: button
-    label: "Large Button (300x60)"
-    slot: "9130894804"
+  small:  "6066270853"   # 300x250
+  medium: "6066270853"   # 300x250 ← default
+  large:  "4394096538"   # 336x280
 
 square:
-  - size: medium
-    label: "Square (Responsive)"
-    slot: "8939839370"
-  - size: small
-    label: "Small Square (250x250)"
-    slot: "1684851337"
-  - size: tiny
-    label: "ChatGPTing (200x250)"
-    slot: "4774277934"
+  small:  "1684851337"   # 250x250
+  medium: "8939839370"   # Square (Responsive) ← default
+  large:  "8939839370"   # fallback to responsive
 
 in-article:
-  - size: responsive
-    label: "In-article (fluid)"
-    slot: "6501428979"
+  medium: "6501428979"   # fluid ← default
 
 feed:
-  - size: responsive
-    label: "In-feed (fluid)"
-    slot: "6808134701"  # NOTE: add your layout-key in include if you have one
+  medium: "6808134701"   # fluid ← default
 
 multiplex:
-  - size: horizontal
-    label: "Multiplex Horizontal"
-    slot: "3375031396"
-  - size: vertical
-    label: "Multiplex Vertical"
-    slot: "3295795878"
-
-# Optional catch-alls (older responsive tags)
-vertical:
-  - size: responsive
-    label: "Vertical (Responsive)"
-    slot: "1864856299"
-horizontal:
-  - size: responsive
-    label: "Horizontal (Responsive)"
-    slot: "3487917390"
+  medium: "3375031396"   # Horizontal ← default
+  large:  "3295795878"   # Vertical

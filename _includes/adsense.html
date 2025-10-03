@@ -1,96 +1,70 @@
 {%- comment -%}
-  Simple AdSense include
-  Props:
-    kind: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
-    size: optional (e.g., large, medium, small, responsive, billboard, horizontal, vertical)
-    align: left|center|right (default center)
-    label: accessible caption (default "Advertisement")
-    full: true|false (default true)
-    slot: override slot id (optional, bypasses data file)
+  Minimal AdSense include
+  API:
+    {% include adsense.html type="square" %}
+    {% include adsense.html type="leaderboard" size="large" %}
+  Params:
+    - type: leaderboard | skyscraper | rectangle | square | in-article | feed | multiplex
+    - size: small | medium | large (default: medium)
 {%- endcomment -%}
 
-{%- assign kind = include.kind | default: 'rectangle' -%}
-{%- assign size = include.size -%}
-{%- assign align = include.align | default: 'center' -%}
-{%- assign full  = include.full  | default: true -%}
-{%- assign label = include.label | default: 'Advertisement' -%}
-
-{%- assign slot = include.slot -%}
-{%- if slot == nil -%}
-  {%- assign group = site.data.ads[kind] -%}
-  {%- if group and group.size > 0 -%}
-    {%- if size -%}
-      {%- assign match = group | where: 'size', size | first -%}
-      {%- assign slot = match.slot | default: group[0].slot -%}
-    {%- else -%}
-      {%- assign slot = group[0].slot -%}
-    {%- endif -%}
-  {%- endif -%}
-{%- endif -%}
-
-{%- comment -%}
-  Determine AdSense format from kind
-{%- endcomment -%}
-{%- assign _type = 'display' -%}
-{%- if kind == 'in-article' -%}
-  {%- assign _type = 'in-article' -%}
-{%- elsif kind == 'feed' -%}
-  {%- assign _type = 'in-feed' -%}
-{%- elsif kind == 'multiplex' -%}
-  {%- assign _type = 'multiplex' -%}
-{%- endif -%}
-
-{%- if slot == nil -%}
-  <div class="crma-ad crma-ad--error">Ad not configured (kind: {{ kind }}, size: {{ size | default: 'default' }})</div>
+{%- assign _enabled = site.adsense.enabled | default: true -%}
+{%- if _enabled != true -%}
+  <!-- Ads disabled: site.adsense.enabled != true -->
 {%- else -%}
-  <figure
-    class="crma-ad crma-ad--{{ _type }} crma-ad--{{ kind | replace: ' ', '-' }} crma-ad--align-{{ align }}{% if full %} crma-ad--full{% endif %}"
-    role="figure"
-    aria-label="{{ label | escape }}"
-    data-kind="{{ kind }}"
-    data-size="{{ size | default: 'default' }}"
-  >
-    <figcaption class="crma-ad__label" aria-hidden="true">{{ label }}</figcaption>
+
+{%- assign _type = include.type | downcase -%}
+{%- assign _size = include.size | default: "medium" | downcase -%}
+
+{%- assign _group = site.data.ads[_type] -%}
+{%- assign _slot = nil -%}
+{%- if _group -%}
+  {%- assign _slot = _group[_size] | default: _group["medium"] -%}
+{%- endif -%}
+
+{%- if _slot == nil -%}
+  <div class="crma-ad crma-ad--error">Ad not configured (type: {{ _type }}, size: {{ _size }})</div>
+{%- else -%}
+  {%- assign _fmt = "display" -%}
+  {%- if _type == "in-article" -%}{% assign _fmt = "in-article" %}
+  {%- elsif _type == "feed" -%}{% assign _fmt = "in-feed" %}
+  {%- elsif _type == "multiplex" -%}{% assign _fmt = "multiplex" %}
+  {%- endif -%}
+
+  <figure class="crma-ad crma-ad--{{ _type }} crma-ad--{{ _size }}" role="figure" aria-label="Advertisement">
     <div class="crma-ad__ph" aria-hidden="true"></div>
 
     <ins class="adsbygoogle"
       style="display:block"
       data-ad-client="{{ site.adsense.publisher_id }}"
-      data-ad-slot="{{ slot }}"
-      {%- if _type == 'display' -%}
-        data-ad-format="auto"
-        data-full-width-responsive="true"
-      {%- elsif _type == 'in-article' -%}
-        data-ad-format="fluid"
-        data-ad-layout="in-article"
-      {%- elsif _type == 'in-feed' -%}
-        data-ad-format="fluid"
-        data-ad-layout-key="-g1+1o-3k-5u"
-      {%- elsif _type == 'multiplex' -%}
+      data-ad-slot="{{ _slot }}"
+      {%- if _fmt == "display" -%}
+        data-ad-format="auto" data-full-width-responsive="true"
+      {%- elsif _fmt == "in-article" -%}
+        data-ad-format="fluid" data-ad-layout="in-article"
+      {%- elsif _fmt == "in-feed" -%}
+        data-ad-format="fluid" data-ad-layout-key="-g1+1o-3k-5u"  {# replace with your key if provided #}
+      {%- elsif _fmt == "multiplex" -%}
         data-ad-format="autorelaxed"
       {%- endif -%}
       loading="lazy">
     </ins>
 
     <script>
-      (function lazyAdsense(root){
-        if (!root) return;
-        if (!window.adsbygoogle) { window.adsbygoogle = window.adsbygoogle || []; }
-
-        var ins = root.querySelector('ins.adsbygoogle');
+      (function lazyAdsense(el){
+        if (!el) return;
+        window.adsbygoogle = window.adsbygoogle || [];
         var fire = function(){ try { (adsbygoogle = window.adsbygoogle || []).push({}); } catch(e){} };
-
         if (!('IntersectionObserver' in window)) { fire(); return; }
-
-        var fired = false;
-        var io = new IntersectionObserver(function(es){
+        var io, fired = false, ins = el.querySelector('ins.adsbygoogle');
+        io = new IntersectionObserver(function(es){
           es.forEach(function(e){
             if (!fired && e.isIntersecting) { fired = true; fire(); io.disconnect(); }
           });
         }, { rootMargin: '200px 0px', threshold: 0.01 });
-
         io.observe(ins);
       })(document.currentScript.closest('.crma-ad'));
     </script>
   </figure>
+{%- endif -%}
 {%- endif -%}
