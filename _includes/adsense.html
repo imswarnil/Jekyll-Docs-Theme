@@ -55,9 +55,7 @@
 
   {%- comment -%} --- Renders Lazy-Loading Script (ONCE per page) --- {%- endcomment -%}
   {%- unless page.adsense_script_rendered -%}
-  <script>
-    document.addEventListener("DOMContentLoaded",function(){if(window.adObserver)return;const e=document.querySelectorAll("[data-lazy-ad-unit]");if(!e.length)return;const t=new IntersectionObserver((e,d)=>{e.forEach(e=>{if(e.isIntersecting){const s=e.target;if(s.dataset.adLazyLoaded)return;const a=s.querySelector(".adsbygoogle");if(a){s.dataset.adLazyLoaded="true";try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){console.error("Adsense error:",e)}}d.unobserve(s)}})},{rootMargin:"0px 0px 200px 0px"});window.adObserver=t,e.forEach(e=>{t.observe(e)})});
-  </script>
+ 
   {%- assign page.adsense_script_rendered = true -%}
   {%- endunless -%}
 
