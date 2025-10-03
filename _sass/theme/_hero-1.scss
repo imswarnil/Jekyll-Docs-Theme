@@ -1,0 +1,99 @@
+/* _sass/hero.scss */
+
+// 1. Base Hero Banner Styling
+// -----------------------------------------------------------------------------
+.hero-banner--academy {
+  background: var(--docs-hero-bg);
+  border-bottom: 1px solid var(--docs-border);
+  position: relative;
+  padding: 4rem 1.5rem;
+  overflow: hidden;
+
+  .hero-content {
+    position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr; align-items: center; gap: 2rem;
+    @media (min-width: 1024px) { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+  }
+
+  .hero-text {
+    .tableau-logo { font-size: 1rem; font-weight: 600; letter-spacing: 1px; color: var(--docs-hero-foreground); opacity: 0.9; margin-bottom: 1rem; }
+    h1 { font-size: clamp(2.5rem, 6vw, 4rem); color: var(--docs-hero-foreground); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; }
+    .hero__subtitle { margin-top: 1rem; color: var(--docs-hero-foreground); opacity: 0.85; max-width: 50ch; }
+    .hero-cta { margin-top: 1.5rem; }
+    .hero-pills { margin-top: 1.5rem; }
+  }
+}
+
+// 2. Animated SVG Styling & Responsiveness
+// -----------------------------------------------------------------------------
+.hero-character {
+  width: 100%;
+  max-width: 400px;
+  justify-self: center;
+  @media (min-width: 1024px) { justify-self: end; }
+}
+
+// 3. SVG Element Styling (Theming)
+// -----------------------------------------------------------------------------
+#storyboard-container {
+  .data-point { fill: var(--docs-hero-foreground); opacity: 0.5; }
+  .core-ring { fill: none; stroke: var(--docs-hero-accent); stroke-width: 1.5; }
+  .core-center { fill: var(--docs-hero-accent); }
+  .connector-line { fill: none; stroke: var(--docs-primary); stroke-width: 2.5; stroke-linecap: round; }
+  .icon-group {
+    .ph-duotone-bg { fill: var(--docs-accent); }
+    .ph-duotone-fg { fill: var(--docs-primary); }
+  }
+}
+
+// 4. Animation Definitions (@keyframes)
+// -----------------------------------------------------------------------------
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+@keyframes drawLine { to { stroke-dashoffset: 0; } }
+@keyframes popIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes fadeIn { to { opacity: 1; } }
+
+// 5. Animation Application & Sequencing (Total duration: 8s loop)
+// -----------------------------------------------------------------------------
+#storyboard-container {
+  // Data points float continuously
+  .data-point {
+    animation: float 5s ease-in-out infinite;
+    &.p2 { animation-duration: 7s; animation-delay: -2s; }
+    &.p3 { animation-duration: 6s; animation-delay: -4s; }
+    &.p4 { animation-duration: 8s; animation-delay: -1s; }
+  }
+  
+  // Core processor appears and pulses
+  .core-processor {
+    opacity: 0;
+    transform-origin: center;
+    animation: fadeIn 1s ease-out 0.5s forwards, pulse 4s ease-in-out 1.5s infinite;
+  }
+
+  // Connector lines draw themselves from the core to the icons
+  .connector-line {
+    stroke-dasharray: 200;
+    stroke-dashoffset: 200;
+    animation: drawLine 1s ease-out forwards;
+    // Stagger the start times
+    &.line-1 { animation-delay: 2s; }
+    &.line-2 { animation-delay: 2.3s; }
+    &.line-3 { animation-delay: 2.6s; }
+  }
+
+  // Icons pop into view as their connector lines "reach" them
+  .icon-group {
+    opacity: 0;
+    transform-origin: center;
+    animation: popIn 0.5s ease-out forwards;
+    // Stagger to match the lines
+    &.icon-chart { animation-delay: 3s; }
+    &.icon-users { animation-delay: 3.3s; }
+    &.icon-trend { animation-delay: 3.6s; }
+  }
+
+  // The whole animation fades in at the start for a smooth entrance
+  animation: fadeIn 0.5s ease-out;
+}

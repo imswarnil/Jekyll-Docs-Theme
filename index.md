@@ -10,50 +10,64 @@ hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this
   <div class="hero-content">
     <div class="hero-text">
       <div class="tableau-logo">CRM ANALYTICS • ACADEMY</div>
-      <h1>Master Your Data</h1>
-      <p class="sf-text--large sf-text-muted hero__subtitle">From raw numbers to actionable insights. Unlock the full potential of your CRM data with expert-led courses and tutorials.</p>
+      <h1>From Data to Decisions</h1>
+      <p class="sf-text--large sf-text-muted hero__subtitle">Transform raw data into strategic insights. Our academy provides the expert-led courses you need to master the entire analytics lifecycle.</p>
       <div class="hero-cta">
         <a href="#curriculum" class="btn btn--primary">Browse Curriculum</a>
         <a href="#lessons" class="btn btn--ghost">Latest Lessons</a>
       </div>
       <div class="hero-pills">
         <span class="pill">SAQL</span>
-        <span class="pill">Security Predicate</span>
+        <span class="pill">Data Prep</span>
         <span class="pill">Dashboard JSON</span>
-        <span class="pill">Lightning Embedding</span>
+        <span class="pill">Security</span>
       </div>
     </div>
-    <!-- Dynamic, Animated SVG Storyboard -->
+    <!-- Dynamic, Animated SVG Storyboard with Phosphor Icons -->
     <div class="hero-character" aria-hidden="true">
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
-        <g id="storyboard">
-          <!-- Stage 1: Raw Data Points (Chaos) -->
+        <g id="storyboard-container">
+          <!-- Stage 1: Raw Data -->
           <g class="data-points">
-            <circle class="data-point p1" cx="50" cy="80" r="3"/>
-            <circle class="data-point p2" cx="350" cy="150" r="4"/>
-            <circle class="data-point p3" cx="120" cy="250" r="2.5"/>
-            <rect class="data-point p4" x="30" y="180" width="5" height="5" rx="1"/>
-            <rect class="data-point p5" x="320" y="50" width="6" height="6" rx="1"/>
-            <rect class="data-point p6" x="280" y="260" width="4" height="4" rx="1"/>
+            <circle class="data-point p1" cx="40" cy="80" r="3"/>
+            <circle class="data-point p2" cx="150" cy="250" r="4"/>
+            <rect class="data-point p3" x="30" y="180" width="5" height="5" rx="1"/>
+            <rect class="data-point p4" x="200" y="40" width="6" height="6" rx="1"/>
           </g>
-          <!-- Stage 2: Central Processor (Analysis) -->
+          <!-- Stage 2: Core Processor -->
           <g class="core-processor">
-            <circle class="core-ring ring-1" cx="200" cy="150" r="20"/>
-            <circle class="core-ring ring-2" cx="200" cy="150" r="35"/>
-            <circle class="core-center" cx="200" cy="150" r="8"/>
+            <circle class="core-ring ring-1" cx="120" cy="150" r="30"/>
+            <circle class="core-ring ring-2" cx="120" cy="150" r="45"/>
+            <circle class="core-center" cx="120" cy="150" r="10"/>
           </g>
-          <!-- Stage 3 & 4: Charts (Insight & Growth) -->
-          <g class="charts">
-            <!-- Bar Chart -->
-            <g class="bar-chart">
-              <rect class="chart-bar bar-1" x="140" y="150" width="15" height="0"/>
-              <rect class="chart-bar bar-2" x="165" y="150" width="15" height="0"/>
-              <rect class="chart-bar bar-3" x="190" y="150" width="15" height="0"/>
+          <!-- Stage 3: Insight Connectors -->
+          <g class="insight-connectors">
+            <path class="connector-line line-1" d="M165,150 C220,150 240,80 295,80"/>
+            <path class="connector-line line-2" d="M165,150 C220,150 240,150 295,150"/>
+            <path class="connector-line line-3" d="M165,150 C220,150 240,220 295,220"/>
+          </g>
+          <!-- Stage 4: Insight Icons (Phosphor Duotone) -->
+          <g class="insight-icons">
+            <!-- Icon 1: Chart/Dashboard -->
+            <g class="icon-group icon-chart" transform="translate(300, 60) scale(1.4)">
+              <path class="ph-duotone-bg" d="M128,24a104,104,0,0,0-94.6,71.3L128,128Z"/>
+              <path class="ph-duotone-fg" d="M128,24V128h94.6A104.3,104.3,0,0,0,128,24ZM224,136H136V43.2a96,96,0,0,1,88,92.8Z"/>
+              <path class="ph-duotone-fg" d="M117.8,138.2a104,104,0,1,0,98.8,89.2.8.8,0,0,0-.1.2l-90.3-64.5A8,8,0,0,0,117.8,138.2ZM128,224a88,88,0,1,1,88-88v.8L128.8,144a16.1,16.1,0,0,1-17.6-6.4l-64-89.6A88,88,0,0,1,128,224Z"/>
             </g>
-            <!-- Line Graph -->
-            <g class="line-graph">
-              <polyline class="chart-line" points="215,150 235,120 255,135 275,100"/>
-              <circle class="line-dot" cx="275" cy="100" r="0"/>
+            <!-- Icon 2: Customers/Users -->
+            <g class="icon-group icon-users" transform="translate(300, 130) scale(1.4)">
+              <path class="ph-duotone-bg" d="M128,120a40,40,0,1,0-40-40A40,40,0,0,0,128,120Zm80,8a40,40,0,1,0-40-40A40,40,0,0,0,208,128ZM48,128a40,40,0,1,0-40-40A40,40,0,0,0,48,128Z"/>
+              <path class="ph-duotone-fg" d="M128,72a48,48,0,1,0,48,48A48,48,0,0,0,128,72Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,128,152Z"/>
+              <path class="ph-duotone-fg" d="M208,80a48,48,0,1,0,48,48A48,48,0,0,0,208,80Zm0,80a32,32,0,1,1,32-32A32,32,0,0,1,208,160Z"/>
+              <path class="ph-duotone-fg" d="M48,80a48,48,0,1,0,48,48A48,48,0,0,0,48,80ZM48,160a32,32,0,1,1,32-32A32,32,0,0,1,48,160Z"/>
+              <path class="ph-duotone-fg" d="M156,172.9a59.7,59.7,0,0,0-56,0,64,64,0,0,0-47.2,60.5a8,8,0,0,0,15.9,1.2,48,48,0,0,1,87.2-1.3,8,8,0,0,0,15.9-1.2A64,64,0,0,0,156,172.9Z"/>
+              <path class="ph-duotone-fg" d="M239.2,234.6a48,48,0,0,0-87.2-1.3,8,8,0,0,0-15.9,1.2,64,64,0,0,0,47.2,60.5,57.1,57.1,0,0,0,24.5,0,64,64,0,0,0,47.2-60.5,8,8,0,1,0-15.8-1.2Z"/>
+              <path class="ph-duotone-fg" d="M115.2,233.3a48,48,0,0,0-87.2,1.3,8,8,0,0,0,15.9,1.2A64,64,0,0,0,91.1,174a57.1,57.1,0,0,0-24.5,0,64,64,0,0,0-47.2,60.5,8,8,0,1,0,15.8,1.2A48,48,0,0,0,115.2,233.3Z"/>
+            </g>
+            <!-- Icon 3: Growth/Trends -->
+            <g class="icon-group icon-trend" transform="translate(300, 200) scale(1.4)">
+              <path class="ph-duotone-bg" d="M240,56,136,160,72,96,24,144V56Z"/>
+              <path class="ph-duotone-fg" d="M248,48a8,8,0,0,0-8,8V128l-61.7-61.7a8,8,0,0,0-11.3,0L136,97.7,77.7,39.3a8,8,0,0,0-11.3,0L24,81.7V56a8,8,0,0,0-16,0V152a8,8,0,0,0,8,8H248a8,8,0,0,0,0-16H42.3l24-24L136,182.3l28.7-28.6a8,8,0,0,0,0-11.3L224,81.7l16,16V56A8,8,0,0,0,248,48Z"/>
             </g>
           </g>
         </g>
