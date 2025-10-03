@@ -5,12 +5,9 @@
   width: 100%;
   margin: 2.5rem auto;
   padding: 1.5rem;
-  
-  // Use your site's theme variables for a perfect match
   background-color: var(--docs-secondary);
   border: 1px solid var(--docs-border);
-  border-radius: var(--docs-radius); // Rounded corners
-  
+  border-radius: var(--docs-radius); /* Rounded corners */
   box-sizing: border-box;
   overflow: hidden;
   transition: background-color 0.3s ease;
@@ -27,31 +24,28 @@
     text-align: center;
   }
 
-  // Placeholder styles for the lazy-loading state
-  &.crma-ad-lazy-load {
-    .crma-ad-unit-placeholder {
-      min-height: 250px; // A typical ad height to prevent layout shift
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    
-      // Simple loading spinner animation
-      &::after {
-        content: '';
-        display: block;
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        border: 3px solid var(--docs-border);
-        border-top-color: var(--docs-primary);
-        animation: crma-ad-spin 1s linear infinite;
-      }
+  .crma-ad-unit-placeholder {
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    &::after {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 3px solid var(--docs-border);
+      border-top-color: var(--docs-primary);
+      animation: crma-ad-spin 1s linear infinite;
     }
   }
 
-  // In-article ads should have a cleaner, borderless look
-  &[data-ad-format="fluid"] {
+  &.crma-ad-loaded .crma-ad-unit-placeholder { display: none; }
+
+  &[data-ad-type="In-article"],
+  &[data-ad-type="In-feed"] {
     background-color: transparent;
     border: none;
     border-top: 1px solid var(--docs-border);
@@ -61,6 +55,4 @@
   }
 }
 
-@keyframes crma-ad-spin {
-  to { transform: rotate(360deg); }
-}
+@keyframes crma-ad-spin { to { transform: rotate(360deg); } }

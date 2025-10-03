@@ -112,12 +112,13 @@ css_inline: true # Will insert all styles into a single <style> block in the <he
 adsense:
   enabled: true  # Set to false in local _config_dev.yml to disable while working
   publisher_id: "ca-pub-1291242080282540"
+# 2. Add the plugin's configuration block
 auto_ads:
-  enabled: true           # Master switch. Set to false to disable auto-injection.
-  layouts: ["post"]       # Only run on these layouts (e.g., 'post', 'page').
-  ad_type: "in-article"   # The ad type to inject. Must match a key in the plugin's ad_units hash.
-  start_after: 2          # Don't inject any ads before the Nth paragraph. (e.g., 2 means start after the 2nd <p>).
-  density: 5              # Inject one ad every N paragraphs after the start point.
+  enabled: true                 # Master switch: true or false
+  layouts: ["post"]             # Which layouts to inject ads into.
+  ad_type: "in-article"         # The ad you want to automatically place. (See list below)
+  start_after: 3                # Start injecting after the 3rd paragraph.
+  density: 4                    # Inject one ad every 4 paragraphs after that.
 
 # 8. Site favicons & manifest icons
 favicons: # Favicons are also used in the manifest file. Syntax is 'size: path'
