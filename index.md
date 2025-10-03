@@ -28,7 +28,7 @@ hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this
     </div>
 
     <!-- Optional hero art placeholder; swap with your SVG/PNG if needed -->
-    <img class="hero-character" src="/assets/img/academy-hero.png" alt="CRM Analytics Academy">
+    <img class="hero-character" src="/assets/img/crm-analytics-hero.svg" alt="CRM Analytics Academy">
   </div>
 </section>
 
