@@ -1,71 +1,66 @@
-/* ==========================================================================
-   AdSense Component Styles for CRM Analytics Academy
-   ========================================================================== */
+/* _sass/auto_ads.scss */
 
-/**
- * 1. Base Ad Container
- *    - Applies to all ad units.
- *    - Uses theme variables for a consistent look (light background, border, radius).
- */
 .crma-ad-container {
   display: block;
   width: 100%;
-  max-width: 100%;
-  margin: 2.5rem auto; /* Vertical spacing to separate from content */
+  margin: 2.5rem auto;
   padding: 1.5rem;
   
+  // Use your site's theme variables for a perfect match
   background-color: var(--docs-secondary);
   border: 1px solid var(--docs-border);
-  border-radius: var(--docs-radius);
+  border-radius: var(--docs-radius); // Rounded corners
   
-  text-align: center;
   box-sizing: border-box;
-  overflow: hidden; /* Prevents ad iframes from breaking the border-radius */
-}
+  overflow: hidden;
+  transition: background-color 0.3s ease;
 
-/**
- * 2. Ad Label ("Advertisement")
- *    - A subtle, muted label placed above the ad unit.
- */
-.crma-ad-label {
-  font-family: var(--docs-font-sans);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--docs-muted-foreground);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
-  line-height: 1;
-}
-
-/**
- * 3. Format-Specific Variants
- *    - Special styling for certain ad types to improve integration.
- */
-
-/* In-article & In-feed ads should blend with the content, not sit in a box */
-.crma-ad-container.crma-ad-format--in-article,
-.crma-ad-container.crma-ad-format--in-feed {
-  background-color: transparent;
-  border: none;
-  border-top: 1px solid var(--docs-border);
-  border-bottom: 1px solid var(--docs-border);
-  border-radius: 0;
-  padding: 2.5rem 0; /* More vertical spacing, no horizontal padding */
-}
-
-/**
- * 4. Google AdSense Overrides & Responsive Handling
- */
-
-/* Force Google's ad element to respect our container's background */
-.adsbygoogle {
-  background: transparent !important;
-}
-
-/* On very small screens, ads can disrupt the layout. Hiding them can improve UX. */
-@media (max-width: 374px) {
-  .crma-ad-container {
-    display: none !important;
+  .crma-ad-label {
+    font-family: var(--docs-font-sans);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--docs-muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+    line-height: 1;
+    text-align: center;
   }
+
+  // Placeholder styles for the lazy-loading state
+  &.crma-ad-lazy-load {
+    .crma-ad-unit-placeholder {
+      min-height: 250px; // A typical ad height to prevent layout shift
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    
+      // Simple loading spinner animation
+      &::after {
+        content: '';
+        display: block;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 3px solid var(--docs-border);
+        border-top-color: var(--docs-primary);
+        animation: crma-ad-spin 1s linear infinite;
+      }
+    }
+  }
+
+  // In-article ads should have a cleaner, borderless look
+  &[data-ad-format="fluid"] {
+    background-color: transparent;
+    border: none;
+    border-top: 1px solid var(--docs-border);
+    border-bottom: 1px solid var(--docs-border);
+    border-radius: 0;
+    padding: 2.5rem 0;
+  }
+}
+
+@keyframes crma-ad-spin {
+  to { transform: rotate(360deg); }
 }

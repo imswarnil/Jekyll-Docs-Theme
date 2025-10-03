@@ -1,19 +1,15 @@
 <!-- _includes/adsense.html -->
 {%- comment -%}
   ============================================================================
-  All-in-One AdSense Component for CRM Analytics Academy
+  All-in-One AdSense Component for CRM Analytics Academy (v2)
   
-  This file contains all ad unit definitions and rendering logic.
-  It removes the need for an external _data/ads.yml file.
+  This version adds an 'ad_shape' attribute to provide Google with rendering
+  hints for different types of Display ads (vertical, horizontal, rectangle).
+  This ensures Leaderboards, Skyscrapers, and other specific formats render
+  with their intended shape.
 
-  Usage:
-  Provide the 'type' of the ad you want to display.
-  The 'type' must match one of the keys defined in the main 'case' statement below.
-
-  Examples:
-  {% include adsense.html type="in-article" %}
-  {% include adsense.html type="medium-skyscraper" %}
-  {% include adsense.html type="responsive-leaderboard" %}
+  Usage remains the same:
+  {% include adsense.html type="ad-key" %}
   ============================================================================
 {%- endcomment -%}
 
@@ -21,8 +17,7 @@
 
   {%- comment -%}
     Part 1: Ad Unit Definition
-    This 'case' statement maps the friendly 'type' you provide
-    to the specific Slot ID and Ad Format Type.
+    Maps the friendly 'type' to its Slot ID, Format Type, and Shape Hint.
   {%- endcomment -%}
   {%- assign ad_found = true -%}
   {%- case include.type -%}
@@ -30,87 +25,124 @@
     {%- when "in-article" -%}
       {%- assign slot_id = "6501428979" -%}
       {%- assign ad_format_type = "In-article" -%}
-    {%- when "display-980x120" -%}
-      {%- assign slot_id = "7400425360" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "large-skyscraper" -%}
-      {%- assign slot_id = "2712169578" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "medium-skyscraper" -%}
-      {%- assign slot_id = "9488965956" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "small-skyscraper" -%}
-      {%- assign slot_id = "4394096538" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "large-rectangle" -%}
-      {%- assign slot_id = "1684851337" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "small-square" -%}
-      {%- assign slot_id = "6066270853" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "medium-square" -%}
-      {%- assign slot_id = "9619442326" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "imswarnil-main-blog" -%}
-      {%- assign slot_id = "3295795878" -%}
-      {%- assign ad_format_type = "Display" -%}
+    {%- when "in-feed" -%}
+      {%- assign slot_id = "9130894804" -%}
+      {%- assign ad_format_type = "In-feed" -%}
+
     {%- when "multiplex-vertical" -%}
       {%- assign slot_id = "3375031396" -%}
       {%- assign ad_format_type = "Multiplex" -%}
     {%- when "multiplex-horizontal" -%}
       {%- assign slot_id = "6808134701" -%}
       {%- assign ad_format_type = "Multiplex" -%}
-    {%- when "in-feed" -%}
-      {%- assign slot_id = "9130894804" -%}
-      {%- assign ad_format_type = "In-feed" -%}
-    {%- when "large-button" -%}
-      {%- assign slot_id = "3836856744" -%}
+
+    {%- comment %} --- Vertical Display Ads (Skyscrapers) --- {% endcomment -%}
+    {%- when "large-skyscraper" -%}
+      {%- assign slot_id = "2712169578" -%}
       {%- assign ad_format_type = "Display" -%}
-    {%- when "mobile-leaderboard" -%}
-      {%- assign slot_id = "4003326983" -%}
+      {%- assign ad_shape = "vertical" -%}
+    {%- when "medium-skyscraper" -%}
+      {%- assign slot_id = "9488965956" -%}
       {%- assign ad_format_type = "Display" -%}
-    {%- when "responsive-leaderboard" -%}
-      {%- assign slot_id = "4774277934" -%}
+      {%- assign ad_shape = "vertical" -%}
+    {%- when "small-skyscraper" -%}
+      {%- assign slot_id = "4394096538" -%}
       {%- assign ad_format_type = "Display" -%}
-    {%- when "chatgpting-200x250" -%}
-      {%- assign slot_id = "1549380617" -%}
-      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "vertical" -%}
     {%- when "skyscraper-250x600" -%}
       {%- assign slot_id = "5882506557" -%}
       {%- assign ad_format_type = "Display" -%}
-    {%- when "billboard" -%}
-      {%- assign slot_id = "4921873558" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "leaderboard-980x90" -%}
-      {%- assign slot_id = "8539588233" -%}
-      {%- assign ad_format_type = "Display" -%}
-    {%- when "leaderboard-728x90" -%}
-      {%- assign slot_id = "1864856299" -%}
-      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "vertical" -%}
     {%- when "responsive-vertical" -%}
       {%- assign slot_id = "3487917390" -%}
       {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "vertical" -%}
+
+    {%- comment %} --- Horizontal Display Ads (Leaderboards, Banners) --- {% endcomment -%}
+    {%- when "display-980x120" -%}
+      {%- assign slot_id = "7400425360" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "mobile-leaderboard" -%}
+      {%- assign slot_id = "4003326983" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "responsive-leaderboard" -%}
+      {%- assign slot_id = "4774277934" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "billboard" -%}
+      {%- assign slot_id = "4921873558" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "leaderboard-980x90" -%}
+      {%- assign slot_id = "8539588233" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "leaderboard-728x90" -%}
+      {%- assign slot_id = "1864856299" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
     {%- when "responsive-horizontal" -%}
       {%- assign slot_id = "8939839370" -%}
       {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+    {%- when "large-button" -%}
+      {%- assign slot_id = "3836856744" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "horizontal" -%}
+
+    {%- comment %} --- Rectangular & Square Display Ads --- {% endcomment -%}
+    {%- when "large-rectangle" -%}
+      {%- assign slot_id = "1684851337" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "rectangle" -%}
+    {%- when "small-square" -%}
+      {%- assign slot_id = "6066270853" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "rectangle" -%}
+    {%- when "medium-square" -%}
+      {%- assign slot_id = "9619442326" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "rectangle" -%}
+    {%- when "chatgpting-200x250" -%}
+      {%- assign slot_id = "1549380617" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "rectangle" -%}
     {%- when "responsive-square" -%}
       {%- assign slot_id = "7663977887" -%}
       {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "rectangle" -%}
+
+    {%- comment %} --- Default Auto-Format Display Ad --- {% endcomment -%}
+    {%- when "imswarnil-main-blog" -%}
+      {%- assign slot_id = "3295795878" -%}
+      {%- assign ad_format_type = "Display" -%}
+      {%- assign ad_shape = "auto" -%}
 
     {%- else -%}
       {%- assign ad_found = false -%}
   {%- endcase -%}
 
+
   {%- comment -%}
     Part 2: Ad Rendering
-    If a matching ad was found above, this section generates the
-    correct HTML for it, wrapped in your styled container.
+    This section now intelligently renders all ad types correctly.
   {%- endcomment -%}
   {%- if ad_found -%}
     <div class="crma-ad-container crma-ad-format--{{ ad_format_type | downcase }}">
       <div class="crma-ad-label">Advertisement</div>
 
       {%- case ad_format_type -%}
+        {%- when 'Display' -%}
+          <!-- Renders all Display ads using the 'ad_shape' hint -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="{{ site.adsense.publisher_id }}"
+               data-ad-slot="{{ slot_id }}"
+               data-ad-format="{{ ad_shape | default: 'auto' }}"
+               data-full-width-responsive="true"></ins>
+
         {%- when 'In-article' or 'In-feed' -%}
           <ins class="adsbygoogle"
                style="display:block; text-align:center;"
@@ -118,20 +150,13 @@
                data-ad-format="fluid"
                data-ad-client="{{ site.adsense.publisher_id }}"
                data-ad-slot="{{ slot_id }}"></ins>
+
         {%- when 'Multiplex' -%}
           <ins class="adsbygoogle"
                style="display:block"
                data-ad-format="autorelaxed"
                data-ad-client="{{ site.adsense.publisher_id }}"
                data-ad-slot="{{ slot_id }}"></ins>
-        {%- else -%}
-          <!-- Default for all 'Display' ads -->
-          <ins class="adsbygoogle"
-               style="display:block"
-               data-ad-client="{{ site.adsense.publisher_id }}"
-               data-ad-slot="{{ slot_id }}"
-               data-ad-format="auto"
-               data-full-width-responsive="true"></ins>
       {%- endcase -%}
 
       <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
