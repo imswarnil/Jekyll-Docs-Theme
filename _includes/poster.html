@@ -2,7 +2,7 @@
   Imswarnil – Jekyll Hero Poster Component (SVG)
   Usage:
     {% include hero_poster.svg.html 
-         title_line1="TABLEAU CRM" 
+         title="TABLEAU CRM" 
          title_line2="TRAINING" 
          kicker="CRM ANALYTICS" 
          bg="#a8d2f3" circle_dark="#1e5ea3" circle_mid="#2f78c7" 
@@ -12,10 +12,10 @@
   Notes:
   - Fully responsive (scales with container width)
   - Edit colors via include params (shown above)
-  - If page has `title:` in front matter and you omit `title_line1`, it will use `page.title`
+  - If page has `title:` in front matter and you omit `title`, it will use `page.title`
 {%- endcomment -%}
 
-{%- assign l1 = include.title_line1 | default: page.title | default: "TABLEAU CRM" -%}
+{%- assign l1 = include.title | default: page.title | default: "TABLEAU CRM" -%}
 {%- assign l2 = include.title_line2 | default: "TRAINING" -%}
 {%- assign kicker = include.kicker | default: "CRM ANALYTICS" -%}
 {%- assign bg = include.bg | default: "#a8d2f3" -%}
