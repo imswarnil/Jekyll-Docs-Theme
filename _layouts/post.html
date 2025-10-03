@@ -29,6 +29,20 @@ layout: default
 
   <aside class="sidebar-right">
     <h3 class="toc-title">On This Page</h3>
+    {%- if page.translation_key -%}
+  {%- assign siblings = site.posts | where: "translation_key", page.translation_key -%}
+  <nav class="lang-switch">
+    {%- for p in siblings -%}
+      <a href="{{ p.url | relative_url }}" hreflang="{{ p.lang }}">{{ p.lang | upcase }}</a>
+    {%- endfor -%}
+    {%- if page.alternates -%}
+      {%- for a in page.alternates -%}
+        <a href="{{ a.url | relative_url }}" hreflang="{{ a.lang }}">{{ a.lang | upcase }}</a>
+      {%- endfor -%}
+    {%- endif -%}
+  </nav>
+{%- endif -%}
+
     <div class="desktop-toc-container toc-container"></div>
     <div class="sidebar-right-actions">
       <a href="{{ site.github_url }}/edit/main/{{ page.path }}" target="_blank" rel="noopener noreferrer"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
