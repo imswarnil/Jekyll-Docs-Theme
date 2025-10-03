@@ -1,42 +1,24 @@
 {%- comment -%}
 ================================================================================
-  All-in-One Adsense Component with Self-Contained Styles & Lazy Loading
+  Simple AdSense Component with Lazy Loading & Self-Contained Styles
   - Usage: {% include adsense.html type="[TYPE]" %}
-  - This single file contains all necessary HTML, CSS, and JavaScript.
-  - The slot IDs are mapped internally. Just pass the type.
+  - Available types: square, leaderboard, skyscraper, article
 ================================================================================
 {%- endcomment -%}
 
 {%- assign ad_type = include.type -%}
 {%- assign publisher_id = site.adsense.publisher_id | default: "ca-pub-1291242080282540" -%}
 
-{%- comment -%}
-  --- Step 1: Map ad type to its Slot ID ---
-  This is the internal "config". Add new ad types here.
-{%- endcomment -%}
+{%- comment -%} --- Map type to the correct Slot ID --- {%- endcomment -%}
 {%- case ad_type -%}
-  {%- when "in-article" -%}
-    {%- assign slot_id = "6501428979" -%}
-  {%- when "in-feed" -%}
-    {%- assign slot_id = "9130894804" -%}
-  {%- when "skyscraper-large" -%}
-    {%- assign slot_id = "7400425360" -%}
-  {%- when "skyscraper-medium" -%}
-    {%- assign slot_id = "2712169578" -%}
-  {%- when "skyscraper-small" -%}
-    {%- assign slot_id = "9488965956" -%}
-  {%- when "rectangle-large" -%}
-    {%- assign slot_id = "4394096538" -%}
-  {%- when "square-medium" -%}
-    {%- assign slot_id = "6066270853" -%}
-  {%- when "square-small" -%}
-    {%- assign slot_id = "1684851337" -%}
+  {%- when "square" -%}
+    {%- assign slot_id = "7663977887" -%}
   {%- when "leaderboard" -%}
-    {%- assign slot_id = "4774277934" -%}
-  {%- when "leaderboard-billboard" -%}
-    {%- assign slot_id = "4921873558" -%}
-  {%- when "multiplex-horizontal" -%}
-    {%- assign slot_id = "6808134701" -%}
+    {%- assign slot_id = "8939839370" -%}
+  {%- when "skyscraper" -%}
+    {%- assign slot_id = "3487917390" -%}
+  {%- when "article" -%}
+    {%- assign slot_id = "6501428979" -%}
   {%- else -%}
     {%- assign slot_id = nil -%}
 {%- endcase -%}
@@ -44,68 +26,39 @@
 
 {%- if site.adsense.enabled and slot_id -%}
 
-  {%- comment -%}
-    --- Step 2: Render CSS (ONCE PER PAGE) ---
-    This block adds all the necessary ad styles to the page, but only
-    the first time an ad component is included.
-  {%- endcomment -%}
+  {%- comment -%} --- Renders CSS (ONCE per page) --- {%- endcomment -%}
   {%- unless page.adsense_styles_rendered -%}
-    <style>
-      .crma-ad{--_radius:var(--crma-radius, .75rem);--_bg:var(--crma-secondary, hsl(210, 50%, 96%));--_bd:var(--crma-border, hsl(210, 30%, 90%));--_text:var(--crma-muted-foreground, hsl(214, 20%, 55%));margin:2rem auto;padding:12px;border:1px solid var(--_bd);border-radius:var(--_radius);background:var(--_bg);overflow:hidden;max-width:100%;text-align:center}.crma-ad .adsbygoogle{display:block;background:transparent;margin:0 auto;min-width:150px}.crma-ad .adsbygoogle[data-ad-status=filled]{background:transparent;border:none}.crma-ad .adsbygoogle[data-ad-status=unfilled]::before{content:"Advertisement";display:flex;align-items:center;justify-content:center;width:100%;height:100%;min-height:50px;font-size:.8rem;font-weight:500;color:var(--_text)}.crma-ad--in-article,.crma-ad--in-feed{padding:0;border:none;background:transparent;min-height:250px}.crma-ad--multiplex-horizontal{min-height:250px;max-width:900px}.crma-ad--leaderboard{max-width:980px;min-height:50px}@media (min-width: 768px){.crma-ad--leaderboard{min-height:90px}}.crma-ad--leaderboard-billboard{max-width:970px;min-height:90px}@media (min-width: 1024px){.crma-ad--leaderboard-billboard{min-height:250px}}.crma-ad--skyscraper-large,.crma-ad--skyscraper-medium,.crma-ad--skyscraper-small{display:none;margin:1.5rem 0}@media (min-width: 1280px){.crma-ad--skyscraper-large,.crma-ad--skyscraper-medium,.crma-ad--skyscraper-small{display:block}}.crma-ad--skyscraper-large{max-width:300px;min-height:1050px}.crma-ad--skyscraper-medium{max-width:300px;min-height:600px}.crma-ad--skyscraper-small{max-width:160px;min-height:600px}.crma-ad--rectangle-large{max-width:336px;min-height:280px}.crma-ad--square-medium{max-width:300px;min-height:250px}.crma-ad--square-small{max-width:250px;min-height:250px}html.dark .crma-ad{--_bg:var(--crma-secondary, hsl(216, 35%, 18%));--_bd:var(--crma-border, hsl(216, 30%, 25%));--_text:var(--crma-muted-foreground, hsl(214, 15%, 55%))}
-    </style>
-    {%- assign page.adsense_styles_rendered = true -%}
+  <style>
+    .crma-ad-wrap{--_bg:var(--crma-secondary,hsl(210,50%,96%));--_bd:var(--crma-border,hsl(210,30%,90%));margin:2rem auto;background:var(--_bg);border:1px solid var(--_bd);border-radius:var(--crma-radius,.75rem);padding:10px;display:flex;align-items:center;justify-content:center;overflow:hidden}.crma-ad-wrap[data-ad-type=leaderboard]{min-height:90px;max-width:980px}.crma-ad-wrap[data-ad-type=square]{min-height:250px;max-width:336px}.crma-ad-wrap[data-ad-type=skyscraper]{display:none;min-height:600px;max-width:300px}@media (min-width:1024px){.crma-ad-wrap[data-ad-type=skyscraper]{display:flex}}.crma-ad-wrap[data-ad-type=article]{min-height:280px;border:none;background:0 0;padding:0}.crma-ad-wrap .adsbygoogle{display:block;width:100%;height:100%}html.dark .crma-ad-wrap{--_bg:var(--crma-secondary,hsl(216,35%,18%));--_bd:var(--crma-border,hsl(216,30%,25%))}
+  </style>
+  {%- assign page.adsense_styles_rendered = true -%}
   {%- endunless -%}
 
-  {%- comment -%}
-    --- Step 3: Render the Ad HTML ---
-    This is the actual ad unit that will be placed on the page.
-    It has a `data-lazy-ad` attribute for our script to find it.
-  {%- endcomment -%}
-  <div class="crma-ad crma-ad--{{ ad_type }}" data-lazy-ad>
-    <ins class="adsbygoogle"
-         data-ad-client="{{ publisher_id }}"
-         data-ad-slot="{{ slot_id }}"
-         {%- if ad_type == 'in-article' -%}
-           data-ad-layout="in-article" data-ad-format="fluid"
-         {%- elsif ad_type == 'in-feed' -%}
-           data-ad-format="fluid" data-ad-layout-key="-6v+f0-19-44+c6"
-         {%- endif -%}>
-    </ins>
+  {%- comment -%} --- The Ad Unit HTML --- {%- endcomment -%}
+  <div class="crma-ad-wrap" data-ad-type="{{ ad_type }}" data-lazy-ad-unit>
+    {%- if ad_type == "article" -%}
+      <ins class="adsbygoogle"
+          style="display:block; text-align:center;"
+          data-ad-layout="in-article"
+          data-ad-format="fluid"
+          data-ad-client="{{ publisher_id }}"
+          data-ad-slot="{{ slot_id }}"></ins>
+    {%- else -%}
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="{{ publisher_id }}"
+          data-ad-slot="{{ slot_id }}"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+    {%- endif -%}
   </div>
 
-  {%- comment -%}
-    --- Step 4: Render Lazy-Loading JavaScript (ONCE PER PAGE) ---
-    This script sets up an IntersectionObserver that finds all ads with
-    `data-lazy-ad` and loads them when they are near the viewport.
-    It will only be rendered once, with the first ad component on the page.
-  {%- endcomment -%}
+  {%- comment -%} --- Renders Lazy-Loading Script (ONCE per page) --- {%- endcomment -%}
   {%- unless page.adsense_script_rendered -%}
-    <script>
-      document.addEventListener("DOMContentLoaded", function() {
-        if (window.adObserver) return;
-        const lazyAdContainers = document.querySelectorAll('[data-lazy-ad]');
-        if (!lazyAdContainers.length) return;
-        const adObserver = new IntersectionObserver((entries, observer) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const adContainer = entry.target;
-              if (adContainer.dataset.adLazyLoaded) return;
-              const adInsElement = adContainer.querySelector('.adsbygoogle');
-              if (adInsElement) {
-                adContainer.dataset.adLazyLoaded = 'true';
-                try {
-                  (window.adsbygoogle = window.adsbygoogle || []).push({});
-                } catch (e) { console.error('Adsense error:', e); }
-              }
-              observer.unobserve(adContainer);
-            }
-          });
-        }, { rootMargin: '0px 0px 200px 0px' });
-        window.adObserver = adObserver;
-        lazyAdContainers.forEach(container => adObserver.observe(container));
-      });
-    </script>
-    {%- assign page.adsense_script_rendered = true -%}
+  <script>
+    document.addEventListener("DOMContentLoaded",function(){if(window.adObserver)return;const e=document.querySelectorAll("[data-lazy-ad-unit]");if(!e.length)return;const t=new IntersectionObserver((e,d)=>{e.forEach(e=>{if(e.isIntersecting){const s=e.target;if(s.dataset.adLazyLoaded)return;const a=s.querySelector(".adsbygoogle");if(a){s.dataset.adLazyLoaded="true";try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){console.error("Adsense error:",e)}}d.unobserve(s)}})},{rootMargin:"0px 0px 200px 0px"});window.adObserver=t,e.forEach(e=>{t.observe(e)})});
+  </script>
+  {%- assign page.adsense_script_rendered = true -%}
   {%- endunless -%}
 
 {%- endif -%}
