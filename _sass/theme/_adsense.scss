@@ -1,103 +1,21 @@
-:root{
-    --ad-radius: var(--crma-radius, .75rem);
-    --ad-bg: var(--crma-ad-bg, var(--crma-secondary));
-    --ad-border: var(--crma-ad-border, var(--crma-border));
-    --ad-muted: var(--crma-muted-foreground);
-    --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
-  }
-  html.dark{ --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25)); }
-  
-  /* ===== Base ad card (we control ALL container styling) ===== */
-  .ad{
+.ad{
     width: 100%;
     max-width: 100%;
-    margin: clamp(var(--crma-space-3,.75rem), 3vw, var(--crma-space-6,1.5rem)) 0;
+    margin: clamp(var(--crma-space-3,.75rem), 3vw, var(--crma-space-6,1.5rem)) auto;
     padding: clamp(10px, 2vw, 16px);
-    background: var(--ad-bg);
-    border: var(--crma-border-width,1px) solid var(--ad-border);
-    border-radius: var(--ad-radius);
-    box-shadow: var(--ad-shadow);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: .45rem;
+    background: var(--crma-ad-bg, var(--crma-secondary));
+    border: var(--crma-border-width,1px) solid var(--crma-ad-border, var(--crma-border));
+    border-radius: var(--crma-radius, .75rem);
+    box-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
   }
+  html.dark .ad{ box-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25)); }
   
-  /* Label */
   .ad__label{
-    font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui);
+    display: block;
+    font: var(--crma-weight-semibold,600) 11px/1 var(--crma-font-sans, system-ui);
     letter-spacing: .14em;
     text-transform: uppercase;
-    color: var(--ad-muted);
+    color: var(--crma-muted-foreground);
+    margin-bottom: 6px;
   }
-  
-  /* <ins> must fill our frame; we override all defaults */
-  .ad .adsbygoogle{
-    display: block !important;
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 0 !important;
-    background: transparent !important;
-    border: 0 !important;
-    border-radius: calc(var(--ad-radius) - 2px);
-    overflow: hidden;
-  }
-  
-  /* ===== SQUARE (sm/md/lg) — width caps + height guards ===== */
-  .ad--square.ad--sm { max-width: 200px; min-height: 120px; }  /* ~120–200 tall */
-  .ad--square.ad--md { max-width: 300px; min-height: 250px; }  /* ~250–300 tall */
-  .ad--square.ad--lg { max-width: 336px; min-height: 280px; }  /* ~300+ tall */
-  
-  /* ===== LEADERBOARD (horizontal) ===== */
-  .ad--leaderboard.ad--sm { max-width: 468px; min-height: 60px; }   /* 468×60 */
-  .ad--leaderboard.ad--md { max-width: 728px; min-height: 90px; }   /* 728×90 */
-  .ad--leaderboard.ad--lg { max-width: 980px; min-height: 120px; }  /* 980×120 / 970×90 */
-  
-  /* ===== RECTANGLE / BANNERS ===== */
-  .ad--rectangle.ad--sm { max-width: 250px; min-height: 200px; }  /* 250×200 */
-  .ad--rectangle.ad--md { max-width: 300px; min-height: 250px; }  /* 300×250 */
-  .ad--rectangle.ad--lg { max-width: 336px; min-height: 280px; }  /* 336×280 */
-  
-  /* ===== SKYSCRAPER (vertical) ===== */
-  .ad--skyscraper.ad--sm { max-width: 120px; min-height: 600px; }   /* 120×600 */
-  .ad--skyscraper.ad--md { max-width: 160px; min-height: 600px; }   /* 160×600 */
-  .ad--skyscraper.ad--lg { max-width: 300px; min-height: 600px; }   /* 300×600; can stretch taller */
-  
-  /* ===== Fluid families (stretch to container width) ===== */
-  .ad--article,
-  .ad--feed,
-  .ad--multiplex { max-width: 100%; }
-  
-  /* ===== Mobile behavior — fill container width, relax heights slightly ===== */
-  @media (max-width: 480px){
-    .ad--square,
-    .ad--rectangle,
-    .ad--leaderboard { max-width: 100% !important; }
-  
-    .ad--leaderboard.ad--md { min-height: 70px; }
-    .ad--leaderboard.ad--lg { min-height: 90px; }
-  
-    /* Skyscrapers in narrow sidebars: allow shorter minimum if needed */
-    .ad--skyscraper.ad--sm,
-    .ad--skyscraper.ad--md,
-    .ad--skyscraper.ad--lg { min-height: 480px; }
-  }
-  
-  /* ===== Layout nicety: center capped units on tablet+ ===== */
-  @media (min-width: 768px){
-    .ad { margin-left: auto; margin-right: auto; }
-  }
-  
-  /* ===== Optional: aspect-ratio helpers (opt-in) =====
-     Add .ad--ratio-1-1 for perfect square; .ad--ratio-8-1 for wide leaderboard.
-     These reserve space to further reduce CLS. */
-  .ad--ratio-1-1  { aspect-ratio: 1 / 1; }
-  .ad--ratio-4-3  { aspect-ratio: 4 / 3; }
-  .ad--ratio-3-2  { aspect-ratio: 3 / 2; }
-  .ad--ratio-8-1  { aspect-ratio: 8 / 1; }   /* e.g., 970×120 ≈ 8:1 */
-  .ad--ratio-16-9 { aspect-ratio: 16 / 9; }
-  
-  /* Aspect-ratio reserves space for the card; keep inner <ins> flexible */
-  .ad[class*="ad--ratio-"]{ padding: clamp(8px, 1.5vw, 14px); }
   

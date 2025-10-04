@@ -1,0 +1,26 @@
+{%- assign t = include.type | downcase | default: 'square' -%}
+{%- assign extra = include.class | default: '' -%}
+{%- assign label = include.label | default: 'Advertisement' -%}
+
+<div class="ad {{ extra }}">
+  <span class="ad__label" aria-label="Advertisement">{{ label }}</span>
+
+  {%- case t -%}
+    {%- when 'square' -%}
+      {% include adsense/square.html %}
+    {%- when 'leaderboard' -%}
+      {% include adsense/leaderboard.html %}
+    {%- when 'article' -%}
+      {% include adsense/article.html %}
+    {%- when 'multiplex' -%}
+      {% include adsense/multiplex.html %}
+    {%- when 'feed' -%}
+      {% include adsense/feed.html layout_key=include.layout_key %}
+    {%- when 'vertical' -%}
+      {% include adsense/vertical.html %}
+    {%- else -%}
+      {% include adsense/square.html %}
+  {%- endcase -%}
+</div>
+
+<script>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
