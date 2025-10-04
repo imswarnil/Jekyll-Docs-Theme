@@ -13,12 +13,10 @@ hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this
       <div class="tableau-logo">CRM ANALYTICS • ACADEMY</div>
       <h1>{{ page.hero_title }}</h1>
       <p class="sf-text--large sf-text-muted hero__subtitle">{{ page.hero_subtitle }}</p>
-
       <div class="hero-cta">
         <a href="#curriculum" class="btn btn--primary">Browse Curriculum</a>
         <a href="#lessons" class="btn btn--ghost">Latest Lessons</a>
       </div>
-
       <div class="hero-pills">
         <span class="pill">SAQL</span>
         <span class="pill">Security Predicate</span>
@@ -26,7 +24,6 @@ hero_image: "/assets/img/academy-hero.png" # Make sure you have an image at this
         <span class="pill">Lightning Embedding</span>
       </div>
     </div>
-
     <!-- Optional hero art placeholder; swap with your SVG/PNG if needed -->
     <img class="hero-character" src="/assets/img/academy-hero.png" alt="CRM Analytics Academy">
   </div>
