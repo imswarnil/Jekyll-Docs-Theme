@@ -1,40 +1,15 @@
-{%- assign cfg = site.adsense -%}
-{%- assign enabled = cfg.enabled | default: true -%}
-{%- assign pub = cfg.publisher_id | default: "ca-pub-1291242080282540" -%}
-{%- assign key = include.key | strip -%}
-{%- assign size = include.size | default: "md" -%}
-{%- assign extra = include.class | default: "" -%}
-{%- assign layout_key = include.layout_key | default: "-6v+f0-19-44+c6" -%}
+{%- assign type  = include.type  | downcase | default: 'square' -%}
+{%- assign size  = include.size  | downcase | default: 'md' -%}
+{%- assign extra = include.class | default: '' -%}
 
-{%- assign slot_obj = cfg.slots[key] -%}
-{%- assign slot = slot_obj.slot | default: nil -%}
-{%- assign fmt = slot_obj.format | default: nil | downcase -%}
+<div class="ad ad--{{ type }} ad--{{ size }} {{ extra }}">
+  <span class="ad__label" aria-label="Advertisement">Advertisement</span>
+  {%- case type -%}
+    {%- when 'square' -%}
+      {% include adsense/square.html size=size %}
+    {%- else -%}
+      <!-- Unknown type; nothing to render -->
+  {%- endcase -%}
+</div>
 
-{%- if enabled and key and slot and fmt -%}
-  {%- capture attrs -%}
-    data-ad-client="{{ pub }}"
-    data-ad-slot="{{ slot }}"
-    {%- case fmt -%}
-      {%- when "article" -%}
-        data-ad-format="fluid" data-ad-layout="in-article" data-full-width-responsive="true"
-      {%- when "feed" -%}
-        data-ad-format="fluid" data-ad-layout="in-feed" data-ad-layout-key="{{ layout_key }}"
-      {%- when "multiplex" -%}
-        data-ad-format="autorelaxed"
-      {%- else -%} {# display & responsive_* #}
-        data-ad-format="auto" data-full-width-responsive="true"
-    {%- endcase -%}
-  {%- endcapture -%}
-
-  <div class="ad ad--{{ key | replace:'_','-' }} ad--{{ fmt }} ad--{{ size }} {{ extra }}">
-    <span class="ad__label" aria-label="Advertisement">Advertisement</span>
-    <ins class="adsbygoogle" {{ attrs | strip }}></ins>
-  </div>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-
-{%- else -%}
-  <div class="ad ad--placeholder">
-    <span class="ad__label">Advertisement</span>
-    <div class="adsbygoogle"></div>
-  </div>
-{%- endif -%}
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
