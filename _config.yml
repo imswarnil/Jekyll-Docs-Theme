@@ -136,7 +136,7 @@ adsense:
     rectangle_large:        { slot: '4394096538', format: 'display' } # 336x280
     square_medium:          { slot: '6066270853', format: 'display' } # 300x250
     square_small:           { slot: '1684851337', format: 'display' } # 250x250
-    square_200:             { slot: '1549380617', format: 'display' } # 200x250 (ChatGPTing)
+    square_200:             { slot: '1549380617', format: 'display' } # 200x250
 
     # --- Leaderboard & Banner Ads ---
     leaderboard_responsive: { slot: '4774277934', format: 'display' }
