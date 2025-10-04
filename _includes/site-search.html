@@ -1,99 +1,58 @@
+<div class="form  form--search">
+  <form id="contact-form" action="">
+    <label class="label" for="search">Search term:</label>
+    <input class="input" id="search" type="search" name="search" placeholder="e.g. About us" autocomplete="off" />
 
-<div class="search-overlay">
-  <div class="search-modal">
-
-    <header class="search-modal__header">
-      <h1 class="search-modal__title">Search the Site</h1>
-      <a href="javascript:history.back()" class="search-modal__close-btn" title="Close Search">&times;</a>
-    </header>
-
-    <div class="search-input-group">
-      <i class="ph-magnifying-glass search-input-icon"></i>
-      <input class="search-input" id="site-search-input" type="search" placeholder="Start typing to find anything..." autocomplete="off" autofocus />
-    </div>
-
-    <div class="search-results-wrapper" id="search-results-wrapper">
-      <div class="search-results-placeholder">
-        <i class="ph-text-aa-bold placeholder-icon"></i>
-        <p>Results will appear here as you type</p>
-      </div>
-    </div>
-
-  </div>
+    <ul class="list  list--results" id="list">
+        <!-- results go here -->
+    </ul>
+  </form>
 </div>
 
 <script type="text/javascript" src="{{ "/assets/scripts/fetch.js" | relative_url }}"></script>
 <script type="text/javascript">
-  document.addEventListener('DOMContentLoaded', function() {
-    const endpoint = '{{ "/assets/search.json" | relative_url }}';
-    const pages = [];
-    let isDataFetched = false;
+  const endpoint = '{{ "/assets/search.json" | relative_url }}';
 
-    // Fetch the search data
-    fetch(endpoint)
-      .then(blob => blob.json())
-      .then(data => {
-        pages.push(...data);
-        isDataFetched = true;
-      });
+  const pages = [];
 
-    const searchInput = document.getElementById('site-search-input');
-    const resultsWrapper = document.getElementById('search-results-wrapper');
+  fetch(endpoint)
+    .then(blob => blob.json())
+    .then(data => pages.push(...data))
 
-    // Guard clause to ensure elements exist
-    if (!searchInput || !resultsWrapper) {
-      console.error('Search input or results wrapper not found.');
-      return;
-    }
-
-    function findResults(termToMatch, pages) {
+  function findResults(termToMatch, pages) {
+    return pages.filter(item => {
       const regex = new RegExp(termToMatch, 'gi');
-      return pages.filter(item => item.title.match(regex) || item.content.match(regex));
-    }
-
-    function displayResults() {
-      if (!isDataFetched) return; // Don't search until data is loaded
-
-      const searchTerm = this.value.trim();
-
-      if (searchTerm.length < 2) {
-        resultsWrapper.innerHTML = `
-          <div class="search-results-placeholder">
-            <i class="ph-text-aa-bold placeholder-icon"></i>
-            <p>Results will appear here as you type</p>
-          </div>`;
-        return;
-      }
-
-      const resultsArray = findResults(searchTerm, pages);
-
-      if (resultsArray.length > 0) {
-        const html = resultsArray.map(item => {
-          const tempDiv = document.createElement('div');
-          tempDiv.innerHTML = item.excerpt;
-          const cleanExcerpt = (tempDiv.textContent || tempDiv.innerText || "").trim();
-
-          return `
-            <a href="${item.url}" class="search-result-card">
-              <h4 class="search-result-card__title">${item.title}</h4>
-              <p class="search-result-card__excerpt">${cleanExcerpt}</p>
-            </a>`;
-        }).join('');
-        resultsWrapper.innerHTML = `<div class="search-results-grid">${html}</div>`;
-      } else {
-        resultsWrapper.innerHTML = `
-          <div class="search-no-results">
-            <i class="ph-x-circle no-results-icon"></i>
-            <h4>No Results Found</h4>
-            <p>Sorry, we couldn't find anything for "${searchTerm}".</p>
-          </div>`;
-      }
-    }
-
-    searchInput.addEventListener('keyup', displayResults);
-    searchInput.addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') event.preventDefault();
+      return item.title.match(regex) || item.content.match(regex);
     });
+  }
+
+  function displayResults() {
+    const resultsArray = findResults(this.value, pages);
+    const html = resultsArray.map(item => {
+      return `
+        <li class="item  item--result">
+          <article class="article  typeset">
+            <h4><a href="${item.url}">${item.title}</a></h4>
+            <p>${item.excerpt}</p>
+          </article>
+        </li>`;
+    }).join('');
+    if ((resultsArray.length == 0) || (this.value == '')) {
+      resultsList.innerHTML = `<p>Sorry, nothing was found</p>`;
+    } else {
+      resultsList.innerHTML = html;
+    }
+  }
+
+  const field = document.querySelector('#search');
+  const resultsList = document.querySelector('#list');
+
+  field.addEventListener('keyup', displayResults);
+
+  field.addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
   });
 </script>
-<noscript>A JavaScript-enabled browser is required to use this search feature.</noscript>
+<noscript>Please enable JavaScript to use the search form.</noscript>

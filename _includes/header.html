@@ -1,77 +1,58 @@
-  <!-- Left: mobile menu + brand -->
-  <div class="header-left">
-    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
-      <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
-    </button>
+<div class="header-left">
+  <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
+    <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
+  </button>
 
-    <a href="{{ site.baseurl | default: '' }}/" class="logo">
-      {{ site.title | default: "CourseDocs" }}
-    </a>
-  </div>
+  <a href="{{ site.baseurl | default: '' }}/" class="logo">
+    {{ site.title | default: "CourseDocs" }}
+  </a>
 
-  <!-- Center: wide search form -->
-  <div class="header-center">
-    <form class="site-search" role="search" action="{{ site.baseurl }}/search/">
-      <i class="ph-duotone ph-magnifying-glass" aria-hidden="true"></i>
-      <input
-        id="site-search-input"
-        type="search"
-        name="q"
-        placeholder="Search docs, guides, changelog…"
-        autocomplete="off"
-        aria-label="Search site"
-      />
-      <kbd class="shortcut">⌘K</kbd>
-    </form>
-  </div>
+  <nav class="header-nav">
+    {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
+    {%- for item in nav_items -%}
+      {%- assign item_url = item.url | to_s -%}
+      {%- assign is_external = item_url contains '://' or item_url startswith 'http' -%}
 
-  <!-- Right: actions -->
-  <div class="header-right">
-    {% if site.github_url %}
-      <!-- Star project -->
-      <a href="{{ site.github_url }}/stargazers"
-         class="action-button"
-         aria-label="Star project"
-         title="Star project">
-        <i class="ph-duotone ph-star"></i>
+      {%- comment -%}
+        Normalize current page URL to compare for active state
+      {%- endcomment -%}
+      {%- assign current = page.url | to_s -%}
+      {%- assign normalized_item = is_external
+          | ternary: item_url,
+                     item_url | relative_url -%}
+
+      {%- assign is_home_link = item_url == '/' -%}
+      {%- assign is_active =
+          (current == item_url) or
+          (current == normalized_item) or
+          (is_home_link and (current == '/' or current == site.baseurl)) -%}
+
+      <a
+        href="{{ is_external | ternary: item_url, item_url | relative_url }}"
+        class="{% if is_active %}active{% endif %}"
+        {% if is_active %}aria-current="page"{% endif %}
+        {% if is_external %}target="_blank" rel="noopener noreferrer"{% endif %}
+      >
+        {{ item.title }}
       </a>
+    {%- endfor -%}
+  </nav>
+</div>
 
-      <!-- GitHub repo -->
-      <a href="{{ site.github_url }}"
-         class="action-button github-link"
-         aria-label="GitHub Repository"
-         title="GitHub Repository"
-         target="_blank" rel="noopener noreferrer">
-        <i class="ph-duotone ph-github-logo"></i>
-      </a>
-    {% endif %}
+<div class="header-right">
+  <button class="search-trigger-button" id="search-trigger">
+    <i class="ph-duotone ph-magnifying-glass"></i>
+    <span>Search...</span>
+    <kbd>⌘K</kbd>
+  </button>
 
-    <!-- Changelog -->
-    <a href="{{ site.baseurl }}/changelog/"
-       class="action-button"
-       aria-label="Changelog"
-       title="Changelog">
-      <i class="ph-duotone ph-clock-counter-clockwise"></i>
+  {% if site.github_url %}
+    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
+      <i class="ph-duotone ph-github-logo"></i>
     </a>
+  {% endif %}
 
-    <!-- Resources -->
-    <a href="{{ site.baseurl }}/resources/"
-       class="action-button"
-       aria-label="Resources"
-       title="Resources">
-      <i class="ph-duotone ph-books"></i>
-    </a>
-
-    <!-- About -->
-    <a href="{{ site.baseurl }}/about/"
-       class="action-button"
-       aria-label="About project"
-       title="About project">
-      <i class="ph-duotone ph-info"></i>
-    </a>
-
-    <!-- Theme toggle -->
-    <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" title="Theme">
-      <i class="ph-duotone ph-sun"></i>
-    </button>
-  </div>
+  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
+    <i class="ph-duotone ph-sun"></i>
+  </button>
+</div>
