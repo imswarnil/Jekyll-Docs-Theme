@@ -1,78 +1,44 @@
-/* ==========================================================================
-   AdSense Component Styles (`_plugins/adsense.rb`)
-   ========================================================================== */
-
-.ad {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: var(--crma-space-8) auto;
-  padding: var(--crma-space-3);
-  width: 100%;
-  overflow: hidden;
-  background-color: var(--crma-ad-bg, var(--crma-secondary));
-  border: 1px solid var(--crma-ad-border, var(--crma-border));
-  border-radius: var(--crma-radius);
-
-  .adsbygoogle {
-    display: block;
-    width: 100%;
-    height: 100%;
+:root{
+    --ad-radius: var(--crma-radius, 0.75rem);
+    --ad-bg: var(--crma-ad-bg, var(--crma-secondary));
+    --ad-border: var(--crma-ad-border, var(--crma-border));
+    --ad-muted: var(--crma-muted-foreground);
+    --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
   }
-
-  // --- Fluid ad styles ---
-  &--article,
-  &--feed {
-    background: transparent;
-    border: none;
-    padding: 0;
-    min-height: 280px;
+  html.dark{ --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25)); }
+  
+  .ad{
+    width:100%; max-width:100%;
+    margin: clamp(var(--crma-space-3,.75rem),3vw,var(--crma-space-6,1.5rem)) 0;
+    padding: clamp(10px,2vw,16px);
+    background: var(--ad-bg);
+    border: var(--crma-border-width,1px) solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    box-shadow: var(--ad-shadow);
+    display:flex; flex-direction:column; align-items:center; gap:.45rem;
   }
-
-  // --- Multiplex styles ---
-  &--multiplex-horizontal { min-height: 250px; max-width: 900px; }
-  &--multiplex-vertical { display: none; min-height: 600px; max-width: 300px; @media (min-width: var(--crma-bp-lg)) { display: flex; } }
-
-  // --- Leaderboard styles ---
-  &--leaderboard-responsive,
-  &--leaderboard_980,
-  &--leaderboard_728,
-  &--responsive-horizontal {
-    min-height: 50px;
-    max-width: 980px;
-    @media (min-width: var(--crma-bp-md)) { min-height: 90px; }
+  .ad__label{
+    font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui);
+    letter-spacing:.14em; text-transform:uppercase; color:var(--ad-muted);
   }
-  &--billboard {
-    min-height: 90px;
-    max-width: 970px;
-    @media (min-width: var(--crma-bp-lg)) { min-height: 250px; }
+  .ad .adsbygoogle{ display:block; width:100%; max-width:100%; height:auto; border-radius:calc(var(--ad-radius) - 2px); overflow:hidden; }
+  
+  /* width caps by type/size (container only) */
+  .ad--leaderboard.ad--lg{ max-width:980px; } .ad--leaderboard.ad--md{ max-width:728px; } .ad--leaderboard.ad--sm{ max-width:468px; }
+  .ad--rectangle.ad--lg{ max-width:336px; } .ad--rectangle.ad--md{ max-width:300px; } .ad--rectangle.ad--sm{ max-width:250px; }
+  .ad--square.ad--lg{ max-width:250px; } .ad--square.ad--md{ max-width:200px; } .ad--square.ad--sm{ max-width:120px; }
+  .ad--skyscraper.ad--lg{ max-width:300px; } .ad--skyscraper.ad--md{ max-width:160px; } .ad--skyscraper.ad--sm{ max-width:120px; }
+  
+  /* fluid types */
+  .ad--article, .ad--feed, .ad--multiplex{ max-width:100%; }
+  
+  /* phones: fill width */
+  @media (max-width: 480px){
+    .ad{ width:100%; max-width:100%; }
+    .ad--leaderboard, .ad--rectangle, .ad--square{ max-width:100% !important; }
   }
-
-  // --- Square/Rectangle styles ---
-  &--rectangle-large { min-height: 280px; max-width: 336px; }
-  &--square-medium { min-height: 250px; max-width: 300px; }
-  &--square-small,
-  &--square-200,
-  &--responsive-square { min-height: 250px; max-width: 250px; }
-
-  // --- Button styles ---
-  &--button-large { min-height: 60px; max-width: 300px; }
-  &--button-mobile { min-height: 50px; max-width: 300px; }
-
-  // --- Skyscraper styles ---
-  &--skyscraper-large,
-  &--skyscraper-medium,
-  &--skyscraper_250,
-  &--skyscraper-small,
-  &--responsive-vertical {
-    display: none; // Hide on mobile by default
-    margin-left: 0;
-    margin-right: 0;
-    @media (min-width: var(--crma-bp-xl)) { display: flex; }
-  }
-  &--skyscraper-large { min-height: 1050px; max-width: 300px; }
-  &--skyscraper-medium,
-  &--skyscraper_250 { min-height: 600px; max-width: 300px; }
-  &--skyscraper-small { min-height: 600px; max-width: 160px; }
-}
+  
+  /* tablet+: center caps */
+  @media (min-width:768px){ .ad{ margin-left:auto; margin-right:auto; } }
+  @media (min-width:1024px){ .ad--skyscraper{ align-self:center; } }
+  
