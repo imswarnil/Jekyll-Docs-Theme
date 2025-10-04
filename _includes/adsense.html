@@ -1,68 +1,86 @@
-{%- comment -%}
-  Imswarnil – Simplified AdSense Include
-  Usage: {% include adsense.html type="leaderboard" %}
-         Types: leaderboard | rectangle | square | skyscraper | article | feed | multiplex | auto
-  Optional: class="..." (extra classes)  layout_key="..." (in-feed only if Google gave one)
-  Notes:
-  - Global <script> must be in <head>. See head-adsense.html include.
-  - Sizes and slots mapped to your IDs; units become responsive on mobile.
-{%- endcomment -%}
-
 {%- assign t = include.type | downcase | default: 'auto' -%}
-{%- assign c = include.class | default: '' -%}
-{%- assign layout_key = include.layout_key | default: '' -%}
+{%- assign s = include.size | downcase | default: 'md' -%}
+{%- assign extra = include.class | default: '' -%}
+{%- assign layout_key = include.layout_key | default: '-6v+f0-19-44+c6' -%}
 
 {%- capture _unit -%}
 {%- case t -%}
   {%- when 'leaderboard' -%}
-    {%- assign slot = '4774277934' -%} {# Responsive_Leaderboard #}
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    {%- assign slot = '4774277934' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 
   {%- when 'rectangle' -%}
-    {%- assign slot = '9619442326' -%} {# Medium Rectangle 300x250 (will scale) #}
-    <ins class="adsbygoogle ad--rectangle" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    {%- assign slot = '9619442326' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 
   {%- when 'square' -%}
-    {%- assign slot = '6066270853' -%} {# Small Square 250x250 (will scale) #}
-    <ins class="adsbygoogle ad--square" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    {%- assign slot = '6066270853' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 
   {%- when 'skyscraper' -%}
-    {%- assign slot = '2712169578' -%} {# Medium Skyscraper 300x600 (desktop), auto on mobile #}
-    <ins class="adsbygoogle ad--skyscraper" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    {%- assign slot = '2712169578' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 
   {%- when 'article' -%}
-    {%- assign slot = '6501428979' -%} {# In-article #}
-    <ins class="adsbygoogle ad--in-article" style="display:block; text-align:center;"
-         data-ad-client="ca-pub-1291242080282540" data-ad-slot="{{ slot }}"
-         data-ad-format="fluid" data-ad-layout="in-article" data-full-width-responsive="true"></ins>
+    {%- assign slot = '6501428979' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="fluid"
+         data-ad-layout="in-article"
+         data-full-width-responsive="true"></ins>
 
   {%- when 'feed' -%}
     {%- assign slot = '9130894804' -%}
-    <ins class="adsbygoogle ad--in-feed" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="fluid" data-ad-layout="in-feed" {% if layout_key != '' %}data-ad-layout-key="{{ layout_key }}"{% endif %}></ins>
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="fluid"
+         data-ad-layout="in-feed"
+         {% if layout_key != '' %}data-ad-layout-key="{{ layout_key }}"{% endif %}></ins>
 
   {%- when 'multiplex' -%}
-    {%- assign slot = '3375031396' -%} {# Vertical multiplex (auto-relaxed) #}
-    <ins class="adsbygoogle ad--multiplex" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="autorelaxed"></ins>
+    {%- assign slot = '3375031396' -%}
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="autorelaxed"></ins>
 
   {%- when 'auto' -%}
     {%- assign slot = '4774277934' -%}
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 
   {%- else -%}
     {%- assign slot = '4774277934' -%}
-    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="{{ slot }}"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
 {%- endcase -%}
 {%- endcapture -%}
 
-<div class="ad {{ c }} ad--{{ t }}">
+<div class="ad ad--{{ t }} ad--{{ s }} {{ extra }}">
   <span class="ad__label" aria-label="Advertisement">Advertisement</span>
   {{ _unit }}
 </div>

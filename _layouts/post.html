@@ -4,7 +4,6 @@ layout: default
 
 <aside class="sidebar-left" id="sidebar-left">
   {% include sidebar.html %}
-  {% include adsense.html type="feed" %}
 
 </aside>
 <div class="main-content-area">
@@ -19,7 +18,11 @@ layout: default
   
   </div>
 
-  {% include adsense.html type="leaderboard" %}
+  {% include adsense.html type="leaderboard" size="lg" %}
+  {% include adsense.html type="leaderboard" size="md" %}
+  {% include adsense.html type="leaderboard" size="sm" %}
+
+
 
   <main class="content-wrapper">
     <div class="mobile-toc" id="mobile-toc-container">
@@ -49,6 +52,8 @@ layout: default
     <div class="sidebar-right-actions">
       <a href="{{ site.github_url }}/edit/main/{{ page.path }}" target="_blank" rel="noopener noreferrer"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
     </div> 
-    {% include adsense.html type="square" %}
+    {% include adsense.html type="square"     size="sm" %}
+    {% include adsense.html type="square"     size="lg" %}
+
   </aside>
 </div>

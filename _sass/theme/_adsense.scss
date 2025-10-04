@@ -1,32 +1,87 @@
-/* Imswarnil – Simple responsive Ad styles using CRMA vars */
 :root{
-  --ad-radius: var(--crma-radius, .75rem);
-  --ad-border: var(--crma-border, hsl(210, 30%, 90%));
-  --ad-muted: var(--crma-muted-foreground, hsl(214, 20%, 55%));
-}
-html.dark{
-  --ad-border: var(--crma-border, hsl(216, 30%, 25%));
-  --ad-muted: var(--crma-muted-foreground, hsl(214, 15%, 55%));
-}
-
-.ad{ display:flex; justify-content:center; align-items:center; flex-direction:column; gap:.4rem; margin:clamp(12px,3vw,24px) 0; }
-.ad__label{ font: 600 11px/1.2 var(--crma-font-sans, system-ui); letter-spacing:.14em; text-transform:uppercase; color: var(--ad-muted); }
-
-/* Make Google <ins> flexible and never overflow */
-.ad .adsbygoogle{ max-width:100%; height:auto; border-radius: var(--ad-radius); overflow:hidden; }
-
-/* Type helpers (optional to target placement) */
-.ad--leaderboard,.ad--rectangle,.ad--square,.ad--skyscraper,.ad--article,.ad--feed,.ad--multiplex{ width:100%; }
-
-/* Skyscrapers: hide on small screens; use responsive auto instead */
-@media (max-width: 991px){ .ad--skyscraper{ display:none; } }
-
-/* Desktop centering for fixed-size variants if Google returns fixed sizes */
-@media (min-width: 992px){ .ad .adsbygoogle[style*="width:"]{ margin-inline:auto; } }
-
-/* In-article & feed tweaks */
-.ad--article .adsbygoogle{ text-align:center; }
-.ad--feed .adsbygoogle{ display:block; }
-
-/* Optional bordered container when you want separation */
-.ad.ad--framed{ padding: clamp(8px, 1.5vw, 12px); border:1px solid var(--ad-border); border-radius: var(--ad-radius); }
+    --ad-radius: var(--crma-radius, 0.75rem);
+    --ad-bg: var(--crma-ad-bg, var(--crma-secondary));
+    --ad-border: var(--crma-ad-border, var(--crma-border));
+    --ad-muted: var(--crma-muted-foreground, hsl(214, 20%, 55%));
+    --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
+  }
+  html.dark{
+    --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25));
+  }
+  
+  .ad{
+    width: 100%;
+    max-width: 100%;
+    margin: clamp(12px, 3vw, 24px) 0;
+    padding: clamp(10px, 2vw, 16px);
+    background: var(--ad-bg);
+    border: var(--crma-border-width, 1px) solid var(--ad-border);
+    border-radius: var(--ad-radius);
+    box-shadow: var(--ad-shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .45rem;
+  }
+  
+  .ad__label{
+    font: 600 11px/1.2 var(--crma-font-sans, system-ui, -apple-system, Segoe UI, Roboto, Arial);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ad-muted);
+  }
+  
+  .ad .adsbygoogle{
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-radius: calc(var(--ad-radius) - 2px);
+    overflow: hidden;
+  }
+  
+  /* Size caps by type+size (Google decides internal creative) */
+  .ad--leaderboard.ad--lg { max-width: 980px; }
+  .ad--leaderboard.ad--md { max-width: 728px; }
+  .ad--leaderboard.ad--sm { max-width: 468px; }
+  
+  .ad--rectangle.ad--lg { max-width: 336px; }
+  .ad--rectangle.ad--md { max-width: 300px; }
+  .ad--rectangle.ad--sm { max-width: 250px; }
+  
+  .ad--square.ad--lg { max-width: 250px; }
+  .ad--square.ad--md { max-width: 200px; }
+  .ad--square.ad--sm { max-width: 120px; }
+  
+  .ad--skyscraper.ad--lg { max-width: 300px; }
+  .ad--skyscraper.ad--md { max-width: 160px; }
+  .ad--skyscraper.ad--sm { max-width: 120px; }
+  
+  .ad--article,
+  .ad--feed,
+  .ad--multiplex { max-width: 100%; }
+  
+  /* Mobile: fill container width */
+  @media (max-width: 480px){
+    .ad { width: 100%; max-width: 100%; }
+    .ad--leaderboard,
+    .ad--rectangle,
+    .ad--square { max-width: 100% !important; }
+  }
+  
+  /* Tablet and up: center fixed caps */
+  @media (min-width: 768px){
+    .ad { margin-left: auto; margin-right: auto; }
+  }
+  
+  /* Desktop: keep skyscrapers narrow for sidebars */
+  @media (min-width: 1024px){
+    .ad--skyscraper { align-self: center; }
+  }
+  
+  /* Optional stronger frame variant */
+  .ad--framed{
+    background: var(--crma-surface);
+    border-color: var(--crma-surface-border);
+  }
+  
