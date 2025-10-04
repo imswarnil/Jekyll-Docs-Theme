@@ -1,6 +1,6 @@
 .header {
     grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
-    padding: 0 1.5rem; border-bottom: 1px solid var(--crma-border); background-color: var(--crma-background);
+    padding: 0 1.5rem; border-bottom: 1px solid var(--docs-border); background-color: var(--docs-background);
     position: sticky; top: 0; z-index: 50;
 }
 .header-left {
@@ -14,8 +14,8 @@
 .header-nav {
     display: none;
     a {
-        font-weight: 500; color: var(--crma-muted-foreground); padding: 0.5rem;
-        &.active { color: var(--crma-foreground); font-weight: 600; }
+        font-weight: 500; color: var(--docs-muted-foreground); padding: 0.5rem;
+        &.active { color: var(--docs-foreground); font-weight: 600; }
     }
     @media (min-width: 1024px) { display: flex; gap: 1rem; }
 }
@@ -26,10 +26,10 @@
 }
 .search-trigger-button {
     display: flex; align-items: center; justify-content: space-between; height: 40px;
-    background-color: var(--crma-secondary); border: 1px solid var(--crma-border); border-radius: var(--crma-radius);
-    padding: 0 0.75rem; font-size: 0.9rem; color: var(--crma-muted-foreground); text-align: left; cursor: pointer;
-    transition: all var(--crma-transition-speed);
-    &:hover { border-color: var(--crma-primary); }
+    background-color: var(--docs-secondary); border: 1px solid var(--docs-border); border-radius: var(--docs-radius);
+    padding: 0 0.75rem; font-size: 0.9rem; color: var(--docs-muted-foreground); text-align: left; cursor: pointer;
+    transition: all var(--docs-transition-speed);
+    &:hover { border-color: var(--docs-primary); }
     &:active { transform: scale(0.98); }
     @media (min-width: 640px) {
         min-width: 240px;
@@ -38,8 +38,8 @@
 }
 .action-button {
     display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
-    background: transparent; border-radius: var(--crma-radius); color: var(--crma-muted-foreground);
-    cursor: pointer; transition: all var(--crma-transition-speed); flex-shrink: 0;
-    &:hover { color: var(--crma-foreground); background-color: var(--crma-accent); }
+    background: transparent; border-radius: var(--docs-radius); color: var(--docs-muted-foreground);
+    cursor: pointer; transition: all var(--docs-transition-speed); flex-shrink: 0;
+    &:hover { color: var(--docs-foreground); background-color: var(--docs-accent); }
     &:active { transform: scale(0.95); }
 }
