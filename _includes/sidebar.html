@@ -1,34 +1,21 @@
 <!-- _includes/sidebar.html -->
 <div class="sidebar-left-content">
   <nav class="sidebar-nav">
-    <!-- Main Header Navigation for Mobile -->
     <ul>
-      {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
-      {%- for item in nav_items -%}
-        <li class="nav-link {% if page.url == item.url %}active{% endif %}">
-          <a href="{{ item.url | relative_url }}">
-            <!-- You can add icons here if you want -->
-            {{ item.title }}
-          </a>
-        </li>
-      {%- endfor -%}
-    </ul>
-    <!-- Separator -->
-    <hr style="border: none; border-top: 1px solid var(--docs-border); margin: 1.5rem 0;">
-
-    <!-- Existing Post/Academy Navigation -->
-    <ul>
-      {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
-      {% assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" %}
+      {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
+      {%- assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" -%}
 
       {%- for g in groups -%}
         <li class="nav-category">{{ g.name | replace: '-', ' ' | capitalize }}</li>
-        {% assign weighted = g.items | sort: "nav_weight" %}
-        {% assign ordered  = weighted | sort: "date" | reverse %}
+        
+        {%- assign weighted = g.items | sort: "nav_weight" -%}
+        {%- assign ordered  = weighted | sort: "date" | reverse -%}
+        
         {%- for post in ordered -%}
           <li class="nav-link {% if page.url == post.url %}active{% endif %}">
             <a href="{{ post.url | relative_url }}">
-              <i class="ph-duotone ph-article"></i>{{ post.title }}
+              <i class="ph-duotone ph-article"></i>
+              <span>{{ post.title }}</span>
             </a>
           </li>
         {%- endfor -%}
@@ -36,12 +23,11 @@
     </ul>
   </nav>
 
-  <!-- I noticed you had a sponsor card but the CSS variable was --crma-muted-foreground. 
-       I've changed it to the standard --docs-muted-foreground from your CSS. -->
-  <div class="sponsor-card" style="margin-top: auto; padding-top: 1rem;">
-    <div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div>
-    <div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div>
-    <p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">
+  <!-- Sponsor Card is now outside the nav for better structure -->
+  <div class="sponsor-card">
+    <div class="ad-label">Advertisement</div>
+    <div class="sponsor-card__title">Sponsored Training</div>
+    <p class="sponsor-card__text">
       Learn advanced CRM techniques with our new course.
     </p>
   </div>

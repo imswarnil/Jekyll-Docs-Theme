@@ -1,0 +1,141 @@
+/* ==========================================================================
+   Sidebar Navigation Styles (Timeline Stepper)
+   ========================================================================== */
+
+// --- Main Navigation Container ---
+.sidebar-nav {
+  position: relative; // Needed to anchor the timeline pseudo-element
+}
+
+.sidebar-nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+
+  // The main timeline vertical line
+  &::before {
+    content: '';
+    position: absolute;
+    // Position the line. '18px' is half the icon width (32px) + padding.
+    // This value centers the line with the stepper dots.
+    left: calc(var(--crma-space-4) + 6px);
+    top: var(--crma-space-4);
+    bottom: var(--crma-space-4);
+    width: 2px;
+    background-color: var(--crma-border);
+    border-radius: 2px;
+  }
+}
+
+// --- Category Headers ---
+// Styled to sit "on top" of the timeline line
+.sidebar-nav .nav-category {
+  font-size: var(--crma-font-size-xs);
+  font-weight: var(--crma-weight-bold);
+  color: var(--crma-muted-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: var(--crma-space-2) var(--crma-space-3);
+  margin: var(--crma-space-6) 0 var(--crma-space-3) 0;
+  position: relative; // Ensures it's above the timeline line
+}
+
+// --- Navigation Links (The Steps) ---
+.sidebar-nav .nav-link a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--crma-space-3);
+  // Give extra left padding for the timeline and dot
+  padding: var(--crma-space-3) var(--crma-space-4) var(--crma-space-3) calc(var(--crma-space-4) * 2.5);
+  margin: var(--crma-space-1) 0;
+  font-size: var(--crma-font-size-sm);
+  border-radius: var(--crma-radius);
+  color: var(--crma-muted-foreground);
+  font-weight: var(--crma-weight-semibold);
+  transition: all var(--crma-duration-fast) var(--crma-ease);
+
+  // The stepper "dot"
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: var(--crma-space-4); // Aligns the dot with the timeline
+    transform: translateY(-50%);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--crma-background); // Creates the "hollow" effect
+    border: 2px solid var(--crma-border);
+    transition: all var(--crma-duration-fast) var(--crma-ease);
+  }
+
+  // The icon inside the link
+  i {
+    font-size: 1.25rem;
+    color: var(--crma-primary);
+    transition: color var(--crma-duration-fast) var(--crma-ease);
+    // Hide the icon; the dot is the primary visual element now.
+    // You can re-enable this by removing `display: none`.
+    display: none;
+  }
+}
+
+// --- Hover State ---
+.sidebar-nav .nav-link a:hover {
+  background-color: var(--crma-surface-hover);
+  color: var(--crma-foreground);
+
+  // Make the dot's border primary on hover
+  &::before {
+    border-color: var(--crma-primary);
+  }
+}
+
+// --- Active State ---
+// This is the key highlight for the current page.
+.sidebar-nav .nav-link.active a {
+  background-color: var(--crma-primary);
+  color: var(--crma-primary-foreground);
+  font-weight: var(--crma-weight-bold);
+
+  // Make the dot solid and prominent
+  &::before {
+    background-color: var(--crma-primary);
+    border-color: var(--crma-primary);
+    transform: translateY(-50%) scale(1.1); // Slightly larger for emphasis
+  }
+
+  // Make the icon match the active text color
+  i {
+    color: var(--crma-primary-foreground);
+  }
+}
+
+// --- Sponsor Card ---
+// Styled to sit cleanly at the bottom of the sidebar.
+.sponsor-card {
+  margin-top: auto; // Pushes it to the bottom
+  padding: var(--crma-space-6) var(--crma-space-4) var(--crma-space-4);
+  border-top: 1px solid var(--crma-border);
+
+  .ad-label {
+    font-size: var(--crma-font-size-xs);
+    font-weight: var(--crma-weight-semibold);
+    color: var(--crma-muted-foreground);
+    text-transform: uppercase;
+  }
+
+  &__title {
+    font-weight: var(--crma-weight-bold);
+    color: var(--crma-foreground);
+    margin: var(--crma-space-2) 0;
+  }
+
+  &__text {
+    font-size: var(--crma-font-size-sm);
+    color: var(--crma-muted-foreground);
+    margin: 0;
+  }
+}
