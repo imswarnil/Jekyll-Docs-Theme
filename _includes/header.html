@@ -1,58 +1,39 @@
+<!-- _includes/header.html -->
 <div class="header-left">
   <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
-    <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
+    <i class="ph-duotone ph-list"></i>
   </button>
-
   <a href="{{ site.baseurl | default: '' }}/" class="logo">
     {{ site.title | default: "CourseDocs" }}
   </a>
+</div>
 
-  <nav class="header-nav">
-    {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
-    {%- for item in nav_items -%}
-      {%- assign item_url = item.url | to_s -%}
-      {%- assign is_external = item_url contains '://' or item_url startswith 'http' -%}
-
-      {%- comment -%}
-        Normalize current page URL to compare for active state
-      {%- endcomment -%}
-      {%- assign current = page.url | to_s -%}
-      {%- assign normalized_item = is_external
-          | ternary: item_url,
-                     item_url | relative_url -%}
-
-      {%- assign is_home_link = item_url == '/' -%}
-      {%- assign is_active =
-          (current == item_url) or
-          (current == normalized_item) or
-          (is_home_link and (current == '/' or current == site.baseurl)) -%}
-
-      <a
-        href="{{ is_external | ternary: item_url, item_url | relative_url }}"
-        class="{% if is_active %}active{% endif %}"
-        {% if is_active %}aria-current="page"{% endif %}
-        {% if is_external %}target="_blank" rel="noopener noreferrer"{% endif %}
-      >
-        {{ item.title }}
-      </a>
-    {%- endfor -%}
-  </nav>
+<!-- A new central container for the desktop search bar -->
+<div class="header-center" id="header-center">
+  <div class="live-search-group">
+    <i class="ph-duotone ph-magnifying-glass"></i>
+    <input type="search" class="live-search-input" id="live-search-input" placeholder="Search documentation..." autocomplete="off">
+  </div>
 </div>
 
 <div class="header-right">
-  <button class="search-trigger-button" id="search-trigger">
+  <!-- This search trigger is ONLY for mobile -->
+  <button class="action-button mobile-search-trigger" id="mobile-search-trigger" aria-label="Search">
     <i class="ph-duotone ph-magnifying-glass"></i>
-    <span>Search...</span>
-    <kbd>⌘K</kbd>
   </button>
 
+  <a href="#" class="btn btn--ghost changelog-button">Changelog</a>
+  
   {% if site.github_url %}
-    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
+    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer" data-tooltip="Star on GitHub">
       <i class="ph-duotone ph-github-logo"></i>
     </a>
   {% endif %}
 
-  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
+  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Toggle Theme">
     <i class="ph-duotone ph-sun"></i>
   </button>
 </div>
+
+<!-- This container holds the search results and appears below the header -->
+<div class="live-search-results-container" id="live-search-results-container"></div>
