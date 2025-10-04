@@ -1,169 +1,45 @@
-/* ==========================================================================
-   Header & Live Search Styles
-   ========================================================================== */
-
 .header {
-  grid-column: 1 / -1;
-  display: grid;
-  // Creates a three-part layout: Left (auto-width), Center (takes remaining space), Right (auto-width)
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--crma-space-6);
-  padding: 0 var(--crma-container-pad-x);
-  height: var(--crma-header-height);
-  border-bottom: 1px solid var(--crma-border);
-  background-color: var(--crma-background);
-  position: sticky;
-  top: 0;
-  z-index: var(--crma-z-header);
+    grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.5rem; border-bottom: 1px solid var(--docs-border); background-color: var(--docs-background);
+    position: sticky; top: 0; z-index: 50;
 }
-
-.header-left,
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: var(--crma-space-4);
+.header-left {
+    display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0;
+    .logo { font-size: 1.5rem; font-weight: 800; }
 }
-.header-left { flex-shrink: 0; }
-.header-right { justify-content: flex-end; }
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: var(--crma-weight-bold);
-}
-
 .mobile-menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--crma-space-2);
-  color: var(--crma-foreground);
-  i { font-size: 1.5rem; }
-  @media (min-width: var(--crma-bp-lg)) { display: none; }
+    background: none; border: none; cursor: pointer; padding: 0.5rem;
+    @media (min-width: 1024px) { display: none; }
 }
-
+.header-nav {
+    display: none;
+    a {
+        font-weight: 500; color: var(--docs-muted-foreground); padding: 0.5rem;
+        &.active { color: var(--docs-foreground); font-weight: 600; }
+    }
+    @media (min-width: 1024px) { display: flex; gap: 1rem; }
+}
+.header-right {
+    display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;
+    .action-button.github-link { @media (max-width: 639px) { display: none; } }
+    @media (min-width: 640px) { gap: 1rem; }
+}
+.search-trigger-button {
+    display: flex; align-items: center; justify-content: space-between; height: 40px;
+    background-color: var(--docs-secondary); border: 1px solid var(--docs-border); border-radius: var(--docs-radius);
+    padding: 0 0.75rem; font-size: 0.9rem; color: var(--docs-muted-foreground); text-align: left; cursor: pointer;
+    transition: all var(--docs-transition-speed);
+    &:hover { border-color: var(--docs-primary); }
+    &:active { transform: scale(0.98); }
+    @media (min-width: 640px) {
+        min-width: 240px;
+        span, .kbd { display: inline-block; }
+    }
+}
 .action-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border-radius: var(--crma-radius);
-  color: var(--crma-muted-foreground);
-  cursor: pointer;
-  transition: all var(--crma-duration-fast) ease;
-  flex-shrink: 0;
-  position: relative; // For tooltips
-  i { font-size: 1.25rem; }
-
-  &:hover {
-    color: var(--crma-foreground);
-    background-color: var(--crma-accent);
-  }
-}
-
-.changelog-button.btn {
-  height: 40px; // Match action button height
-  display: none; // Hidden on mobile
-  @media (min-width: var(--crma-bp-md)) {
-    display: inline-flex; // Show on tablet and up
-  }
-}
-
-// --- Central Search Bar (Desktop) ---
-.header-center {
-  max-width: 600px;
-  width: 100%;
-  margin: 0 auto;
-  display: none; // Hidden on mobile by default
-  @media (min-width: var(--crma-bp-lg)) {
-    display: block; // Visible on desktop
-  }
-}
-
-.live-search-group {
-  position: relative;
-  i {
-    position: absolute;
-    top: 50%;
-    left: var(--crma-space-4);
-    transform: translateY(-50%);
-    color: var(--crma-muted-foreground);
-    pointer-events: none;
-  }
-}
-
-.live-search-input {
-  width: 100%;
-  height: 42px;
-  font-family: var(--crma-font-sans);
-  font-size: var(--crma-font-size-md);
-  background-color: var(--crma-surface);
-  border: 1px solid var(--crma-surface-border);
-  border-radius: var(--crma-radius);
-  padding: 0 var(--crma-space-4) 0 calc(var(--crma-space-4) * 2.5); // Space for icon
-  transition: all var(--crma-duration-fast) ease;
-
-  &:focus {
-    outline: none;
-    border-color: var(--crma-primary);
-    box-shadow: 0 0 0 2px var(--crma-ring-color);
-  }
-}
-
-// --- Search Results Dropdown ---
-.live-search-results-container {
-  position: fixed; // Use fixed positioning to appear over content
-  top: calc(var(--crma-header-height) - 10px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  max-width: 600px;
-  z-index: calc(var(--crma-z-header) - 1); // Just below the header
-  background-color: var(--crma-background);
-  border-radius: var(--crma-radius-lg);
-  box-shadow: var(--crma-shadow-md);
-  max-height: 60vh;
-  overflow-y: auto;
-  opacity: 0;
-  visibility: hidden;
-  transform-origin: top center;
-  transition: opacity var(--crma-duration-fast) ease, visibility var(--crma-duration-fast) ease, transform 0.1s ease;
-  transform: translateX(-50%) scale(0.98);
-
-  &.is-visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) scale(1);
-  }
-}
-
-// --- Mobile Search ---
-.mobile-search-trigger {
-  @media (min-width: var(--crma-bp-lg)) {
-    display: none; // Hidden on desktop
-  }
-}
-
-// This class is toggled by JS to transform the header on mobile
-.mobile-search-active {
-  .header-left .logo,
-  .header-right .changelog-button,
-  .header-right .github-link,
-  .header-right .theme-toggle,
-  .mobile-menu-toggle {
-    display: none; // Hide everything except the search trigger and the search bar
-  }
-
-  .header-center {
-    display: block; // Show the search bar
-    margin: 0;
-    max-width: 100%;
-    grid-column: 1 / -1; // Make it span the full width
-  }
-
-  .header-right {
-    // We can add a "Cancel" button here that JS would show/hide
-  }
+    display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+    background: transparent; border-radius: var(--docs-radius); color: var(--docs-muted-foreground);
+    cursor: pointer; transition: all var(--docs-transition-speed); flex-shrink: 0;
+    &:hover { color: var(--docs-foreground); background-color: var(--docs-accent); }
+    &:active { transform: scale(0.95); }
 }

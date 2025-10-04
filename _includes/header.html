@@ -1,141 +1,58 @@
-<!-- _includes/header.html -->
 <div class="header-left">
   <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
-    <i class="ph-duotone ph-list"></i>
+    <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
   </button>
+
   <a href="{{ site.baseurl | default: '' }}/" class="logo">
     {{ site.title | default: "CourseDocs" }}
   </a>
-</div>
 
-<!-- NEW: A dedicated container for the search bar in the middle -->
-<div class="header-center" id="header-center">
-  <div class="live-search-group">
-    <i class="ph-duotone ph-magnifying-glass"></i>
-    <input type="search" class="live-search-input" id="live-search-input" placeholder="Search documentation..." autocomplete="off">
-  </div>
+  <nav class="header-nav">
+    {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
+    {%- for item in nav_items -%}
+      {%- assign item_url = item.url | to_s -%}
+      {%- assign is_external = item_url contains '://' or item_url startswith 'http' -%}
+
+      {%- comment -%}
+        Normalize current page URL to compare for active state
+      {%- endcomment -%}
+      {%- assign current = page.url | to_s -%}
+      {%- assign normalized_item = is_external
+          | ternary: item_url,
+                     item_url | relative_url -%}
+
+      {%- assign is_home_link = item_url == '/' -%}
+      {%- assign is_active =
+          (current == item_url) or
+          (current == normalized_item) or
+          (is_home_link and (current == '/' or current == site.baseurl)) -%}
+
+      <a
+        href="{{ is_external | ternary: item_url, item_url | relative_url }}"
+        class="{% if is_active %}active{% endif %}"
+        {% if is_active %}aria-current="page"{% endif %}
+        {% if is_external %}target="_blank" rel="noopener noreferrer"{% endif %}
+      >
+        {{ item.title }}
+      </a>
+    {%- endfor -%}
+  </nav>
 </div>
 
 <div class="header-right">
-  <!-- This search trigger is ONLY visible on mobile -->
-  <button class="action-button mobile-search-trigger" id="mobile-search-trigger" aria-label="Search">
+  <button class="search-trigger-button" id="search-trigger">
     <i class="ph-duotone ph-magnifying-glass"></i>
+    <span>Search...</span>
+    <kbd>⌘K</kbd>
   </button>
 
-  <a href="#" class="btn btn--ghost changelog-button">Changelog</a>
-  
   {% if site.github_url %}
-    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer" data-tooltip="Star on GitHub">
+    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
       <i class="ph-duotone ph-github-logo"></i>
     </a>
   {% endif %}
 
-  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Toggle Theme">
+  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
     <i class="ph-duotone ph-sun"></i>
   </button>
 </div>
-
-<!-- NEW: The container for the search results dropdown. This lives outside the main header flow. -->
-<div class="live-search-results-container" id="live-search-results-container"></div>
-<script>
-  (function() {
-    const baseurl = "{{ site.baseurl }}";
-    let searchData = [];
-
-    document.addEventListener('DOMContentLoaded', function () {
-        fetch(`${baseurl}/assets/search.json`)
-            .then(response => response.json())
-            .then(data => { searchData = data; })
-            .catch(error => console.error('Error fetching search data:', error));
-        
-        initDarkMode();
-        initLiveSearch();
-    });
-
-    function initDarkMode() {
-        const themeToggle = document.getElementById('theme-toggle');
-        if (!themeToggle) return;
-
-        const htmlEl = document.documentElement;
-        const setTheme = (theme) => {
-            htmlEl.classList.toggle('dark', theme === 'dark');
-            const icon = themeToggle.querySelector('i');
-            if (icon) icon.className = theme === 'dark' ? 'ph-duotone ph-moon' : 'ph-duotone ph-sun';
-            localStorage.setItem('theme', theme);
-        };
-        
-        setTheme(localStorage.getItem('theme') || 'light');
-        themeToggle.addEventListener('click', () => {
-            setTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
-        });
-    }
-
-    function initLiveSearch() {
-        const searchInput = document.getElementById('live-search-input');
-        const resultsContainer = document.getElementById('live-search-results-container');
-        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
-        const body = document.body;
-
-        if (!searchInput || !resultsContainer) return;
-
-        const renderResults = (query) => {
-            const term = query.trim().toLowerCase();
-            let results = [];
-            if (term.length > 1 && searchData.length > 0) {
-                results = searchData.filter(item => 
-                    item.title.toLowerCase().includes(term) || item.content.toLowerCase().includes(term)
-                );
-            }
-
-            resultsContainer.innerHTML = '';
-            if (results.length > 0) {
-                const ul = document.createElement('ul');
-                // Note: The result item HTML should match your existing style
-                results.slice(0, 7).forEach(item => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `<a href="${baseurl}${item.url}" class="search-result-item">...</a>`; // Your result item markup
-                    ul.appendChild(li);
-                });
-                resultsContainer.appendChild(ul);
-                resultsContainer.classList.add('is-visible');
-            } else {
-                resultsContainer.classList.remove('is-visible');
-            }
-        };
-
-        searchInput.addEventListener('input', () => renderResults(searchInput.value));
-        searchInput.addEventListener('focus', () => renderResults(searchInput.value));
-        
-        // --- Mobile Search Activation ---
-        mobileSearchTrigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            body.classList.add('mobile-search-active');
-            searchInput.focus();
-        });
-
-        // --- Close search when clicking outside ---
-        document.addEventListener('click', function(e) {
-            const isClickInsideSearch = searchInput.contains(e.target) || resultsContainer.contains(e.target);
-            const isMobileTrigger = mobileSearchTrigger.contains(e.target);
-            
-            if (!isClickInsideSearch && !isMobileTrigger) {
-                resultsContainer.classList.remove('is-visible');
-                body.classList.remove('mobile-search-active');
-            }
-        });
-
-        // --- Keyboard Shortcuts ---
-        document.addEventListener('keydown', e => {
-            if (e.key === 'Escape') {
-                resultsContainer.classList.remove('is-visible');
-                body.classList.remove('mobile-search-active');
-                searchInput.blur();
-            }
-            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-                e.preventDefault();
-                searchInput.focus();
-            }
-        });
-    }
-})();
-</script>
