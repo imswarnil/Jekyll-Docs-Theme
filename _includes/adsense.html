@@ -45,43 +45,52 @@
          data-ad-format="fluid"
          data-ad-layout="in-article"
          data-full-width-responsive="true"></ins>
+         
+  {%- comment -%} ... other ad types ... {%- endcomment -%}
 
-  {%- when 'feed' -%}
-    {%- assign slot = '9130894804' -%}
-    <ins class="adsbygoogle"
-         data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}"
-         data-ad-format="fluid"
-         data-ad-layout="in-feed"
-         {% if layout_key != '' %}data-ad-layout-key="{{ layout_key }}"{% endif %}></ins>
-
-  {%- when 'multiplex' -%}
-    {%- assign slot = '3375031396' -%}
-    <ins class="adsbygoogle"
-         data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}"
-         data-ad-format="autorelaxed"></ins>
-
-  {%- when 'auto' -%}
-    {%- assign slot = '4774277934' -%}
-    <ins class="adsbygoogle"
-         data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-
-  {%- else -%}
-    {%- assign slot = '4774277934' -%}
-    <ins class="adsbygoogle"
-         data-ad-client="ca-pub-1291242080282540"
-         data-ad-slot="{{ slot }}"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
 {%- endcase -%}
 {%- endcapture -%}
 
-<div class="ad ad--{{ t }} ad--{{ s }} {{ extra }}">
+<div class="ad ad--{{ t }} ad--{{ s }} {{ extra }}" data-lazy-ad>
   <span class="ad__label" aria-label="Advertisement">Advertisement</span>
   {{ _unit }}
 </div>
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<!-- NOTE: The <script> tag that pushes the ad has been removed for lazy loading -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+  const lazyAdContainers = document.querySelectorAll('[data-lazy-ad]');
+
+  if (!lazyAdContainers.length || window.adObserver) {
+    return;
+  }
+
+  const adObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const adContainer = entry.target;
+        
+        // Push the ad to be loaded by Google
+        try {
+          (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+          console.error("AdSense push error:", e);
+        }
+        
+        // Stop observing this ad to save resources
+        observer.unobserve(adContainer);
+      }
+    });
+  }, {
+    // Start loading when the ad is 200px from the viewport
+    rootMargin: '0px 0px 200px 0px',
+  });
+
+  // Start observing each ad
+  lazyAdContainers.forEach(container => {
+    adObserver.observe(container);
+  });
+  
+  window.adObserver = true; // Prevents re-running the observer setup
+});
+    </script>
