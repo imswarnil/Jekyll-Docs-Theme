@@ -1,27 +1,46 @@
-<div class="header-left">
-  <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
-    <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
-  </button>
+<header class="header">
+  <div class="header-left">
+    <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
+      <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
+    </button>
 
-  <a href="{{ site.baseurl | default: '' }}/" class="logo">
-    {{ site.title | default: "CourseDocs" }}
-  </a>
-</div>
-
-<div class="header-right">
-  <button class="search-trigger-button" id="search-trigger">
-    <i class="ph-duotone ph-magnifying-glass"></i>
-    <span>Search...</span>
-    <kbd>⌘K</kbd>
-  </button>
-
-  {% if site.github_url %}
-    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
-      <i class="ph-duotone ph-github-logo"></i>
+    <a href="{{ site.baseurl | default: '' }}/" class="logo">
+      {{ site.title | default: "CourseDocs" }}
     </a>
-  {% endif %}
+  </div>
 
-  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
-    <i class="ph-duotone ph-sun"></i>
-  </button>
-</div>
+  <!-- Center: wide search -->
+  <div class="header-center">
+    <form class="site-search" role="search" action="{{ site.baseurl }}/search/">
+      <i class="ph-duotone ph-magnifying-glass"></i>
+      <input id="site-search-input" type="search" name="q"
+             placeholder="Search docs, guides, changelog…"
+             autocomplete="off" aria-label="Search" />
+      <kbd class="shortcut">⌘K</kbd>
+    </form>
+  </div>
+
+  <div class="header-right">
+    {% if site.github_url %}
+      <a href="{{ site.github_url }}/stargazers" class="action-button" aria-label="Star project" title="Star project">
+        <i class="ph-duotone ph-star"></i>
+      </a>
+    {% endif %}
+
+    <a href="{{ site.baseurl }}/changelog/" class="action-button" aria-label="Changelog" title="Changelog">
+      <i class="ph-duotone ph-clock-counter-clockwise"></i>
+    </a>
+
+    <a href="{{ site.baseurl }}/resources/" class="action-button" aria-label="Resources" title="Resources">
+      <i class="ph-duotone ph-books"></i>
+    </a>
+
+    <a href="{{ site.baseurl }}/about/" class="action-button" aria-label="About project" title="About">
+      <i class="ph-duotone ph-info"></i>
+    </a>
+
+    <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" title="Theme">
+      <i class="ph-duotone ph-sun"></i>
+    </button>
+  </div>
+</header>

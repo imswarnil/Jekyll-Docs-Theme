@@ -43,3 +43,64 @@
     &:hover { color: var(--crma-foreground); background-color: var(--crma-accent); }
     &:active { transform: scale(0.95); }
 }
+
+/* Center lane for the search */
+.header { gap: 0.75rem; }
+.header-center{
+  flex: 1 1 auto; min-width: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 1rem;
+}
+
+/* Wide search bar */
+.site-search{
+  --ring: var(--crma-ring-color, color-mix(in srgb, var(--crma-primary), transparent 70%));
+  display: flex; align-items: center; gap: .5rem;
+  width: 100%; max-width: min(860px, 100%);
+  height: 44px; padding: 0 .75rem .0 .75rem;
+  background: var(--crma-secondary);
+  border: 1px solid var(--crma-border);
+  border-radius: var(--crma-radius);
+  color: var(--crma-foreground);
+  transition: border-color var(--crma-transition-speed), box-shadow var(--crma-transition-speed), background var(--crma-transition-speed);
+}
+.site-search:hover{ border-color: var(--crma-primary); background: var(--crma-accent); }
+.site-search:focus-within{
+  border-color: var(--crma-primary);
+  box-shadow: 0 0 0 var(--crma-ring-width, 2px) var(--crma-ring-color);
+  background: var(--crma-background);
+}
+.site-search i{ font-size: 1.05rem; color: var(--crma-muted-foreground); }
+
+.site-search input{
+  flex: 1 1 auto; min-width: 0;
+  border: 0; outline: none; background: transparent;
+  font-size: var(--crma-font-size-md, 1rem);
+  color: var(--crma-foreground);
+}
+.site-search input::placeholder{ color: var(--crma-muted-foreground); }
+
+/* Shortcut chip */
+.site-search .shortcut{
+  display: none;
+  border: 1px solid var(--crma-border);
+  background: var(--crma-background);
+  padding: .15rem .4rem; border-radius: .4rem;
+  font: 600 var(--crma-font-size-xs, .75rem)/1 var(--crma-font-sans);
+  color: var(--crma-muted-foreground);
+}
+@media (min-width: 640px){ .site-search .shortcut{ display: inline-block; } }
+
+/* Tighten right icons a bit on mobile, expand on md+ */
+.header-right{ gap: .35rem; }
+@media (min-width: 640px){ .header-right{ gap: 0.75rem; } }
+
+/* Make sure the center shrinks gracefully on small screens */
+@media (max-width: 480px){
+  .header-center{ padding: 0 .5rem; }
+  .site-search{ height: 40px; }
+  .site-search i{ font-size: 1rem; }
+}
+
+/* Optional: hide GitHub link on very small screens if needed */
+/* .header-right .github-link{ display: none; } */
