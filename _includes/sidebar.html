@@ -7,9 +7,9 @@
 
       {%- for g in groups -%}
         <li class="nav-category">{{ g.name | replace: '-', ' ' | capitalize }}</li>
-        
         {%- assign weighted = g.items | sort: "nav_weight" -%}
-        {%- assign ordered  = weighted | sort: "date" | reverse -%}
+        {# REVERSED THE SORT ORDER: Removed ' | reverse ' #}
+        {%- assign ordered  = weighted | sort: "date" -%} 
         
         {%- for post in ordered -%}
           <li class="nav-link {% if page.url == post.url %}active{% endif %}">
@@ -23,7 +23,6 @@
     </ul>
   </nav>
 
-  <!-- Sponsor Card is now outside the nav for better structure -->
   <div class="sponsor-card">
     <div class="ad-label">Advertisement</div>
     <div class="sponsor-card__title">Sponsored Training</div>
@@ -32,3 +31,23 @@
     </p>
   </div>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+  const sidebarContent = document.querySelector('.sidebar-left-content');
+  const activeLink = document.querySelector('.sidebar-nav .nav-link.active');
+
+  if (sidebarContent && activeLink) {
+    // We use a small timeout to ensure any other layout shifts have completed
+    setTimeout(() => {
+      // scrollIntoView() will scroll the sidebar so the active link is visible.
+      // 'block: 'center'' tries to put it in the middle of the sidebar view.
+      // 'behavior: 'smooth'' makes the scroll animated.
+      activeLink.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
+    }, 100);
+  }
+});
+</script>
