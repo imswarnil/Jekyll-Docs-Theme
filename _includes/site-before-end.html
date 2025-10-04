@@ -166,3 +166,105 @@
         });
     })();
         </script>
+
+        <script>
+            // (Keep all your other JS like TOC, Dark Mode, etc.)
+
+// REPLACE THE OLD SEARCH MODAL SECTION WITH THIS:
+
+// --- LIVE HEADER SEARCH ---
+const searchTrigger = document.getElementById('search-trigger');
+const liveSearchContainer = document.getElementById('live-search-container');
+const searchInput = document.getElementById('live-search-input');
+const resultsContainer = document.getElementById('live-search-results');
+let activeResultIndex = -1;
+
+const openSearch = () => {
+    document.body.classList.add('search-is-active');
+    setTimeout(() => searchInput.focus(), 150); // Delay focus until transition is done
+    renderResults(''); // Clear previous results
+};
+
+const closeSearch = () => {
+    document.body.classList.remove('search-is-active');
+    searchInput.value = '';
+};
+
+const renderResults = query => {
+    const term = query.trim().toLowerCase();
+    let results = [];
+    if (term.length > 1) {
+        const regex = new RegExp(term, 'gi');
+        results = searchData.filter(item => item.title.match(regex) || item.content.match(regex));
+    }
+    
+    resultsContainer.innerHTML = '';
+    activeResultIndex = -1;
+    
+    if (term.length > 1 && results.length === 0) {
+        resultsContainer.innerHTML = '<div class="search-no-results">No results found.</div>';
+        return;
+    }
+    
+    if (results.length > 0) {
+        const ul = document.createElement('ul');
+        results.slice(0, 7).forEach((item, index) => { // Show up to 7 results
+            const li = document.createElement('li');
+            li.className = 'search-result-item';
+            li.dataset.index = index;
+            // Using your existing search result item styles from previous prompt
+            li.innerHTML = `<a href="${baseurl}${item.url}">
+                <div style="flex-shrink: 0; width: 32px; text-align: center;"><i class="ph-duotone ph-file-text"></i></div>
+                <div style="flex-grow: 1;">
+                    <div style="font-weight:600;">${item.title}</div>
+                    <div style="font-size: 0.875rem; color: var(--crma-muted-foreground);">${item.excerpt.substring(0, 70)}...</div>
+                </div>
+            </a>`;
+            ul.appendChild(li);
+        });
+        resultsContainer.appendChild(ul);
+    }
+};
+
+const updateActive = n => {
+    const items = resultsContainer.querySelectorAll('.search-result-item');
+    if (items.length === 0) return;
+    if (activeResultIndex > -1 && items[activeResultIndex]) items[activeResultIndex].classList.remove('active');
+    
+    if (n >= items.length) n = 0;
+    if (n < 0) n = items.length - 1;
+    
+    if (items[n]) {
+        items[n].classList.add('active');
+        items[n].scrollIntoView({ block: 'nearest' });
+    }
+    activeResultIndex = n;
+};
+
+searchTrigger.addEventListener('click', openSearch);
+liveSearchContainer.addEventListener('click', (e) => {
+    // Close if the dark overlay is clicked, but not the search box itself
+    if (e.target === liveSearchContainer) {
+        closeSearch();
+    }
+});
+searchInput.addEventListener('input', () => renderResults(searchInput.value));
+
+document.addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        // Toggle search: open if closed, close if open
+        document.body.classList.contains('search-is-active') ? closeSearch() : openSearch();
+    }
+    
+    if (document.body.classList.contains('search-is-active')) {
+        if (e.key === 'Escape') closeSearch();
+        if (e.key === 'ArrowDown') { e.preventDefault(); updateActive(activeResultIndex + 1); }
+        if (e.key === 'ArrowUp') { e.preventDefault(); updateActive(activeResultIndex - 1); }
+        if (e.key === 'Enter') {
+            const activeLink = resultsContainer.querySelector('.search-result-item.active a');
+            if (activeLink) activeLink.click();
+        }
+    }
+});
+        </script>

@@ -5,6 +5,16 @@
     <div class="page-wrapper">
       <header class="header">
         {% include header.html %}
+        <!-- ADD THIS NEW SEARCH CONTAINER RIGHT AFTER THE HEADER -->
+        <div class="live-search-container" id="live-search-container">
+          <div class="live-search-box">
+            <div class="search-input-group">
+              <i class="ph-duotone ph-magnifying-glass search-input-icon"></i>
+              <input class="search-input" id="live-search-input" type="search" placeholder="Search documentation..." autocomplete="off" />
+            </div>
+            <div class="search-results" id="live-search-results"></div>
+          </div>
+        </div>
       </header>
       <aside class="sidebar-left" id="sidebar-left">
         {% include sidebar.html %}
