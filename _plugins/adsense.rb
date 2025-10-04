@@ -1,8 +1,9 @@
 # frozen_string_literal: true
-# Usage:
+
+# Usage in templates:
 #   {% adsense type:leaderboard size:lg class:my-mx layout_key:-6v+f0-19-44+c6 %}
 # Types: leaderboard | rectangle | square | skyscraper | article | feed | multiplex | auto
-# Sizes: lg | md | sm   (caps container width only; Google controls the creative)
+# Sizes: lg | md | sm  (caps container width via CSS; Google controls the creative)
 
 module Jekyll
   class AdsenseTag < Liquid::Tag
@@ -20,18 +21,23 @@ module Jekyll
     def initialize(tag_name, markup, tokens)
       super
       @opts = {}
-      markup.scan(/(\w+)\s*:\s*("(?:[^"]+)"|'(?:[^']+)'|[^\s]+)/).each do |k, v|
+      # Parse key:value pairs (supports quoted values)
+      markup.to_s.scan(/(\w+)\s*:\s*("(?:[^"]+)"|'(?:[^']+)'|[^\s]+)/).each do |k, v|
         v = v.to_s.strip.sub(/\A['"]/, "").sub(/['"]\z/, "")
         @opts[k] = v
       end
     end
 
-    def render(_context)
-      type       = (@opts["type"] || "auto").downcase
-      size       = (@opts["size"] || "md").downcase
-      extra      = @opts["class"] || ""
-      layout_key = @opts["layout_key"] || "-6v+f0-19-44+c6" # feed default
-      client     = @opts["client"] || "ca-pub-1291242080282540"
+    def render(context)
+      site        = context.registers[:site]
+      # Detect production to avoid pushing ads in dev if you want (optional).
+      # production = (site.config["jekyll_environment"] || ENV["JEKYLL_ENV"] || "").downcase == "production"
+
+      type       = fetch_opt("type", "auto")
+      size       = fetch_opt("size", "md")
+      extra      = @opts["class"].to_s
+      layout_key = fetch_opt("layout_key", "-6v+f0-19-44+c6") # your default in-feed key
+      client     = fetch_opt("client", "ca-pub-1291242080282540")
       slot       = SLOT_MAP[type] || SLOT_MAP["auto"]
 
       ins_attrs =
@@ -56,6 +62,12 @@ module Jekyll
         </div>
         <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
       HTML
+    end
+
+    private
+
+    def fetch_opt(key, default)
+      (@opts[key] || default).to_s.downcase
     end
   end
 end
