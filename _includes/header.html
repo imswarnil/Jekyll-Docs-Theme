@@ -6,8 +6,8 @@
   <a href="{{ site.baseurl | default: '' }}/" class="logo">
     {{ site.title | default: "CourseDocs" }}
   </a>
-  <nav class="sidebar-nav">
-    <!-- Main Header Navigation for Mobile -->
+
+  <nav class="header-nav">
     <ul>
       {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
       {%- for item in nav_items -%}
@@ -17,27 +17,6 @@
             {{ item.title }}
           </a>
         </li>
-      {%- endfor -%}
-    </ul>
-    <!-- Separator -->
-    <hr style="border: none; border-top: 1px solid var(--docs-border); margin: 1.5rem 0;">
-
-    <!-- Existing Post/Academy Navigation -->
-    <ul>
-      {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
-      {% assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" %}
-
-      {%- for g in groups -%}
-        <li class="nav-category">{{ g.name | replace: '-', ' ' | capitalize }}</li>
-        {% assign weighted = g.items | sort: "nav_weight" %}
-        {% assign ordered  = weighted | sort: "date" | reverse %}
-        {%- for post in ordered -%}
-          <li class="nav-link {% if page.url == post.url %}active{% endif %}">
-            <a href="{{ post.url | relative_url }}">
-              <i class="ph-duotone ph-article"></i>{{ post.title }}
-            </a>
-          </li>
-        {%- endfor -%}
       {%- endfor -%}
     </ul>
   </nav>
