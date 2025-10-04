@@ -1,23 +1,43 @@
 <!-- _includes/sidebar.html -->
 <div class="sidebar-left-content">
-  <nav class="sidebar-nav">
-    <!-- Main Header Navigation for Mobile -->
-    <ul>
+  <!-- Mobile-only site nav (uses site.navigation_header) -->
+  <nav class="sidebar-mobile-nav" aria-label="Site">
+    <ul class="sidebar-mobile-list">
       {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
+      {%- assign current = page.url | to_s -%}
       {%- for item in nav_items -%}
-        <li class="nav-link {% if page.url == item.url %}active{% endif %}">
-          <a href="{{ item.url | relative_url }}">
-            <!-- You can add icons here if you want -->
-            {{ item.title }}
+        {%- assign item_url = item.url | to_s -%}
+        {%- assign is_home = item_url == '/' -%}
+        {%- assign normalized = item_url | relative_url -%}
+        {%- assign is_active = (current == item_url) or (current == normalized) or (is_home and (current == '/' or current == site.baseurl)) -%}
+
+        {%- comment -%}
+          Optional icon per item:
+          - Add `icon: house` in navigation_header to force a specific icon.
+          - Auto-fallback by title (home/elements/blog).
+        {%- endcomment -%}
+        {%- assign icon = item.icon -%}
+        {%- if icon == nil or icon == '' -%}
+          {%- assign title_down = item.title | downcase -%}
+          {%- if title_down contains 'home' -%}{% assign icon = 'house' %}
+          {%- elsif title_down contains 'element' -%}{% assign icon = 'squares-four' %}
+          {%- elsif title_down contains 'blog' -%}{% assign icon = 'article' %}
+          {%- else -%}{% assign icon = 'compass' %}
+          {%- endif -%}
+        {%- endif -%}
+
+        <li class="nav-link {% if is_active %}active{% endif %}">
+          <a href="{{ item_url | relative_url }}">
+            <i class="ph-duotone ph-{{ icon }}"></i>
+            <span>{{ item.title }}</span>
           </a>
         </li>
       {%- endfor -%}
     </ul>
-    <!-- Separator -->
-    <hr style="border: none; border-top: 1px solid var(--docs-border); margin: 1.5rem 0;">
+  </nav>
 
-    <!-- Existing Post/Academy Navigation -->
-    <ul>
+  <nav class="sidebar-nav">
+    <ul class="sidebar-posts-list">
       {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
       {% assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" %}
 
@@ -28,7 +48,7 @@
         {%- for post in ordered -%}
           <li class="nav-link {% if page.url == post.url %}active{% endif %}">
             <a href="{{ post.url | relative_url }}">
-              <i class="ph-duotone ph-article"></i>{{ post.title }}
+              <i class="ph-duotone ph-article"></i><span>{{ post.title }}</span>
             </a>
           </li>
         {%- endfor -%}
@@ -36,12 +56,10 @@
     </ul>
   </nav>
 
-  <!-- I noticed you had a sponsor card but the CSS variable was --crma-muted-foreground. 
-       I've changed it to the standard --docs-muted-foreground from your CSS. -->
-  <div class="sponsor-card" style="margin-top: auto; padding-top: 1rem;">
-    <div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div>
-    <div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div>
-    <p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">
+  <div class="sponsor-card" style="margin-top:auto; padding-top:1rem;">
+    <div class="ad-label" style="font-size:.7rem; color: var(--crma-muted-foreground);">Ad</div>
+    <div style="font-weight:600; margin:.5rem 0;">Sponsored Training</div>
+    <p style="font-size:.875rem; color: var(--crma-muted-foreground); margin:0;">
       Learn advanced CRM techniques with our new course.
     </p>
   </div>
