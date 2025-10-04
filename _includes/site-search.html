@@ -1,25 +1,31 @@
-<div class="search-page-container">
+<div class="search-overlay-container">
 
-  <header class="search-page-header">
-    <h1 class="section-title">Search Our Site</h1>
-    <p class="search-page-description">Find articles, tutorials, and pages across the entire site.</p>
-  </header>
+  <div class="search-modal">
 
-  <div class="search-form-wrapper">
+    <header class="search-modal__header">
+      <h1 class="search-modal__title">Search</h1>
+      <p class="search-modal__description">Find anything on the site instantly.</p>
+    </header>
+
     <div class="search-input-group">
       <i class="ph-magnifying-glass search-input-icon"></i>
-      <input class="search-input" id="site-search-input" type="search" name="search" placeholder="e.g., Getting Started with..." autocomplete="off" />
+      <input class="search-input" id="site-search-input" type="search" name="search" placeholder="Type to search..." autocomplete="off" autofocus />
     </div>
 
-    <div class="search-results-container" id="search-results-container">
+    <div class="search-results-wrapper" id="search-results-wrapper">
       <!-- Search results will be injected here by JavaScript -->
+      <div class="search-results-placeholder">
+        <i class="ph-text-aa-bold placeholder-icon"></i>
+        <p>Start typing to see results</p>
+      </div>
     </div>
+
   </div>
 
 </div>
 
 <script type="text/javascript" src="{{ "/assets/scripts/fetch.js" | relative_url }}"></script>
-<script type="text/javascript">
+<script type of="text/javascript">
   const endpoint = '{{ "/assets/search.json" | relative_url }}';
   const pages = [];
 
@@ -35,47 +41,54 @@
   }
 
   function displayResults() {
-    // Only search if the term is 2 or more characters
-    if (this.value.length < 2) {
-      resultsContainer.innerHTML = '';
-      resultsContainer.style.display = 'none'; // Hide container
+    const resultsWrapper = document.getElementById('search-results-wrapper');
+    const searchTerm = this.value.trim();
+
+    // Show placeholder if input is too short or empty
+    if (searchTerm.length < 2) {
+      resultsWrapper.innerHTML = `
+        <div class="search-results-placeholder">
+          <i class="ph-text-aa-bold placeholder-icon"></i>
+          <p>Start typing to see results</p>
+        </div>`;
       return;
     }
 
-    const resultsArray = findResults(this.value, pages);
-    resultsContainer.style.display = 'block'; // Show container
+    const resultsArray = findResults(searchTerm, pages);
 
     if (resultsArray.length > 0) {
       const html = resultsArray.map(item => {
-        // Use textContent to prevent any weird HTML in excerpts from breaking the layout
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = item.excerpt;
-        const cleanExcerpt = tempDiv.textContent || tempDiv.innerText || "";
+        const cleanExcerpt = (tempDiv.textContent || tempDiv.innerText || "").trim();
 
         return `
-          <a href="${item.url}" class="search-result-item">
-            <h4 class="search-result-item__title">${item.title}</h4>
-            <p class="search-result-item__excerpt">${cleanExcerpt}</p>
+          <a href="${item.url}" class="search-result-card">
+            <h4 class="search-result-card__title">${item.title}</h4>
+            <p class="search-result-card__excerpt">${cleanExcerpt}</p>
           </a>`;
       }).join('');
-      resultsContainer.innerHTML = `<div class="search-results-list">${html}</div>`;
+      resultsWrapper.innerHTML = `<div class="search-results-grid">${html}</div>`;
     } else {
-      resultsContainer.innerHTML = `
+      resultsWrapper.innerHTML = `
         <div class="search-no-results">
           <i class="ph-x-circle no-results-icon"></i>
           <h4>No Results Found</h4>
-          <p>Sorry, we couldn't find anything for "${this.value}". Try a different search term.</p>
+          <p>Sorry, we couldn't find anything for "${searchTerm}".</p>
         </div>`;
     }
   }
 
   const searchInput = document.querySelector('#site-search-input');
-  const resultsContainer = document.querySelector('#search-results-container');
-
   searchInput.addEventListener('keyup', displayResults);
   searchInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-      event.preventDefault(); // Prevent form submission
+      event.preventDefault();
+      // Optional: redirect to the first search result on Enter
+      const firstResultLink = document.querySelector('.search-result-card');
+      if (firstResultLink) {
+        window.location.href = firstResultLink.href;
+      }
     }
   });
 </script>

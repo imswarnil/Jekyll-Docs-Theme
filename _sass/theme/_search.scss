@@ -1,33 +1,43 @@
 /* ==========================================================================
-   Search Page Styles
+   Search Page Styles (Modal / Command Palette)
    ========================================================================== */
 
-// --- Main Page Container & Header ---
-.search-page-container {
-  max-width: 800px; // A comfortable width for a search interface
-  margin: var(--crma-space-12) auto;
-  padding: 0 var(--crma-container-pad-x);
+// --- Main Overlay & Modal Container ---
+// This ensures the search interface is centered at the top of the viewport.
+.search-overlay-container {
+  padding: var(--crma-space-8) var(--crma-container-pad-x);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // Aligns to the top
+  min-height: 80vh; // Ensures it takes up most of the screen
 }
 
-.search-page-header {
+.search-modal {
+  width: 100%;
+  max-width: 900px; // A generous max-width for the search interface
+  display: flex;
+  flex-direction: column;
+  gap: var(--crma-space-6);
+}
+
+// --- Header ---
+.search-modal__header {
   text-align: center;
-  margin-bottom: var(--crma-space-8);
-
-  .section-title {
-    margin-bottom: var(--crma-space-2);
-  }
 }
-
-.search-page-description {
+.search-modal__title {
+  font-size: var(--crma-font-size-3xl);
+  font-weight: var(--crma-weight-bold);
+  letter-spacing: var(--crma-heading-letterspacing);
+  margin: 0;
+}
+.search-modal__description {
   color: var(--crma-muted-foreground);
   font-size: var(--crma-font-size-lg);
+  margin-top: var(--crma-space-2);
 }
 
-// --- Search Form & Input ---
-.search-form-wrapper {
-  position: relative; // Anchor for the absolute-positioned results
-}
-
+// --- Search Input ---
 .search-input-group {
   position: relative;
 }
@@ -35,29 +45,24 @@
 .search-input-icon {
   position: absolute;
   top: 50%;
-  left: var(--crma-space-4);
+  left: var(--crma-space-5);
   transform: translateY(-50%);
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   color: var(--crma-muted-foreground);
-  pointer-events: none; // Allows clicking through the icon
+  pointer-events: none;
 }
 
 .search-input {
   width: 100%;
-  height: 52px;
+  height: 60px;
   font-family: var(--crma-font-sans);
-  font-size: var(--crma-font-size-lg);
+  font-size: var(--crma-font-size-xl);
   color: var(--crma-foreground);
-  background-color: var(--crma-background);
-  border: var(--crma-border-width) solid var(--crma-border);
-  border-radius: var(--crma-radius);
-  padding: 0 var(--crma-space-4) 0 calc(var(--crma-space-4) * 2.5); // Left padding for icon
+  background-color: var(--crma-surface);
+  border: var(--crma-border-width) solid var(--crma-surface-border);
+  border-radius: var(--crma-radius-lg);
+  padding: 0 var(--crma-space-5) 0 calc(var(--crma-space-5) * 3);
   transition: all var(--crma-duration-fast) var(--crma-ease);
-
-  &::placeholder {
-    color: var(--crma-muted-foreground);
-    opacity: 0.8;
-  }
 
   &:focus {
     outline: none;
@@ -66,42 +71,47 @@
   }
 }
 
-// --- Search Results ---
-.search-results-container {
-  position: absolute;
-  top: calc(100% + var(--crma-space-2));
-  left: 0;
-  right: 0;
-  z-index: 10;
-  background-color: var(--crma-background);
-  border: var(--crma-border-width) solid var(--crma-border);
-  border-radius: var(--crma-radius-lg);
-  box-shadow: var(--crma-shadow-md);
-  max-height: 60vh;
-  overflow-y: auto;
-  display: none; // Initially hidden, JS will show it
+// --- Search Results Wrapper & Grid ---
+.search-results-wrapper {
+  margin-top: var(--crma-space-4);
+  min-height: 300px; // Reserve space to avoid layout shifts
 }
 
-.search-results-list {
-  padding: var(--crma-space-2);
+.search-results-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--crma-grid-gap);
+
+  @media (min-width: var(--crma-bp-md)) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: var(--crma-bp-lg)) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-.search-result-item {
-  display: block;
-  padding: var(--crma-space-3) var(--crma-space-4);
+// --- Individual Result Card ---
+.search-result-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: var(--crma-space-5);
+  background-color: var(--crma-surface);
+  border: var(--crma-border-width) solid var(--crma-surface-border);
   border-radius: var(--crma-radius);
-  transition: background-color var(--crma-duration-fast) var(--crma-ease);
+  transition: all var(--crma-duration-fast) var(--crma-ease);
 
   &:hover {
-    background-color: var(--crma-accent);
-    color: var(--crma-foreground);
+    transform: translateY(-3px);
+    background-color: var(--crma-surface-hover);
+    border-color: var(--crma-primary);
   }
 
   &__title {
-    font-size: var(--crma-font-size-md);
+    font-size: var(--crma-font-size-lg);
     font-weight: var(--crma-weight-semibold);
     color: var(--crma-foreground);
-    margin: 0 0 var(--crma-space-1) 0;
+    margin: 0 0 var(--crma-space-2) 0;
   }
 
   &__excerpt {
@@ -112,26 +122,36 @@
   }
 }
 
-// --- No Results State ---
+// --- Placeholder & No Results States ---
+.search-results-placeholder,
 .search-no-results {
-  padding: var(--crma-space-8) var(--crma-space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
+  padding: var(--crma-space-12) var(--crma-space-6);
   color: var(--crma-muted-foreground);
+  border: 2px dashed var(--crma-border);
+  border-radius: var(--crma-radius-lg);
 
+  .placeholder-icon,
   .no-results-icon {
-    font-size: 2.5rem;
-    color: var(--crma-primary);
+    font-size: 3rem;
+    color: var(--crma-muted-foreground);
     margin-bottom: var(--crma-space-4);
+  }
+  .no-results-icon {
+    color: var(--crma-primary);
   }
 
   h4 {
     color: var(--crma-foreground);
     font-weight: var(--crma-weight-semibold);
-    margin: 0 0 var(--crma-space-1) 0;
+    margin: var(--crma-space-4) 0 var(--crma-space-1) 0;
   }
 
   p {
-    font-size: var(--crma-font-size-sm);
-    margin: 0;
+    max-width: 40ch;
   }
 }
