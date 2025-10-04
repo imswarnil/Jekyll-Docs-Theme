@@ -1,0 +1,116 @@
+{%- comment -%}
+================================================================================
+  Definitive Adsense Component with Self-Contained Styles & Lazy Loading
+  - Usage: {% include adsense.html type="[TYPE]" %}
+  - The main AdSense script MUST be in your <head> for this to work.
+================================================================================
+{%- endcomment -%}
+
+{%- assign ad_type = include.type -%}
+{%- assign publisher_id = site.adsense.publisher_id | default: "ca-pub-1291242080282540" -%}
+
+{%- comment -%}
+  --- Step 1: Ad Unit Configuration Map ---
+  Map your easy-to-remember 'type' to its official Slot ID and format.
+{%- endcomment -%}
+{%- case ad_type -%}
+  {%- when "in-article" -%}
+    {%- assign slot_id = "6501428979" -%}
+    {%- assign ad_format = "in-article" -%}
+  {%- when "in-feed" -%}
+    {%- assign slot_id = "9130894804" -%}
+    {%- assign ad_format = "in-feed" -%}
+  {%- when "multiplex-horizontal" -%}
+    {%- assign slot_id = "6808134701" -%}
+    {%- assign ad_format = "multiplex" -%}
+  {%- when "multiplex-vertical" -%}
+    {%- assign slot_id = "3375031396" -%}
+    {%- assign ad_format = "multiplex" -%}
+  {%- when "leaderboard" -%}
+    {%- assign slot_id = "4774277934" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "leaderboard-large" -%}
+    {%- assign slot_id = "8539588233" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "billboard" -%}
+    {%- assign slot_id = "4921873558" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "skyscraper-large" -%}
+    {%- assign slot_id = "7400425360" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "skyscraper-medium" -%}
+    {%- assign slot_id = "2712169578" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "skyscraper-small" -%}
+    {%- assign slot_id = "9488965956" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "rectangle-large" -%}
+    {%- assign slot_id = "4394096538" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "square-medium" -%}
+    {%- assign slot_id = "6066270853" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "square-small" -%}
+    {%- assign slot_id = "1684851337" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "button-large" -%}
+    {%- assign slot_id = "3836856744" -%}
+    {%- assign ad_format = "display" -%}
+  {%- when "button-mobile" -%}
+    {%- assign slot_id = "4003326983" -%}
+    {%- assign ad_format = "display" -%}
+  {%- else -%}
+    {%- assign slot_id = nil -%}
+{%- endcase -%}
+
+
+{%- if site.adsense.enabled and slot_id -%}
+
+  {%- comment -%} --- Step 2: Render CSS (ONCE PER PAGE) --- {%- endcomment -%}
+  {%- unless page.adsense_styles_rendered -%}
+  <style>
+    .crma-ad{--_bg:var(--crma-secondary,hsl(210,50%,96%));--_bd:var(--crma-border,hsl(210,30%,90%));margin:2rem auto;background:var(--_bg);border:1px solid var(--_bd);border-radius:var(--crma-radius,.75rem);padding:10px;display:flex;align-items:center;justify-content:center;overflow:hidden;max-width:100%}.crma-ad .adsbygoogle{display:block;width:100%;height:100%}.crma-ad--in-article,.crma-ad--in-feed{min-height:280px;border:none;background:0 0;padding:0}.crma-ad--multiplex-horizontal{min-height:250px;max-width:900px}.crma-ad--multiplex-vertical{display:none;min-height:600px;max-width:300px}@media (min-width:1024px){.crma-ad--multiplex-vertical{display:flex}}.crma-ad--leaderboard,.crma-ad--leaderboard-large{min-height:50px;max-width:980px}@media (min-width:768px){.crma-ad--leaderboard,.crma-ad--leaderboard-large{min-height:90px}}.crma-ad--billboard{min-height:90px;max-width:970px}@media (min-width:1024px){.crma-ad--billboard{min-height:250px}}.crma-ad--skyscraper-large,.crma-ad--skyscraper-medium,.crma-ad--skyscraper-small{display:none}@media (min-width:1280px){.crma-ad--skyscraper-large,.crma-ad--skyscraper-medium,.crma-ad--skyscraper-small{display:flex}}.crma-ad--skyscraper-large{min-height:1050px;max-width:300px}.crma-ad--skyscraper-medium{min-height:600px;max-width:300px}.crma-ad--skyscraper-small{min-height:600px;max-width:160px}.crma-ad--rectangle-large{min-height:280px;max-width:336px}.crma-ad--square-medium{min-height:250px;max-width:300px}.crma-ad--square-small{min-height:250px;max-width:250px}.crma-ad--button-large{min-height:60px;max-width:300px}.crma-ad--button-mobile{min-height:50px;max-width:300px}html.dark .crma-ad{--_bg:var(--crma-secondary,hsl(216,35%,18%));--_bd:var(--crma-border,hsl(216,30%,25%))}
+  </style>
+  {%- assign page.adsense_styles_rendered = true -%}
+  {%- endunless -%}
+
+  {%- comment -%} --- Step 3: The Ad Unit HTML --- {%- endcomment -%}
+  <div class="crma-ad crma-ad--{{ ad_type }}" data-lazy-ad-unit>
+    {%- if ad_format == "in-article" -%}
+      <ins class="adsbygoogle"
+          style="display:block; text-align:center;"
+          data-ad-layout="in-article"
+          data-ad-format="fluid"
+          data-ad-client="{{ publisher_id }}"
+          data-ad-slot="{{ slot_id }}"></ins>
+    {%- elsif ad_format == "in-feed" -%}
+      <ins class="adsbygoogle"
+          style="display:block;"
+          data-ad-format="fluid"
+          data-ad-layout-key="-6v+f0-19-44+c6"
+          data-ad-client="{{ publisher_id }}"
+          data-ad-slot="{{ slot_id }}"></ins>
+    {%- elsif ad_format == "multiplex" -%}
+      <ins class="adsbygoogle"
+           style="display:block;"
+           data-ad-client="{{ publisher_id }}"
+           data-ad-slot="{{ slot_id }}"></ins>
+    {%- else -%}
+      <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="{{ publisher_id }}"
+          data-ad-slot="{{ slot_id }}"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+    {%- endif -%}
+  </div>
+
+  {%- comment -%} --- Step 4: Render Lazy-Loading Script (ONCE per page) --- {%- endcomment -%}
+  {%- unless page.adsense_script_rendered -%}
+  <script>
+    document.addEventListener("DOMContentLoaded",function(){if(window.adObserver)return;const e=document.querySelectorAll("[data-lazy-ad-unit]");if(!e.length)return;const t=new IntersectionObserver((e,d)=>{e.forEach(e=>{if(e.isIntersecting){const s=e.target;if(s.dataset.adLazyLoaded)return;const a=s.querySelector(".adsbygoogle");if(a){s.dataset.adLazyLoaded="true";try{(window.adsbygoogle=window.adsbygoogle||[]).push({})}catch(e){console.error("Adsense error:",e)}}d.unobserve(s)}})},{rootMargin:"0px 0px 250px 0px"});window.adObserver=t,e.forEach(e=>{t.observe(e)})});
+  </script>
+  {%- assign page.adsense_script_rendered = true -%}
+  {%- endunless -%}
+
+{%- endif -%}

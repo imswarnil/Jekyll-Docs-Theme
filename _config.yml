@@ -108,11 +108,16 @@ email: "me@daviddarnes.com"
 # short_name: "Al" # The web application short name, defaults to the site title
 css_inline: true # Will insert all styles into a single <style> block in the <head> element and remove the style <link> reference
 
-# Adsense Ads
-# Adsense Ads
+
+# ==============================================================================
+# AdSense Configuration
+# ==============================================================================
 adsense:
   enabled: true
   publisher_id: "ca-pub-1291242080282540"
+
+# You no longer need the big 'slots' map here.
+# The new component handles that internally for simplicity.
 
 
 
