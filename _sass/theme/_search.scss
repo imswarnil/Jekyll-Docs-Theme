@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Search Page Styles
+   ========================================================================== */
+
+// --- Main Page Container & Header ---
+.search-page-container {
+  max-width: 800px; // A comfortable width for a search interface
+  margin: var(--crma-space-12) auto;
+  padding: 0 var(--crma-container-pad-x);
+}
+
+.search-page-header {
+  text-align: center;
+  margin-bottom: var(--crma-space-8);
+
+  .section-title {
+    margin-bottom: var(--crma-space-2);
+  }
+}
+
+.search-page-description {
+  color: var(--crma-muted-foreground);
+  font-size: var(--crma-font-size-lg);
+}
+
+// --- Search Form & Input ---
+.search-form-wrapper {
+  position: relative; // Anchor for the absolute-positioned results
+}
+
+.search-input-group {
+  position: relative;
+}
+
+.search-input-icon {
+  position: absolute;
+  top: 50%;
+  left: var(--crma-space-4);
+  transform: translateY(-50%);
+  font-size: 1.25rem;
+  color: var(--crma-muted-foreground);
+  pointer-events: none; // Allows clicking through the icon
+}
+
+.search-input {
+  width: 100%;
+  height: 52px;
+  font-family: var(--crma-font-sans);
+  font-size: var(--crma-font-size-lg);
+  color: var(--crma-foreground);
+  background-color: var(--crma-background);
+  border: var(--crma-border-width) solid var(--crma-border);
+  border-radius: var(--crma-radius);
+  padding: 0 var(--crma-space-4) 0 calc(var(--crma-space-4) * 2.5); // Left padding for icon
+  transition: all var(--crma-duration-fast) var(--crma-ease);
+
+  &::placeholder {
+    color: var(--crma-muted-foreground);
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: var(--crma-primary);
+    box-shadow: 0 0 0 var(--crma-ring-width) var(--crma-ring-color);
+  }
+}
+
+// --- Search Results ---
+.search-results-container {
+  position: absolute;
+  top: calc(100% + var(--crma-space-2));
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background-color: var(--crma-background);
+  border: var(--crma-border-width) solid var(--crma-border);
+  border-radius: var(--crma-radius-lg);
+  box-shadow: var(--crma-shadow-md);
+  max-height: 60vh;
+  overflow-y: auto;
+  display: none; // Initially hidden, JS will show it
+}
+
+.search-results-list {
+  padding: var(--crma-space-2);
+}
+
+.search-result-item {
+  display: block;
+  padding: var(--crma-space-3) var(--crma-space-4);
+  border-radius: var(--crma-radius);
+  transition: background-color var(--crma-duration-fast) var(--crma-ease);
+
+  &:hover {
+    background-color: var(--crma-accent);
+    color: var(--crma-foreground);
+  }
+
+  &__title {
+    font-size: var(--crma-font-size-md);
+    font-weight: var(--crma-weight-semibold);
+    color: var(--crma-foreground);
+    margin: 0 0 var(--crma-space-1) 0;
+  }
+
+  &__excerpt {
+    font-size: var(--crma-font-size-sm);
+    color: var(--crma-muted-foreground);
+    margin: 0;
+    line-height: var(--crma-line-normal);
+  }
+}
+
+// --- No Results State ---
+.search-no-results {
+  padding: var(--crma-space-8) var(--crma-space-6);
+  text-align: center;
+  color: var(--crma-muted-foreground);
+
+  .no-results-icon {
+    font-size: 2.5rem;
+    color: var(--crma-primary);
+    margin-bottom: var(--crma-space-4);
+  }
+
+  h4 {
+    color: var(--crma-foreground);
+    font-weight: var(--crma-weight-semibold);
+    margin: 0 0 var(--crma-space-1) 0;
+  }
+
+  p {
+    font-size: var(--crma-font-size-sm);
+    margin: 0;
+  }
+}

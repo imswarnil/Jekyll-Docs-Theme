@@ -1,23 +1,31 @@
-<div class="form  form--search">
-  <form id="contact-form" action="">
-    <label class="label" for="search">Search term:</label>
-    <input class="input" id="search" type="search" name="search" placeholder="e.g. About us" autocomplete="off" />
+<div class="search-page-container">
 
-    <ul class="list  list--results" id="list">
-        <!-- results go here -->
-    </ul>
-  </form>
+  <header class="search-page-header">
+    <h1 class="section-title">Search Our Site</h1>
+    <p class="search-page-description">Find articles, tutorials, and pages across the entire site.</p>
+  </header>
+
+  <div class="search-form-wrapper">
+    <div class="search-input-group">
+      <i class="ph-magnifying-glass search-input-icon"></i>
+      <input class="search-input" id="site-search-input" type="search" name="search" placeholder="e.g., Getting Started with..." autocomplete="off" />
+    </div>
+
+    <div class="search-results-container" id="search-results-container">
+      <!-- Search results will be injected here by JavaScript -->
+    </div>
+  </div>
+
 </div>
 
 <script type="text/javascript" src="{{ "/assets/scripts/fetch.js" | relative_url }}"></script>
 <script type="text/javascript">
   const endpoint = '{{ "/assets/search.json" | relative_url }}';
-
   const pages = [];
 
   fetch(endpoint)
     .then(blob => blob.json())
-    .then(data => pages.push(...data))
+    .then(data => pages.push(...data));
 
   function findResults(termToMatch, pages) {
     return pages.filter(item => {
@@ -27,31 +35,47 @@
   }
 
   function displayResults() {
+    // Only search if the term is 2 or more characters
+    if (this.value.length < 2) {
+      resultsContainer.innerHTML = '';
+      resultsContainer.style.display = 'none'; // Hide container
+      return;
+    }
+
     const resultsArray = findResults(this.value, pages);
-    const html = resultsArray.map(item => {
-      return `
-        <li class="item  item--result">
-          <article class="article  typeset">
-            <h4><a href="${item.url}">${item.title}</a></h4>
-            <p>${item.excerpt}</p>
-          </article>
-        </li>`;
-    }).join('');
-    if ((resultsArray.length == 0) || (this.value == '')) {
-      resultsList.innerHTML = `<p>Sorry, nothing was found</p>`;
+    resultsContainer.style.display = 'block'; // Show container
+
+    if (resultsArray.length > 0) {
+      const html = resultsArray.map(item => {
+        // Use textContent to prevent any weird HTML in excerpts from breaking the layout
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = item.excerpt;
+        const cleanExcerpt = tempDiv.textContent || tempDiv.innerText || "";
+
+        return `
+          <a href="${item.url}" class="search-result-item">
+            <h4 class="search-result-item__title">${item.title}</h4>
+            <p class="search-result-item__excerpt">${cleanExcerpt}</p>
+          </a>`;
+      }).join('');
+      resultsContainer.innerHTML = `<div class="search-results-list">${html}</div>`;
     } else {
-      resultsList.innerHTML = html;
+      resultsContainer.innerHTML = `
+        <div class="search-no-results">
+          <i class="ph-x-circle no-results-icon"></i>
+          <h4>No Results Found</h4>
+          <p>Sorry, we couldn't find anything for "${this.value}". Try a different search term.</p>
+        </div>`;
     }
   }
 
-  const field = document.querySelector('#search');
-  const resultsList = document.querySelector('#list');
+  const searchInput = document.querySelector('#site-search-input');
+  const resultsContainer = document.querySelector('#search-results-container');
 
-  field.addEventListener('keyup', displayResults);
-
-  field.addEventListener('keydown', function(event) {
+  searchInput.addEventListener('keyup', displayResults);
+  searchInput.addEventListener('keydown', function(event) {
     if (event.key === 'Enter') {
-      event.preventDefault();
+      event.preventDefault(); // Prevent form submission
     }
   });
 </script>
