@@ -93,7 +93,7 @@ defaults:
 # 7. Site settings
 encoding: utf-8 # Make sure the encoding is right
 lang: en-GB # Set the site language
-title: "Alembic" # Site name or title, also used in jekyll-seo-tag
+title: "CRM Analytics Academy" # Site name or title, also used in jekyll-seo-tag
 logo: "/assets/logos/logo.svg" # Site logo, also used in jekyll-seo-tag
 description: "Alembic is a starting point for Jekyll projects. Rather than starting from scratch, this boilerplate is designed to get the ball rolling immediately" # Site description and default description, also used in jekyll-seo-tag
 url: "" # Site url, also used in jekyll-seo-tag
@@ -117,41 +117,6 @@ adsense:
   enabled: true
   publisher_id: "ca-pub-1291242080282540"
 
-  # Define all your ad units here.
-  # The key (e.g., "skyscraper_large") is what you'll use in the tag.
-  slots:
-    # --- Special Formats ---
-    article:                { slot: '6501428979', format: 'article' }
-    feed:                   { slot: '9130894804', format: 'feed' }
-    multiplex_horizontal:   { slot: '6808134701', format: 'multiplex' }
-    multiplex_vertical:     { slot: '3375031396', format: 'multiplex' }
-
-    # --- Skyscraper Ads ---
-    skyscraper_large:       { slot: '7400425360', format: 'display' } # 300x1050
-    skyscraper_medium:      { slot: '2712169578', format: 'display' } # 300x600
-    skyscraper_250:         { slot: '5882506557', format: 'display' } # 250x600
-    skyscraper_small:       { slot: '9488965956', format: 'display' } # 160x600
-
-    # --- Square & Rectangle Ads ---
-    rectangle_large:        { slot: '4394096538', format: 'display' } # 336x280
-    square_medium:          { slot: '6066270853', format: 'display' } # 300x250
-    square_small:           { slot: '1684851337', format: 'display' } # 250x250
-    square_200:             { slot: '1549380617', format: 'display' } # 200x250
-
-    # --- Leaderboard & Banner Ads ---
-    leaderboard_responsive: { slot: '4774277934', format: 'display' }
-    leaderboard_980:        { slot: '8539588233', format: 'display' } # 980x90
-    leaderboard_728:        { slot: '1864856299', format: 'display' } # 728x90
-    billboard:              { slot: '4921873558', format: 'display' } # 970x250
-    
-    # --- Button Ads ---
-    button_large:           { slot: '3836856744', format: 'display' } # 300x60
-    button_mobile:          { slot: '4003326983', format: 'display' } # 300x50
-
-    # --- Generic Responsive Units ---
-    responsive_horizontal:  { slot: '8939839370', format: 'display' }
-    responsive_vertical:    { slot: '3487917390', format: 'display' }
-    responsive_square:      { slot: '7663977887', format: 'display' }
 
 
 safe: false   # or just remove 'safe:' entirely
