@@ -5,43 +5,73 @@
     --ad-muted: var(--crma-muted-foreground);
     --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
   }
+  
   html.dark{ --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25)); }
   
-  /* Container card */
+  /* ===== Base ad card (we control ALL container styling) ===== */
   .ad{
-    width:100%; max-width:100%;
+    width: 100%;
+    max-width: 100%;
     margin: clamp(var(--crma-space-3,.75rem), 3vw, var(--crma-space-6,1.5rem)) 0;
     padding: clamp(10px, 2vw, 16px);
     background: var(--ad-bg);
     border: var(--crma-border-width,1px) solid var(--ad-border);
     border-radius: var(--ad-radius);
     box-shadow: var(--ad-shadow);
-    display:flex; flex-direction:column; align-items:center; gap:.45rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .45rem;
   }
+  
+  /* Label */
   .ad__label{
     font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui);
-    letter-spacing:.14em; text-transform:uppercase; color: var(--ad-muted);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--ad-muted);
   }
   
-  /* The <ins> must be block and width:100% for responsive creatives */
+  /* We override default <ins> block sizing so it fills our frame */
   .ad .adsbygoogle{
-    display:block; width:100%; max-width:100%; height:auto;
-    border-radius: calc(var(--ad-radius) - 2px); overflow:hidden;
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: calc(var(--ad-radius) - 2px);
+    overflow: hidden;
   }
   
-  /* ===== Square container caps by size =====
-     sm: up to 200px, md: up to 300px, lg: up to 336px */
+  /* ======== SQUARE: width caps + height guards (reduce CLS) ======== */
+  /* Size caps (container width) */
   .ad--square.ad--sm { max-width: 200px; }
   .ad--square.ad--md { max-width: 300px; }
   .ad--square.ad--lg { max-width: 336px; }
   
-  /* Phones: let it fill the content width */
+  /* Height guards (min-height; ad may exceed if needed) */
+  .ad--square.ad--sm { min-height: 120px; } /* ~120x120/200 */
+  .ad--square.ad--md { min-height: 250px; } /* ~250–300 */
+  .ad--square.ad--lg { min-height: 280px; } /* ~300+ */
+  
+  /* ======== LEADERBOARD: width caps + height guards ======== */
+  .ad--leaderboard.ad--sm { max-width: 468px; min-height: 60px; }   /* 468×60 */
+  .ad--leaderboard.ad--md { max-width: 728px; min-height: 90px; }   /* 728×90 */
+  .ad--leaderboard.ad--lg { max-width: 980px; min-height: 120px; }  /* 980×120 / 970×90 */
+  
+  /* Phones: let fixed families fill container width; reduce min-heights a bit */
   @media (max-width: 480px){
-    .ad--square { max-width: 100% !important; }
+    .ad--square,
+    .ad--leaderboard { max-width: 100% !important; }
+  
+    .ad--leaderboard.ad--md { min-height: 70px; }
+    .ad--leaderboard.ad--lg { min-height: 90px; }
   }
   
-  /* Center on larger screens */
+  /* Center capped units on larger screens */
   @media (min-width: 768px){
-    .ad { margin-left:auto; margin-right:auto; }
+    .ad { margin-left: auto; margin-right: auto; }
   }
   
