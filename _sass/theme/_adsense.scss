@@ -1,5 +1,5 @@
 :root{
-    --ad-radius: var(--crma-radius, 0.75rem);
+    --ad-radius: var(--crma-radius, .75rem);
     --ad-bg: var(--crma-ad-bg, var(--crma-secondary));
     --ad-border: var(--crma-ad-border, var(--crma-border));
     --ad-muted: var(--crma-muted-foreground);
@@ -9,8 +9,8 @@
   
   .ad{
     width:100%; max-width:100%;
-    margin: clamp(var(--crma-space-3,.75rem),3vw,var(--crma-space-6,1.5rem)) 0;
-    padding: clamp(10px,2vw,16px);
+    margin: clamp(var(--crma-space-3,.75rem), 3vw, var(--crma-space-6,1.5rem)) 0;
+    padding: clamp(10px, 2vw, 16px);
     background: var(--ad-bg);
     border: var(--crma-border-width,1px) solid var(--ad-border);
     border-radius: var(--ad-radius);
@@ -18,27 +18,67 @@
     display:flex; flex-direction:column; align-items:center; gap:.45rem;
   }
   .ad__label{
-    font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui);
-    letter-spacing:.14em; text-transform:uppercase; color:var(--ad-muted);
+    font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui, -apple-system, Segoe UI, Roboto, Arial);
+    letter-spacing:.14em; text-transform:uppercase; color: var(--ad-muted);
   }
-  .ad .adsbygoogle{ display:block; width:100%; max-width:100%; height:auto; border-radius:calc(var(--ad-radius) - 2px); overflow:hidden; }
   
-  /* width caps by type/size (container only) */
-  .ad--leaderboard.ad--lg{ max-width:980px; } .ad--leaderboard.ad--md{ max-width:728px; } .ad--leaderboard.ad--sm{ max-width:468px; }
-  .ad--rectangle.ad--lg{ max-width:336px; } .ad--rectangle.ad--md{ max-width:300px; } .ad--rectangle.ad--sm{ max-width:250px; }
-  .ad--square.ad--lg{ max-width:250px; } .ad--square.ad--md{ max-width:200px; } .ad--square.ad--sm{ max-width:120px; }
-  .ad--skyscraper.ad--lg{ max-width:300px; } .ad--skyscraper.ad--md{ max-width:160px; } .ad--skyscraper.ad--sm{ max-width:120px; }
+  /* Google <ins> fills the card; Google decides creative size */
+  .ad .adsbygoogle{
+    display:block; width:100%; max-width:100%; height:auto;
+    border-radius: calc(var(--ad-radius) - 2px); overflow:hidden;
+  }
   
-  /* fluid types */
-  .ad--article, .ad--feed, .ad--multiplex{ max-width:100%; }
+  /* ---- Container width caps by family (desktop) ---- */
+  /* Leaderboards / banners */
+  .ad--leaderboard-responsive.ad--md { max-width: 728px; }
+  .ad--leaderboard-980.ad--lg        { max-width: 980px; }
+  .ad--leaderboard-728.ad--md        { max-width: 728px; }
+  .ad--billboard.ad--lg              { max-width: 970px; }
   
-  /* phones: fill width */
+  /* Rectangles / squares */
+  .ad--rectangle-large.ad--lg  { max-width: 336px; }
+  .ad--square-medium.ad--md,
+  .ad--square-medium.ad--lg    { max-width: 300px; }
+  .ad--square-small.ad--sm     { max-width: 250px; }
+  .ad--square-200.ad--sm       { max-width: 200px; }
+  
+  /* Skyscrapers */
+  .ad--skyscraper-large.ad--lg { max-width: 300px; }  /* 300x1050 */
+  .ad--skyscraper-medium.ad--md{ max-width: 300px; }  /* 300x600  */
+  .ad--skyscraper-250.ad--md   { max-width: 250px; }  /* 250x600  */
+  .ad--skyscraper-small.ad--sm { max-width: 160px; }  /* 160x600  */
+  
+  /* Fluid families stretch */
+  .ad--responsive-horizontal,
+  .ad--responsive-vertical,
+  .ad--responsive-square,
+  .ad--article,
+  .ad--feed,
+  .ad--multiplex-horizontal,
+  .ad--multiplex-vertical { max-width: 100%; }
+  
+  /* ---- Responsiveness ---- */
+  /* Phones: fill container width */
   @media (max-width: 480px){
     .ad{ width:100%; max-width:100%; }
-    .ad--leaderboard, .ad--rectangle, .ad--square{ max-width:100% !important; }
+    .ad[class*="leaderboard"],
+    .ad[class*="rectangle"],
+    .ad[class*="square"]{ max-width:100% !important; }
   }
   
-  /* tablet+: center caps */
-  @media (min-width:768px){ .ad{ margin-left:auto; margin-right:auto; } }
-  @media (min-width:1024px){ .ad--skyscraper{ align-self:center; } }
+  /* Tablet+: center capped units */
+  @media (min-width: 768px){
+    .ad{ margin-left:auto; margin-right:auto; }
+  }
+  
+  /* Desktop sidebars: keep skyscrapers narrow and centered */
+  @media (min-width: 1024px){
+    .ad[class*="skyscraper"]{ align-self:center; }
+  }
+  
+  /* Optional stronger frame */
+  .ad--framed{
+    background: var(--crma-surface);
+    border-color: var(--crma-surface-border);
+  }
   
