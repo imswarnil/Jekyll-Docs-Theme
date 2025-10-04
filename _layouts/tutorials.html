@@ -1,0 +1,32 @@
+---
+layout: default
+---
+<div class="main-content-area">
+
+  <div class="content-wrapper">
+    <main class="tutorials-page">
+
+      {# A styled header for the tutorials section #}
+      <header class="tutorials-header">
+        {%- assign collectiondata = site.collections | where: "label", page.collectionpage | first -%}
+        <h1 class="section-title">{{ collectiondata.title | default: "Tutorials" }}</h1>
+        {%- if collectiondata.description -%}
+          <p class="tutorials-header__description">{{ collectiondata.description }}</p>
+        {%- endif -%}
+      </header>
+      
+
+      {# The list of posts will be rendered by this include #}
+      {% include post-list.html %}
+
+    </main>
+  </div>
+
+  {# Sidebar Column (for ads and other widgets) #}
+  <aside class="sidebar-right">
+    <div class="sidebar-right__sticky-content">
+      <h3 class="sidebar-widget-title">Sponsor</h3>
+    </div>
+  </aside>
+
+</div>

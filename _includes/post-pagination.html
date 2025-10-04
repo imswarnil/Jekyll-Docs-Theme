@@ -1,17 +1,21 @@
-<nav class="nav  nav--paginator">
-
+<nav class="pagination-nav">
   {% if paginator.previous_page %}
-    <a href="{{ site.baseurl }}{{ paginator.previous_page_path }}" class="pagination  pagination--previous">&larr; Newer</a>
+    <a href="{{ paginator.previous_page_path | relative_url }}" class="btn btn--ghost">
+      <i class="ph-arrow-left"></i> Newer Posts
+    </a>
   {% else %}
-    <span class="pagination  pagination--previous">&larr; Newer</span>
+    <span class="btn btn--ghost" disabled><i class="ph-arrow-left"></i> Newer Posts</span>
   {% endif %}
 
-  <span class="pagination  pagination--counter">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  <span class="pagination-nav__counter">
+    Page {{ paginator.page }} of {{ paginator.total_pages }}
+  </span>
 
   {% if paginator.next_page %}
-    <a href="{{ site.baseurl }}{{ paginator.next_page_path }}" class="pagination  pagination--next">Older &rarr;</a>
+    <a href="{{ paginator.next_page_path | relative_url }}" class="btn btn--ghost">
+      Older Posts <i class="ph-arrow-right"></i>
+    </a>
   {% else %}
-    <span class="pagination  pagination--next">Older &rarr;</span>
+    <span class="btn btn--ghost" disabled>Older Posts <i class="ph-arrow-right"></i></span>
   {% endif %}
-
 </nav>

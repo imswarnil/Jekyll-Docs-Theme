@@ -1,32 +1,36 @@
-{% if paginator.posts %}
-  <section class="section  typeset">
-    <ul class="list  list--posts">
-      {% for page in paginator.posts %}
-        <li class="item  item--post">
-          <article class="article  article--post">
+{%- assign posts_to_show = paginator.posts | default: site.posts -%}
 
-            <h2><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></h2>
-            {{ page.excerpt | markdownify | truncatewords: 60 }}
+<section class="post-grid">
+  {%- for post in posts_to_show -%}
+    {# Renders the post card #}
+    <article class="post-card">
+      <a href="{{ post.url | relative_url }}" class="post-card__link">
+        <div class="post-card__content">
+          <h3 class="post-card__title">{{ post.title }}</h3>
+          <p class="post-card__excerpt">
+            {{ post.excerpt | markdownify | strip_html | truncatewords: 25 }}
+          </p>
+        </div>
+        <footer class="post-card__footer">
+          <time datetime="{{ post.date | date_to_xmlschema }}">
+            {{ post.date | date: "%B %d, %Y" }}
+          </time>
+          <span>Read More &rarr;</span>
+        </footer>
+      </a>
+    </article>
 
-          </article>
-        </li>
-      {% endfor %}
-    </ul>
-    {% include post-pagination.html %}
-  </section>
-{% else %}
-  <section class="section  typeset">
-    <ul class="list  list--posts">
-      {% for page in site.posts %}
-        <li class="item  item--post">
-          <article class="article  article--post">
+    {# --- In-Feed Ad Injection Logic --- #}
+    {# After the 3rd post, inject an ad #}
+    {%- if forloop.index == 3 -%}
+      <div class="post-grid__ad-item">
+        {% adsense type:"rectangle_large" %}
+      </div>
+    {%- endif -%}
 
-            <h2><a href="{{ site.baseurl }}{{ page.url }}">{{ page.title }}</a></h2>
-            {{ page.excerpt | markdownify | truncatewords: 60 }}
+  {%- endfor -%}
+</section>
 
-          </article>
-        </li>
-      {% endfor %}
-    </ul>
-  </section>
-{% endif %}
+{%- if paginator -%}
+  {% include post-pagination.html %}
+{%- endif -%}
