@@ -8,7 +8,7 @@
   </a>
 </div>
 
-<!-- A new central container for the desktop search bar -->
+<!-- NEW: A dedicated container for the search bar in the middle -->
 <div class="header-center" id="header-center">
   <div class="live-search-group">
     <i class="ph-duotone ph-magnifying-glass"></i>
@@ -17,7 +17,7 @@
 </div>
 
 <div class="header-right">
-  <!-- This search trigger is ONLY for mobile -->
+  <!-- This search trigger is ONLY visible on mobile -->
   <button class="action-button mobile-search-trigger" id="mobile-search-trigger" aria-label="Search">
     <i class="ph-duotone ph-magnifying-glass"></i>
   </button>
@@ -35,5 +35,107 @@
   </button>
 </div>
 
-<!-- This container holds the search results and appears below the header -->
+<!-- NEW: The container for the search results dropdown. This lives outside the main header flow. -->
 <div class="live-search-results-container" id="live-search-results-container"></div>
+<script>
+  (function() {
+    const baseurl = "{{ site.baseurl }}";
+    let searchData = [];
+
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch(`${baseurl}/assets/search.json`)
+            .then(response => response.json())
+            .then(data => { searchData = data; })
+            .catch(error => console.error('Error fetching search data:', error));
+        
+        initDarkMode();
+        initLiveSearch();
+    });
+
+    function initDarkMode() {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (!themeToggle) return;
+
+        const htmlEl = document.documentElement;
+        const setTheme = (theme) => {
+            htmlEl.classList.toggle('dark', theme === 'dark');
+            const icon = themeToggle.querySelector('i');
+            if (icon) icon.className = theme === 'dark' ? 'ph-duotone ph-moon' : 'ph-duotone ph-sun';
+            localStorage.setItem('theme', theme);
+        };
+        
+        setTheme(localStorage.getItem('theme') || 'light');
+        themeToggle.addEventListener('click', () => {
+            setTheme(htmlEl.classList.contains('dark') ? 'light' : 'dark');
+        });
+    }
+
+    function initLiveSearch() {
+        const searchInput = document.getElementById('live-search-input');
+        const resultsContainer = document.getElementById('live-search-results-container');
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        const body = document.body;
+
+        if (!searchInput || !resultsContainer) return;
+
+        const renderResults = (query) => {
+            const term = query.trim().toLowerCase();
+            let results = [];
+            if (term.length > 1 && searchData.length > 0) {
+                results = searchData.filter(item => 
+                    item.title.toLowerCase().includes(term) || item.content.toLowerCase().includes(term)
+                );
+            }
+
+            resultsContainer.innerHTML = '';
+            if (results.length > 0) {
+                const ul = document.createElement('ul');
+                // Note: The result item HTML should match your existing style
+                results.slice(0, 7).forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${baseurl}${item.url}" class="search-result-item">...</a>`; // Your result item markup
+                    ul.appendChild(li);
+                });
+                resultsContainer.appendChild(ul);
+                resultsContainer.classList.add('is-visible');
+            } else {
+                resultsContainer.classList.remove('is-visible');
+            }
+        };
+
+        searchInput.addEventListener('input', () => renderResults(searchInput.value));
+        searchInput.addEventListener('focus', () => renderResults(searchInput.value));
+        
+        // --- Mobile Search Activation ---
+        mobileSearchTrigger.addEventListener('click', (e) => {
+            e.stopPropagation();
+            body.classList.add('mobile-search-active');
+            searchInput.focus();
+        });
+
+        // --- Close search when clicking outside ---
+        document.addEventListener('click', function(e) {
+            const isClickInsideSearch = searchInput.contains(e.target) || resultsContainer.contains(e.target);
+            const isMobileTrigger = mobileSearchTrigger.contains(e.target);
+            
+            if (!isClickInsideSearch && !isMobileTrigger) {
+                resultsContainer.classList.remove('is-visible');
+                body.classList.remove('mobile-search-active');
+            }
+        });
+
+        // --- Keyboard Shortcuts ---
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                resultsContainer.classList.remove('is-visible');
+                body.classList.remove('mobile-search-active');
+                searchInput.blur();
+            }
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+    }
+})();
+</script>
