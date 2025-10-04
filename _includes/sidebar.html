@@ -1,21 +1,28 @@
-<!-- _includes/sidebar.html -->
 <div class="sidebar-left-content">
   <nav class="sidebar-nav">
     <ul>
-      {%- assign posts = site.posts | where_exp: "p", "p.draft != true" -%}
-      {%- assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" -%}
+      {%- comment -%}
+        Pull posts (skip drafts), group by first category (fallback: "Posts")
+        This is compatible with GitHub Pages’ pinned Jekyll/Liquid.
+      {%- endcomment -%}
+      {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
+      {% assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" %}
 
       {%- for g in groups -%}
         <li class="nav-category">{{ g.name | replace: '-', ' ' | capitalize }}</li>
-        {%- assign weighted = g.items | sort: "nav_weight" -%}
-        {# REVERSED THE SORT ORDER: Removed ' | reverse ' #}
-        {%- assign ordered  = weighted | sort: "date" -%} 
-        
+
+        {%- comment -%}
+          Order: by optional nav_weight (lower first), then newest
+          (If you don’t use nav_weight, it just sorts by date desc.)
+        {%- endcomment -%}
+        {% assign weighted = g.items | sort: "nav_weight" %}
+        {% assign ordered  = weighted | sort: "date" | reverse %}
+
         {%- for post in ordered -%}
           <li class="nav-link {% if page.url == post.url %}active{% endif %}">
             <a href="{{ post.url | relative_url }}">
-              <i class="ph-duotone ph-article"></i>
-              <span>{{ post.title }}</span>
+              <!-- Hardcoded icon for now -->
+              <i class="ph-duotone ph-article"></i>{{ post.title }}
             </a>
           </li>
         {%- endfor -%}
@@ -24,30 +31,10 @@
   </nav>
 
   <div class="sponsor-card">
-    <div class="ad-label">Advertisement</div>
-    <div class="sponsor-card__title">Sponsored Training</div>
-    <p class="sponsor-card__text">
+    <div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div>
+    <div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div>
+    <p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">
       Learn advanced CRM techniques with our new course.
     </p>
   </div>
 </div>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-  const sidebarContent = document.querySelector('.sidebar-left-content');
-  const activeLink = document.querySelector('.sidebar-nav .nav-link.active');
-
-  if (sidebarContent && activeLink) {
-    // We use a small timeout to ensure any other layout shifts have completed
-    setTimeout(() => {
-      // scrollIntoView() will scroll the sidebar so the active link is visible.
-      // 'block: 'center'' tries to put it in the middle of the sidebar view.
-      // 'behavior: 'smooth'' makes the scroll animated.
-      activeLink.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-        inline: 'nearest'
-      });
-    }, 100);
-  }
-});
-</script>
