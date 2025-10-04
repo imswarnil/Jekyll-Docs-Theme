@@ -1,153 +1,45 @@
-/* ==========================================================================
-   Header & Live Search Styles
-   ========================================================================== */
-
-// --- Base Header ---
 .header {
-    grid-column: 1 / -1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 var(--crma-container-pad-x);
-    height: var(--crma-header-height);
-    border-bottom: 1px solid var(--crma-border);
-    background-color: var(--crma-background);
-    position: sticky;
-    top: 0;
-    z-index: var(--crma-z-header);
-    transition: opacity var(--crma-duration-fast) ease;
+    grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.5rem; border-bottom: 1px solid var(--docs-border); background-color: var(--docs-background);
+    position: sticky; top: 0; z-index: 50;
 }
-
 .header-left {
-    display: flex;
-    align-items: center;
-    gap: var(--crma-space-6);
-    flex-shrink: 0;
-    .logo { font-size: 1.5rem; font-weight: var(--crma-weight-bold); }
+    display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0;
+    .logo { font-size: 1.5rem; font-weight: 800; }
 }
-
 .mobile-menu-toggle {
-    background: none; border: none; cursor: pointer; padding: var(--crma-space-2);
-    color: var(--crma-foreground);
-    @media (min-width: var(--crma-bp-lg)) { display: none; }
+    background: none; border: none; cursor: pointer; padding: 0.5rem;
+    @media (min-width: 1024px) { display: none; }
 }
-
+.header-nav {
+    display: none;
+    a {
+        font-weight: 500; color: var(--docs-muted-foreground); padding: 0.5rem;
+        &.active { color: var(--docs-foreground); font-weight: 600; }
+    }
+    @media (min-width: 1024px) { display: flex; gap: 1rem; }
+}
 .header-right {
-    display: flex;
-    align-items: center;
-    gap: var(--crma-space-2);
-    justify-content: flex-end;
-    .github-link { @media (max-width: 639px) { display: none; } }
-    @media (min-width: var(--crma-bp-md)) { gap: var(--crma-space-3); }
+    display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;
+    .action-button.github-link { @media (max-width: 639px) { display: none; } }
+    @media (min-width: 640px) { gap: 1rem; }
 }
-
+.search-trigger-button {
+    display: flex; align-items: center; justify-content: space-between; height: 40px;
+    background-color: var(--docs-secondary); border: 1px solid var(--docs-border); border-radius: var(--docs-radius);
+    padding: 0 0.75rem; font-size: 0.9rem; color: var(--docs-muted-foreground); text-align: left; cursor: pointer;
+    transition: all var(--docs-transition-speed);
+    &:hover { border-color: var(--docs-primary); }
+    &:active { transform: scale(0.98); }
+    @media (min-width: 640px) {
+        min-width: 240px;
+        span, .kbd { display: inline-block; }
+    }
+}
 .action-button {
-    display: flex; align-items: center; justify-content: center;
-    width: 40px; height: 40px;
-    background: transparent; border-radius: var(--crma-radius);
-    color: var(--crma-muted-foreground);
-    cursor: pointer;
-    transition: all var(--crma-duration-fast) ease;
-    flex-shrink: 0;
-    position: relative; // For tooltip positioning
-
-    &:hover {
-        color: var(--crma-foreground);
-        background-color: var(--crma-accent);
-    }
+    display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+    background: transparent; border-radius: var(--docs-radius); color: var(--docs-muted-foreground);
+    cursor: pointer; transition: all var(--docs-transition-speed); flex-shrink: 0;
+    &:hover { color: var(--docs-foreground); background-color: var(--docs-accent); }
     &:active { transform: scale(0.95); }
-
-    i { font-size: 1.25rem; }
-}
-
-.changelog-button {
-    height: 40px;
-    padding: 0 var(--crma-space-4);
-    display: none; // Hide on mobile
-    @media (min-width: var(--crma-bp-md)) {
-        display: inline-flex; // Show on tablet and up
-    }
-}
-
-// --- Tooltip Styling ---
-[data-tooltip] {
-    &::after {
-        content: attr(data-tooltip);
-        position: absolute;
-        bottom: calc(100% + var(--crma-space-2));
-        left: 50%;
-        transform: translateX(-50%);
-        padding: var(--crma-space-2) var(--crma-space-3);
-        background-color: var(--crma-foreground);
-        color: var(--crma-background);
-        border-radius: var(--crma-radius-sm);
-        font-size: var(--crma-font-size-xs);
-        font-weight: var(--crma-weight-semibold);
-        white-space: nowrap;
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-        transition: opacity var(--crma-duration-fast) ease, transform var(--crma-duration-fast) ease;
-    }
-
-    &:hover::after {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) translateY(-2px);
-    }
-}
-
-// --- Live Search Container & Active State ---
-.live-search-container {
-    position: fixed;
-    inset: 0;
-    z-index: calc(var(--crma-z-header) - 1);
-    background-color: rgba(0,0,0,0.3);
-    backdrop-filter: blur(4px);
-    padding: var(--crma-space-8) var(--crma-container-pad-x);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--crma-duration-fast) ease, visibility var(--crma-duration-fast) ease;
-
-    .search-input-group { position: relative; }
-    .search-input-icon {
-        position: absolute; top: 50%; left: var(--crma-space-5);
-        transform: translateY(-50%); font-size: 1.5rem;
-        color: var(--crma-muted-foreground); pointer-events: none;
-    }
-    .search-input {
-        width: 100%; height: 60px;
-        font-family: var(--crma-font-sans); font-size: var(--crma-font-size-xl);
-        background-color: var(--crma-background);
-        border: 1px solid var(--crma-border); border-radius: var(--crma-radius-lg);
-        padding: 0 var(--crma-space-5) 0 calc(var(--crma-space-5) * 3);
-        &:focus { outline: none; border-color: var(--crma-primary); box-shadow: 0 0 0 2px var(--crma-ring-color); }
-    }
-    .search-results {
-        background-color: var(--crma-background); border-radius: var(--crma-radius-lg);
-        margin-top: var(--crma-space-3); max-height: 60vh; overflow-y: auto;
-        box-shadow: var(--crma-shadow-md);
-    }
-}
-
-.live-search-box {
-    width: 100%; max-width: 700px;
-    margin: 0 auto;
-    transform: translateY(-20px);
-    transition: transform var(--crma-duration) var(--crma-ease);
-}
-
-// When search becomes active...
-body.search-is-active {
-    .header {
-        opacity: 0;
-        pointer-events: none;
-    }
-    .live-search-container {
-        opacity: 1;
-        visibility: visible;
-    }
-    .live-search-box {
-        transform: translateY(0);
-    }
 }

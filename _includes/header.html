@@ -2,32 +2,27 @@
   <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
     <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
   </button>
+
   <a href="{{ site.baseurl | default: '' }}/" class="logo">
     {{ site.title | default: "CourseDocs" }}
   </a>
+
 </div>
 
 <div class="header-right">
-  <!-- The search trigger is now just an icon button -->
-  <button class="action-button" id="search-trigger" aria-label="Search" data-tooltip="Search (⌘K)">
+  <button class="search-trigger-button" id="search-trigger">
     <i class="ph-duotone ph-magnifying-glass"></i>
+    <span>Search...</span>
+    <kbd>⌘K</kbd>
   </button>
 
-  <!-- New Buttons with Tooltips -->
-  <a href="#" class="action-button" aria-label="Resources" data-tooltip="Resources">
-    <i class="ph-duotone ph-books"></i>
-  </a>
-  
   {% if site.github_url %}
-    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer" data-tooltip="Star on GitHub">
+    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
       <i class="ph-duotone ph-github-logo"></i>
     </a>
   {% endif %}
 
-  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Toggle Theme">
+  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
     <i class="ph-duotone ph-sun"></i>
   </button>
-
-  <!-- Changelog styled as a button -->
-  <a href="#" class="btn btn--ghost changelog-button">Changelog</a>
 </div>
