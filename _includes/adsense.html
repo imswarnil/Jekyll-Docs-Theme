@@ -1,15 +1,9 @@
-{%- assign type  = include.type  | downcase | default: 'square' -%}
-{%- assign size  = include.size  | downcase | default: 'md' -%}
+{%- assign type  = include.type | downcase | default: 'square' -%}
+{%- assign size  = include.size | downcase | default: 'md' -%}
 {%- assign extra = include.class | default: '' -%}
 
 <div class="ad ad--{{ type }} ad--{{ size }} {{ extra }}">
   <span class="ad__label" aria-label="Advertisement">Advertisement</span>
-  {%- case type -%}
-    {%- when 'square' -%}
-      {% include adsense/square.html size=size %}
-    {%- else -%}
-      <!-- Unknown type; nothing to render -->
-  {%- endcase -%}
+  {% include adsense/square.html %}
 </div>
-
-<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+<script>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>

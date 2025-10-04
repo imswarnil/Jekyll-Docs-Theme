@@ -5,43 +5,43 @@
     --ad-muted: var(--crma-muted-foreground);
     --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.06));
   }
+  html.dark{ --ad-shadow: var(--crma-shadow-sm, 0 1px 2px rgba(0,0,0,.25)); }
   
-  /* Ad container look & feel */
+  /* Container card */
   .ad{
-    width: 100%; max-width: 100%;
+    width:100%; max-width:100%;
     margin: clamp(var(--crma-space-3,.75rem), 3vw, var(--crma-space-6,1.5rem)) 0;
     padding: clamp(10px, 2vw, 16px);
     background: var(--ad-bg);
     border: var(--crma-border-width,1px) solid var(--ad-border);
     border-radius: var(--ad-radius);
     box-shadow: var(--ad-shadow);
-    display: flex; flex-direction: column; align-items: center; gap: .45rem;
+    display:flex; flex-direction:column; align-items:center; gap:.45rem;
   }
   .ad__label{
     font: var(--crma-weight-semibold,600) 11px/1.2 var(--crma-font-sans, system-ui);
-    letter-spacing: .14em; text-transform: uppercase; color: var(--ad-muted);
+    letter-spacing:.14em; text-transform:uppercase; color: var(--ad-muted);
   }
   
-  /* Google <ins> fills container; Google decides creative */
+  /* The <ins> must be block and width:100% for responsive creatives */
   .ad .adsbygoogle{
-    display: block; width: 100%; max-width: 100%; height: auto;
-    border-radius: calc(var(--ad-radius) - 2px);
-    overflow: hidden;
+    display:block; width:100%; max-width:100%; height:auto;
+    border-radius: calc(var(--ad-radius) - 2px); overflow:hidden;
   }
   
-  /* ====== SQUARE SIZING (container caps only) ======
-     sm ~120–200; md ~200–300; lg ~250–300. */
+  /* ===== Square container caps by size =====
+     sm: up to 200px, md: up to 300px, lg: up to 336px */
   .ad--square.ad--sm { max-width: 200px; }
   .ad--square.ad--md { max-width: 300px; }
-  .ad--square.ad--lg { max-width: 336px; } /* gives headroom for large containers */
+  .ad--square.ad--lg { max-width: 336px; }
   
-  /* Phones: let square fill content width elegantly */
+  /* Phones: let it fill the content width */
   @media (max-width: 480px){
     .ad--square { max-width: 100% !important; }
   }
   
   /* Center on larger screens */
   @media (min-width: 768px){
-    .ad { margin-left: auto; margin-right: auto; }
+    .ad { margin-left:auto; margin-right:auto; }
   }
   
