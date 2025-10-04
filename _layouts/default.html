@@ -2,12 +2,17 @@
 <html lang="{{ site.lang | default: "en-US" }}">
   {% include head.html %}
   <body class="layout-{{ page.layout }}{% if page.title %}  {{ page.title | slugify }}{% endif %}">
-    <div class="{% if page.layout == 'home' or page.url == '/' %}home-wrapper{% else %}page-wrapper{% endif %}">
+    <div class="page-wrapper">
       <header class="header">
         {% include header.html %}
       </header>
+      <aside class="sidebar-left" id="sidebar-left">
+        {% include sidebar.html %}
+      </aside>
       {{ content }}
-      <footer class="main-footer">{% include footer.html %}</footer>
+      <footer class="main-footer">
+        {% include footer.html %}
+      </footer>
     </div>
   
     <div class="mobile-overlay" id="mobile-overlay"></div>
