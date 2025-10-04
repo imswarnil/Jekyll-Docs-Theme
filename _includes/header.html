@@ -1,40 +1,59 @@
-<!-- _includes/header.html -->
-<div class="header-left">
+<header><div class="header-left">
   <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-label="Open navigation menu">
-    <i class="ph-duotone ph-list"></i>
+    <i class="ph-duotone ph-list" style="font-size: 1.5rem;"></i>
   </button>
 
   <a href="{{ site.baseurl | default: '' }}/" class="logo">
-    <i class="ph-duotone ph-chart-bar-horizontal"></i>
-    <span>{{ site.title | default: "CourseDocs" }}</span>
+    {{ site.title | default: "CourseDocs" }}
   </a>
-</div>
 
-<!-- NEW: A central container for the search bar -->
-<div class="header-center">
-  <button class="search-trigger-button" id="search-trigger">
-    <i class="ph-duotone ph-magnifying-glass"></i>
-    <span>Search documentation...</span>
-    <kbd>⌘K</kbd>
-  </button>
+  <nav class="header-nav">
+    {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
+    {%- for item in nav_items -%}
+      {%- assign item_url = item.url | to_s -%}
+      {%- assign is_external = item_url contains '://' or item_url startswith 'http' -%}
+
+      {%- comment -%}
+        Normalize current page URL to compare for active state
+      {%- endcomment -%}
+      {%- assign current = page.url | to_s -%}
+      {%- assign normalized_item = is_external
+          | ternary: item_url,
+                     item_url | relative_url -%}
+
+      {%- assign is_home_link = item_url == '/' -%}
+      {%- assign is_active =
+          (current == item_url) or
+          (current == normalized_item) or
+          (is_home_link and (current == '/' or current == site.baseurl)) -%}
+
+      <a
+        href="{{ is_external | ternary: item_url, item_url | relative_url }}"
+        class="{% if is_active %}active{% endif %}"
+        {% if is_active %}aria-current="page"{% endif %}
+        {% if is_external %}target="_blank" rel="noopener noreferrer"{% endif %}
+      >
+        {{ item.title }}
+      </a>
+    {%- endfor -%}
+  </nav>
 </div>
 
 <div class="header-right">
-  <!-- NEW: Additional action buttons -->
-  <a href="#" class="action-button" aria-label="API Docs" data-tooltip="API Docs">
-    <i class="ph-duotone ph-code"></i>
-  </a>
-  <a href="#" class="action-button" aria-label="Changelog" data-tooltip="Changelog">
-    <i class="ph-duotone ph-git-pull-request"></i>
-  </a>
-  
+  <button class="search-trigger-button" id="search-trigger">
+    <i class="ph-duotone ph-magnifying-glass"></i>
+    <span>Search...</span>
+    <kbd>⌘K</kbd>
+  </button>
+
   {% if site.github_url %}
-    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer" data-tooltip="Star on GitHub">
+    <a href="{{ site.github_url }}" class="action-button github-link" aria-label="GitHub Repository" target="_blank" rel="noopener noreferrer">
       <i class="ph-duotone ph-github-logo"></i>
     </a>
   {% endif %}
 
-  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode" data-tooltip="Toggle Theme">
+  <button class="action-button" id="theme-toggle" aria-label="Toggle dark mode">
     <i class="ph-duotone ph-sun"></i>
   </button>
 </div>
+</header>

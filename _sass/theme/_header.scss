@@ -1,154 +1,45 @@
-/* ==========================================================================
-   Header Styles (Centered Search)
-   ========================================================================== */
-
 .header {
-  grid-column: 1 / -1;
-  display: grid;
-  // Creates the three-part layout: Left, Center (flexible), Right
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: var(--crma-space-6);
-  padding: 0 var(--crma-container-pad-x);
-  height: var(--crma-header-height);
-  border-bottom: 1px solid var(--crma-border);
-  background-color: var(--crma-background);
-  position: sticky;
-  top: 0;
-  z-index: 50;
+    grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between;
+    padding: 0 1.5rem; border-bottom: 1px solid var(--crma-border); background-color: var(--crma-background);
+    position: sticky; top: 0; z-index: 50;
 }
-
-// --- Left Side (Logo & Mobile Menu) ---
 .header-left {
-  display: flex;
-  align-items: center;
-  gap: var(--crma-space-4);
-  flex-shrink: 0;
+    display: flex; align-items: center; gap: 1.5rem; flex-shrink: 0;
+    .logo { font-size: 1.5rem; font-weight: 800; }
 }
-
-.logo {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--crma-space-3);
-  font-size: 1.25rem; // Slightly smaller to accommodate icon
-  font-weight: var(--crma-weight-bold);
-
-  i {
-    font-size: 1.5rem;
-    color: var(--crma-primary);
-  }
-}
-
 .mobile-menu-toggle {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: var(--crma-space-2);
-  color: var(--crma-foreground);
-  i { font-size: 1.5rem; }
-
-  @media (min-width: var(--crma-bp-lg)) {
-    display: none; // Corresponds to your old `@media (min-width: 1024px)`
-  }
+    background: none; border: none; cursor: pointer; padding: 0.5rem;
+    @media (min-width: 1024px) { display: none; }
 }
-
-// --- Center (Search Bar) ---
-.header-center {
-  max-width: 600px;
-  width: 100%;
-  margin: 0 auto;
-  // Hide the search bar on mobile by default
-  display: none;
-  @media (min-width: var(--crma-bp-md)) {
-    display: block; // Show it on tablet and up
-  }
+.header-nav {
+    display: none;
+    a {
+        font-weight: 500; color: var(--crma-muted-foreground); padding: 0.5rem;
+        &.active { color: var(--crma-foreground); font-weight: 600; }
+    }
+    @media (min-width: 1024px) { display: flex; gap: 1rem; }
 }
-
-.search-trigger-button {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%; // Make it fill the central container
-  height: 42px;
-  background-color: var(--crma-surface);
-  border: 1px solid var(--crma-surface-border);
-  border-radius: var(--crma-radius);
-  padding: 0 var(--crma-space-3);
-  font-size: var(--crma-font-size-sm);
-  color: var(--crma-muted-foreground);
-  text-align: left;
-  cursor: pointer;
-  transition: all var(--crma-transition-speed);
-
-  &:hover {
-    border-color: var(--crma-primary);
-  }
-
-  span, kbd {
-    display: inline-block;
-  }
-  kbd {
-    background-color: var(--crma-background);
-    border: 1px solid var(--crma-border);
-    border-radius: var(--crma-radius-sm);
-    padding: var(--crma-space-1) var(--crma-space-2);
-    font-size: 0.75rem;
-  }
-}
-
-// --- Right Side (Action Buttons) ---
 .header-right {
-  display: flex;
-  align-items: center;
-  gap: var(--crma-space-2); // Tighter gap for icon buttons
-  justify-content: flex-end;
+    display: flex; align-items: center; gap: 0.5rem; justify-content: flex-end;
+    .action-button.github-link { @media (max-width: 639px) { display: none; } }
+    @media (min-width: 640px) { gap: 1rem; }
 }
-
+.search-trigger-button {
+    display: flex; align-items: center; justify-content: space-between; height: 40px;
+    background-color: var(--crma-secondary); border: 1px solid var(--crma-border); border-radius: var(--crma-radius);
+    padding: 0 0.75rem; font-size: 0.9rem; color: var(--crma-muted-foreground); text-align: left; cursor: pointer;
+    transition: all var(--crma-transition-speed);
+    &:hover { border-color: var(--crma-primary); }
+    &:active { transform: scale(0.98); }
+    @media (min-width: 640px) {
+        min-width: 240px;
+        span, .kbd { display: inline-block; }
+    }
+}
 .action-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border-radius: var(--crma-radius);
-  color: var(--crma-muted-foreground);
-  cursor: pointer;
-  transition: all var(--crma-duration-fast) ease;
-  flex-shrink: 0;
-  position: relative; // For tooltip positioning
-  i { font-size: 1.25rem; }
-
-  &:hover {
-    color: var(--crma-foreground);
-    background-color: var(--crma-accent);
-  }
-}
-
-// --- Tooltip Styling ---
-[data-tooltip] {
-  &::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    bottom: calc(100% + var(--crma-space-2));
-    left: 50%;
-    transform: translateX(-50%);
-    padding: var(--crma-space-2) var(--crma-space-3);
-    background-color: var(--crma-foreground);
-    color: var(--crma-background);
-    border-radius: var(--crma-radius-sm);
-    font-size: var(--crma-font-size-xs);
-    font-weight: var(--crma-weight-semibold);
-    white-space: nowrap;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    transition: opacity var(--crma-duration-fast) ease, transform var(--crma-duration-fast) ease;
-  }
-
-  &:hover::after {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(-2px);
-  }
+    display: flex; align-items: center; justify-content: center; width: 40px; height: 40px;
+    background: transparent; border-radius: var(--crma-radius); color: var(--crma-muted-foreground);
+    cursor: pointer; transition: all var(--crma-transition-speed); flex-shrink: 0;
+    &:hover { color: var(--crma-foreground); background-color: var(--crma-accent); }
+    &:active { transform: scale(0.95); }
 }
