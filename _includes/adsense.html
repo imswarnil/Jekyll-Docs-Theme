@@ -1,26 +1,64 @@
 {%- assign t = include.type | downcase | default: 'square' -%}
-{%- assign extra = include.class | default: '' -%}
+{%- assign layout_key = include.layout_key | default: '-6v+f0-19-44+c6' -%}
 {%- assign label = include.label | default: 'Advertisement' -%}
+{%- assign extra = include.class | default: '' -%}
 
 <div class="ad {{ extra }}">
   <span class="ad__label" aria-label="Advertisement">{{ label }}</span>
 
-  {%- case t -%}
-    {%- when 'square' -%}
-      {% include adsense/square.html %}
-    {%- when 'leaderboard' -%}
-      {% include adsense/leaderboard.html %}
-    {%- when 'article' -%}
-      {% include adsense/article.html %}
-    {%- when 'multiplex' -%}
-      {% include adsense/multiplex.html %}
-    {%- when 'feed' -%}
-      {% include adsense/feed.html layout_key=include.layout_key %}
-    {%- when 'vertical' -%}
-      {% include adsense/vertical.html %}
-    {%- else -%}
-      {% include adsense/square.html %}
-  {%- endcase -%}
+  {%- if t == 'square' -%}
+    <!-- Square (Responsive) -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="7663977887"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+  {%- elsif t == 'leaderboard' -%}
+    <!-- Horizontal (Responsive) -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="8939839370"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+
+  {%- elsif t == 'article' -%}
+    <!-- In-Article (Fluid) -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="6501428979"></ins>
+
+  {%- elsif t == 'multiplex' -%}
+    <!-- Multiplex (Auto-relaxed) -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-format="autorelaxed"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="6808134701"></ins>
+
+  {%- elsif t == 'feed' -%}
+    <!-- In-Feed (Fluid) -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-format="fluid"
+         data-ad-layout-key="{{ layout_key }}"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="9130894804"></ins>
+
+  {%- elsif t == 'vertical' -%}
+    <!-- Vertical (Responsive) -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-1291242080282540"
+         data-ad-slot="3487917390"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  {%- endif -%}
 </div>
 
 <script>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
