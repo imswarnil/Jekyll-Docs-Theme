@@ -18,9 +18,7 @@ layout: default
   
   </div>
 
-  {% include adsense.html type="leaderboard" size="lg" %}
-  {% include adsense.html type="leaderboard" size="md" %}
-  {% include adsense.html type="leaderboard" size="sm" %}
+  {% adsense type:leaderboard size:lg %}
 
 
 
@@ -52,8 +50,6 @@ layout: default
     <div class="sidebar-right-actions">
       <a href="{{ site.github_url }}/edit/main/{{ page.path }}" target="_blank" rel="noopener noreferrer"><i class="ph-duotone ph-pencil-simple"></i>Edit this page</a>
     </div> 
-    {% include adsense.html type="square"     size="sm" %}
-    {% include adsense.html type="square"     size="lg" %}
-
+    {% adsense type:square     size:sm %}
   </aside>
 </div>
