@@ -1,124 +1,32 @@
-/* ==========================================================================
-   AdSense Component Styles
-   ========================================================================== */
-
-// --- Base Ad Container ---
-// This is the main wrapper for all ads.
-.crma-ad {
-  --_radius: var(--crma-radius, 0.75rem);
-  --_bg: var(--crma-secondary, hsl(210, 50%, 96%));
-  --_bd: var(--crma-border, hsl(210, 30%, 90%));
-  --_text: var(--crma-muted-foreground, hsl(214, 20%, 55%));
-
-  margin: 2rem auto; // Give ads breathing room and center them.
-  padding: 12px;
-  border: 1px solid var(--_bd);
-  border-radius: var(--_radius);
-  background: var(--_bg);
-  overflow: hidden; // Ensures nothing spills out of the rounded corners.
-  max-width: 100%;
-  text-align: center; // Center fixed-width ads on mobile.
-
-  .adsbygoogle {
-    display: block; // This is the crucial replacement for inline style.
-    background: transparent;
-    margin: 0 auto; // Keep ad content centered.
-    min-width: 150px; // A reasonable minimum size.
-  }
-
-  // Hide the placeholder visuals once the ad is loaded.
-  .adsbygoogle[data-ad-status="filled"] {
-    background: transparent;
-    border: none;
-  }
-
-  // A friendly message if the ad fails to load (e.g., AdBlock).
-  .adsbygoogle[data-ad-status="unfilled"]::before {
-    content: "Advertisement";
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    min-height: 50px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    color: var(--_text);
-  }
+/* Imswarnil – Simple responsive Ad styles using CRMA vars */
+:root{
+  --ad-radius: var(--crma-radius, .75rem);
+  --ad-border: var(--crma-border, hsl(210, 30%, 90%));
+  --ad-muted: var(--crma-muted-foreground, hsl(214, 20%, 55%));
+}
+html.dark{
+  --ad-border: var(--crma-border, hsl(216, 30%, 25%));
+  --ad-muted: var(--crma-muted-foreground, hsl(214, 15%, 55%));
 }
 
-// --- In-Article & In-Feed Ads ---
-// These are fluid and should blend seamlessly with content.
-.crma-ad--in-article,
-.crma-ad--in-feed {
-  padding: 0;
-  border: none;
-  background: transparent;
-  min-height: 250px;
-}
+.ad{ display:flex; justify-content:center; align-items:center; flex-direction:column; gap:.4rem; margin:clamp(12px,3vw,24px) 0; }
+.ad__label{ font: 600 11px/1.2 var(--crma-font-sans, system-ui); letter-spacing:.14em; text-transform:uppercase; color: var(--ad-muted); }
 
-// --- Multiplex Ads ---
-.crma-ad--multiplex {
-  min-height: 250px;
-  max-width: 900px;
-}
-.crma-ad--multiplex-vertical {
-  min-height: 600px;
-  max-width: 300px;
-}
+/* Make Google <ins> flexible and never overflow */
+.ad .adsbygoogle{ max-width:100%; height:auto; border-radius: var(--ad-radius); overflow:hidden; }
 
-// --- Leaderboards & Banners ---
-// Horizontal ads that adapt to screen width.
-.crma-ad--leaderboard { // Covers 980x90, 728x90, and Mobile 300x50
-  max-width: 980px;
-  min-height: 50px; // Mobile Leaderboard
-  @media (min-width: 768px) {
-    min-height: 90px; // Tablet/Desktop Leaderboard
-  }
-}
-.crma-ad--leaderboard-billboard { // For the large 970x250
-  max-width: 970px;
-  min-height: 90px;
-  @media (min-width: 1024px) {
-    min-height: 250px;
-  }
-}
+/* Type helpers (optional to target placement) */
+.ad--leaderboard,.ad--rectangle,.ad--square,.ad--skyscraper,.ad--article,.ad--feed,.ad--multiplex{ width:100%; }
 
-// --- Skyscraper Ads ---
-// Tall ads for sidebars. HIDDEN on mobile for better UX.
-.crma-ad--skyscraper-large,
-.crma-ad--skyscraper-medium,
-.crma-ad--skyscraper-small {
-  display: none; // Hide on mobile and tablet by default.
-  margin: 1.5rem 0;
-  @media (min-width: 1280px) { // Show only on large desktop screens
-    display: block;
-  }
-}
-.crma-ad--skyscraper-large {   // 300x1050
-  max-width: 300px; min-height: 1050px;
-}
-.crma-ad--skyscraper-medium {  // 300x600 & 250x600
-  max-width: 300px; min-height: 600px;
-}
-.crma-ad--skyscraper-small {   // 160x600
-  max-width: 160px; min-height: 600px;
-}
+/* Skyscrapers: hide on small screens; use responsive auto instead */
+@media (max-width: 991px){ .ad--skyscraper{ display:none; } }
 
+/* Desktop centering for fixed-size variants if Google returns fixed sizes */
+@media (min-width: 992px){ .ad .adsbygoogle[style*="width:"]{ margin-inline:auto; } }
 
-// --- Square & Rectangle Ads ---
-// Versatile ads for in-content or sidebars.
-.crma-ad--rectangle-large { // 336x280
-  max-width: 336px; min-height: 280px;
-}
-.crma-ad--square-medium {   // 300x250
-  max-width: 300px; min-height: 250px;
-}
-.crma-ad--square-small {    // 250x250 & 200x250
-  max-width: 250px; min-height: 250px;
-}
+/* In-article & feed tweaks */
+.ad--article .adsbygoogle{ text-align:center; }
+.ad--feed .adsbygoogle{ display:block; }
 
-// --- Button Ads ---
-.crma-ad--button { // 300x60
-  max-width: 300px; min-height: 60px;
-}
+/* Optional bordered container when you want separation */
+.ad.ad--framed{ padding: clamp(8px, 1.5vw, 12px); border:1px solid var(--ad-border); border-radius: var(--ad-radius); }
