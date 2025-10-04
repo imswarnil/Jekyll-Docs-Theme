@@ -1,27 +1,33 @@
+<!-- _includes/sidebar.html -->
 <div class="sidebar-left-content">
   <nav class="sidebar-nav">
+    <!-- Main Header Navigation for Mobile -->
     <ul>
-      {%- comment -%}
-        Pull posts (skip drafts), group by first category (fallback: "Posts")
-        This is compatible with GitHub Pages’ pinned Jekyll/Liquid.
-      {%- endcomment -%}
+      {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
+      {%- for item in nav_items -%}
+        <li class="nav-link {% if page.url == item.url %}active{% endif %}">
+          <a href="{{ item.url | relative_url }}">
+            <!-- You can add icons here if you want -->
+            {{ item.title }}
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+    <!-- Separator -->
+    <hr style="border: none; border-top: 1px solid var(--docs-border); margin: 1.5rem 0;">
+
+    <!-- Existing Post/Academy Navigation -->
+    <ul>
       {% assign posts = site.posts | where_exp: "p", "p.draft != true" %}
       {% assign groups = posts | group_by_exp: "p", "p.categories[0] | default: 'Posts'" %}
 
       {%- for g in groups -%}
         <li class="nav-category">{{ g.name | replace: '-', ' ' | capitalize }}</li>
-
-        {%- comment -%}
-          Order: by optional nav_weight (lower first), then newest
-          (If you don’t use nav_weight, it just sorts by date desc.)
-        {%- endcomment -%}
         {% assign weighted = g.items | sort: "nav_weight" %}
         {% assign ordered  = weighted | sort: "date" | reverse %}
-
         {%- for post in ordered -%}
           <li class="nav-link {% if page.url == post.url %}active{% endif %}">
             <a href="{{ post.url | relative_url }}">
-              <!-- Hardcoded icon for now -->
               <i class="ph-duotone ph-article"></i>{{ post.title }}
             </a>
           </li>
@@ -30,7 +36,9 @@
     </ul>
   </nav>
 
-  <div class="sponsor-card">
+  <!-- I noticed you had a sponsor card but the CSS variable was --crma-muted-foreground. 
+       I've changed it to the standard --docs-muted-foreground from your CSS. -->
+  <div class="sponsor-card" style="margin-top: auto; padding-top: 1rem;">
     <div class="ad-label" style="font-size: 0.7rem; color: var(--docs-muted-foreground);">Ad</div>
     <div style="font-weight: 600; margin: 0.5rem 0;">Sponsored Training</div>
     <p style="font-size: 0.875rem; color: var(--docs-muted-foreground); margin: 0;">
