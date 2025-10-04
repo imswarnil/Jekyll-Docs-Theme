@@ -7,36 +7,6 @@
     {{ site.title | default: "CourseDocs" }}
   </a>
 
-  <nav class="header-nav">
-    {%- assign nav_items = site.navigation_header | default: site.data.navigation_header -%}
-    {%- for item in nav_items -%}
-      {%- assign item_url = item.url | to_s -%}
-      {%- assign is_external = item_url contains '://' or item_url startswith 'http' -%}
-
-      {%- comment -%}
-        Normalize current page URL to compare for active state
-      {%- endcomment -%}
-      {%- assign current = page.url | to_s -%}
-      {%- assign normalized_item = is_external
-          | ternary: item_url,
-                     item_url | relative_url -%}
-
-      {%- assign is_home_link = item_url == '/' -%}
-      {%- assign is_active =
-          (current == item_url) or
-          (current == normalized_item) or
-          (is_home_link and (current == '/' or current == site.baseurl)) -%}
-
-      <a
-        href="{{ is_external | ternary: item_url, item_url | relative_url }}"
-        class="{% if is_active %}active{% endif %}"
-        {% if is_active %}aria-current="page"{% endif %}
-        {% if is_external %}target="_blank" rel="noopener noreferrer"{% endif %}
-      >
-        {{ item.title }}
-      </a>
-    {%- endfor -%}
-  </nav>
 </div>
 
 <div class="header-right">
